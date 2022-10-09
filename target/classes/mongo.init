@@ -1,3 +1,0 @@
-use admin
-db.createUser({ user: "ch_core_service", pwd: "CoreCH319", roles: [{ role: "dbOwner", db: "ch_core_db" }, { role: "dbOwner", db: "ch_core_db_test" }] })
-db.auth("ch_core_service", "CoreCH319")
