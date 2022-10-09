@@ -1,0 +1,290 @@
+2022-10-01 12:47:42,256 INFO org.springframework.boot.StartupInfoLogger trace-id= [main] Starting CohotzSurveyServiceApplication using Java 11.0.14 on LAPTOP-3K314OP0 with PID 17736 (C:\workspace\cohotz\cohotz-survey-service\target\classes started by saura in C:\workspace\cohotz\cohotz-survey-service)
+2022-10-01 12:47:42,262 DEBUG org.springframework.boot.StartupInfoLogger trace-id= [main] Running with Spring Boot v2.7.2, Spring v5.3.22
+2022-10-01 12:47:42,263 INFO org.springframework.boot.SpringApplication trace-id= [main] No active profile set, falling back to 1 default profile: "default"
+2022-10-01 12:47:43,496 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate trace-id= [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-10-01 12:47:43,587 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate trace-id= [main] Finished Spring Data repository scanning in 84 ms. Found 2 MongoDB repository interfaces.
+2022-10-01 12:47:43,917 INFO org.cohotz.boot.autoconfigure.web.mvc.RestTemplateAutoConfiguration trace-id= [main] Initializing restTemplatePostBeanProcessor()
+2022-10-01 12:47:44,767 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer trace-id= [main] Tomcat initialized with port(s): 8083 (http)
+2022-10-01 12:47:44,778 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Initializing ProtocolHandler ["http-nio-8083"]
+2022-10-01 12:47:44,778 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Starting service [Tomcat]
+2022-10-01 12:47:44,779 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-10-01 12:47:44,968 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Initializing Spring embedded WebApplicationContext
+2022-10-01 12:47:44,969 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext trace-id= [main] Root WebApplicationContext: initialization completed in 2618 ms
+2022-10-01 12:47:45,588 INFO org.cohotz.boot.web.mvc.beanprocessor.RestTemplateBeanProcessor trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Fetching rest template properties of : cohotz-core-service-rest
+2022-10-01 12:47:45,601 INFO org.cohotz.boot.web.mvc.beanprocessor.RestTemplateBeanProcessor trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Processing custom properties for RestTemplate bean: cohotz-core-service-rest
+2022-10-01 12:47:46,022 INFO org.cohotz.boot.config.CHWebConfigurer trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Adding custom interceptors
+2022-10-01 12:47:46,935 INFO org.springframework.security.web.DefaultSecurityFilterChain trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@57a5b03, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5649f55, org.springframework.security.web.context.SecurityContextPersistenceFilter@46d69ca4, org.springframework.security.web.header.HeaderWriterFilter@6207145c, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@6e948f1c, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@2eb6d34a, org.springframework.security.web.authentication.logout.LogoutFilter@4ac7856f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@517bdce0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@672d8370, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@1cc708a7, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@36525ab, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@558127d2, org.springframework.security.web.session.SessionManagementFilter@6614289a, org.springframework.security.web.access.ExceptionTranslationFilter@12200670, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@50b38342]
+2022-10-01 12:47:47,298 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.6.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/11.0.14+8-LTS-263"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=majority, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='ch_survey_service', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@13ddaffb], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@5a31abe9]}, clusterSettings={hosts=[localhost:27018], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@2dacda9a], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+2022-10-01 12:47:47,736 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Cluster description not yet available. Waiting for 30000 ms before timing out
+2022-10-01 12:47:49,339 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337e99b34d33212d6bde0db', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-01 12:48:17,744 WARN org.springframework.context.support.AbstractApplicationContext trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'healthContributorRegistry' defined in class path resource [org/springframework/boot/actuate/autoconfigure/health/HealthEndpointConfiguration.class]: Unsatisfied dependency expressed through method 'healthContributorRegistry' parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mongoHealthContributor' defined in class path resource [org/springframework/boot/actuate/autoconfigure/mongo/MongoHealthContributorAutoConfiguration.class]: Unsatisfied dependency expressed through method 'mongoHealthContributor' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoTemplate' defined in class path resource [org/springframework/boot/autoconfigure/data/mongo/MongoDatabaseFactoryDependentConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+2022-10-01 12:48:17,754 INFO org.apache.juli.logging.DirectJDKLog trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Stopping service [Tomcat]
+2022-10-01 12:48:17,777 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-10-01 12:48:17,800 ERROR org.springframework.boot.SpringApplication trace-id=ba3ba148-899e-481d-a547-17465be34946 [main] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'healthContributorRegistry' defined in class path resource [org/springframework/boot/actuate/autoconfigure/health/HealthEndpointConfiguration.class]: Unsatisfied dependency expressed through method 'healthContributorRegistry' parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mongoHealthContributor' defined in class path resource [org/springframework/boot/actuate/autoconfigure/mongo/MongoHealthContributorAutoConfiguration.class]: Unsatisfied dependency expressed through method 'mongoHealthContributor' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoTemplate' defined in class path resource [org/springframework/boot/autoconfigure/data/mongo/MongoDatabaseFactoryDependentConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.cohotz.survey.CohotzSurveyServiceApplication.main(CohotzSurveyServiceApplication.java:17)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mongoHealthContributor' defined in class path resource [org/springframework/boot/actuate/autoconfigure/mongo/MongoHealthContributorAutoConfiguration.class]: Unsatisfied dependency expressed through method 'mongoHealthContributor' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoTemplate' defined in class path resource [org/springframework/boot/autoconfigure/data/mongo/MongoDatabaseFactoryDependentConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:1609)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1573)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1492)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1349)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoTemplate' defined in class path resource [org/springframework/boot/autoconfigure/data/mongo/MongoDatabaseFactoryDependentConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:1609)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1573)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1492)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1349)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 36 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 53 common frames omitted
+Caused by: org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at org.springframework.data.mongodb.core.MongoExceptionTranslator.translateExceptionIfPossible(MongoExceptionTranslator.java:95)
+	at org.springframework.data.mongodb.core.MongoTemplate.potentiallyConvertRuntimeException(MongoTemplate.java:3044)
+	at org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:600)
+	at org.springframework.data.mongodb.core.DefaultIndexOperations.execute(DefaultIndexOperations.java:214)
+	at org.springframework.data.mongodb.core.DefaultIndexOperations.ensureIndex(DefaultIndexOperations.java:121)
+	at org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexCreator.createIndex(MongoPersistentEntityIndexCreator.java:157)
+	at org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexCreator.checkForAndCreateIndexes(MongoPersistentEntityIndexCreator.java:147)
+	at org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexCreator.checkForIndexes(MongoPersistentEntityIndexCreator.java:131)
+	at org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexCreator.<init>(MongoPersistentEntityIndexCreator.java:96)
+	at org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexCreator.<init>(MongoPersistentEntityIndexCreator.java:73)
+	at org.springframework.data.mongodb.core.MongoTemplate.<init>(MongoTemplate.java:243)
+	at org.springframework.boot.autoconfigure.data.mongo.MongoDatabaseFactoryDependentConfiguration.mongoTemplate(MongoDatabaseFactoryDependentConfiguration.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 54 common frames omitted
+Caused by: com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27018, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+	at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:180)
+	at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:44)
+	at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:144)
+	at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:101)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:291)
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:207)
+	at com.mongodb.client.internal.MongoCollectionImpl.executeCreateIndexes(MongoCollectionImpl.java:848)
+	at com.mongodb.client.internal.MongoCollectionImpl.createIndexes(MongoCollectionImpl.java:831)
+	at com.mongodb.client.internal.MongoCollectionImpl.createIndexes(MongoCollectionImpl.java:826)
+	at com.mongodb.client.internal.MongoCollectionImpl.createIndex(MongoCollectionImpl.java:811)
+	at org.springframework.data.mongodb.core.DefaultIndexOperations.lambda$ensureIndex$0(DefaultIndexOperations.java:131)
+	at org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:598)
+	... 68 common frames omitted
+2022-10-01 12:51:20,797 INFO org.springframework.boot.StartupInfoLogger trace-id= [main] Starting CohotzSurveyServiceApplication using Java 11.0.14 on LAPTOP-3K314OP0 with PID 8652 (C:\workspace\cohotz\cohotz-survey-service\target\classes started by saura in C:\workspace\cohotz\cohotz-survey-service)
+2022-10-01 12:51:20,801 DEBUG org.springframework.boot.StartupInfoLogger trace-id= [main] Running with Spring Boot v2.7.2, Spring v5.3.22
+2022-10-01 12:51:20,802 INFO org.springframework.boot.SpringApplication trace-id= [main] No active profile set, falling back to 1 default profile: "default"
+2022-10-01 12:51:22,145 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate trace-id= [main] Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2022-10-01 12:51:22,228 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate trace-id= [main] Finished Spring Data repository scanning in 77 ms. Found 2 MongoDB repository interfaces.
+2022-10-01 12:51:22,534 INFO org.cohotz.boot.autoconfigure.web.mvc.RestTemplateAutoConfiguration trace-id= [main] Initializing restTemplatePostBeanProcessor()
+2022-10-01 12:51:23,363 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer trace-id= [main] Tomcat initialized with port(s): 8083 (http)
+2022-10-01 12:51:23,373 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Initializing ProtocolHandler ["http-nio-8083"]
+2022-10-01 12:51:23,374 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Starting service [Tomcat]
+2022-10-01 12:51:23,374 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-10-01 12:51:23,548 INFO org.apache.juli.logging.DirectJDKLog trace-id= [main] Initializing Spring embedded WebApplicationContext
+2022-10-01 12:51:23,548 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext trace-id= [main] Root WebApplicationContext: initialization completed in 2669 ms
+2022-10-01 12:51:24,241 INFO org.cohotz.boot.web.mvc.beanprocessor.RestTemplateBeanProcessor trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Fetching rest template properties of : cohotz-core-service-rest
+2022-10-01 12:51:24,282 INFO org.cohotz.boot.web.mvc.beanprocessor.RestTemplateBeanProcessor trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Processing custom properties for RestTemplate bean: cohotz-core-service-rest
+2022-10-01 12:51:24,745 INFO org.cohotz.boot.config.CHWebConfigurer trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Adding custom interceptors
+2022-10-01 12:51:25,714 INFO org.springframework.security.web.DefaultSecurityFilterChain trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d75c604, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3265995e, org.springframework.security.web.context.SecurityContextPersistenceFilter@409395b9, org.springframework.security.web.header.HeaderWriterFilter@4e9ea32f, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@68b3248a, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@601f264d, org.springframework.security.web.authentication.logout.LogoutFilter@13137835, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3df3410a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@416b681c, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@7d088813, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@12448de1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@33f2eb04, org.springframework.security.web.session.SessionManagementFilter@55f6f965, org.springframework.security.web.access.ExceptionTranslationFilter@2095c331, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7619fbe7]
+2022-10-01 12:51:26,088 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.6.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/11.0.14+8-LTS-263"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=majority, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='ch_survey_service', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@6f7b8ae1], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@6c8d8b60]}, clusterSettings={hosts=[localhost:27018], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@4fa6fb7f], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+2022-10-01 12:51:26,117 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:2, serverValue:8}] to localhost:27018
+2022-10-01 12:51:26,122 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=43727100}
+2022-10-01 12:51:26,121 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:1, serverValue:9}] to localhost:27018
+2022-10-01 12:51:26,724 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Opened connection [connectionId{localValue:3, serverValue:10}] to localhost:27018
+2022-10-01 12:51:27,125 INFO org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-10-01 12:51:27,158 INFO org.apache.juli.logging.DirectJDKLog trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Starting ProtocolHandler ["http-nio-8083"]
+2022-10-01 12:51:27,180 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Tomcat started on port(s): 8083 (http) with context path ''
+2022-10-01 12:51:27,195 INFO org.springframework.boot.StartupInfoLogger trace-id=622a1120-c79f-4980-a709-293dbcfcf427 [main] Started CohotzSurveyServiceApplication in 7.082 seconds (JVM running for 7.883)
+2022-10-01 16:37:34,337 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-01 16:37:46,435 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-01 16:41:45,455 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:44, serverValue:1}] to localhost:27018
+2022-10-01 16:41:45,456 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4857400}
+2022-10-01 16:41:52,851 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:45, serverValue:4}] to localhost:27018
+2022-10-01 16:43:51,507 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-01 16:44:03,558 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-01 16:45:25,894 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:60, serverValue:4}] to localhost:27018
+2022-10-01 16:45:25,895 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5275700}
+2022-10-01 16:45:27,350 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:61, serverValue:5}] to localhost:27018
+2022-10-01 16:47:01,659 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-01 16:47:13,723 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-01 16:50:12,589 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:92, serverValue:1}] to localhost:27018
+2022-10-01 16:50:12,591 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=7121300}
+2022-10-01 16:50:16,757 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:93, serverValue:5}] to localhost:27018
+2022-10-01 16:52:44,834 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-01 16:52:56,893 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-01 16:53:18,968 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:98, serverValue:1}] to localhost:27018
+2022-10-01 16:53:18,969 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3288900}
+2022-10-01 16:53:21,025 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6337ea76bbbe0c2f2de7ea4a', description='null'}-localhost:27018] Opened connection [connectionId{localValue:99, serverValue:2}] to localhost:27018

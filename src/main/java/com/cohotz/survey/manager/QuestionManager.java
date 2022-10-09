@@ -1,0 +1,17 @@
+package com.cohotz.survey.manager;
+
+import com.cohotz.survey.client.core.model.ApiResponsePoolQuestionResult;
+import com.cohotz.survey.client.core.model.PoolQuestion;
+import com.cohotz.survey.client.core.model.Question;
+import com.cohotz.survey.dto.request.ResponseDTO;
+import com.cohotz.survey.model.question.StaticSurveyQuestion;
+import com.cohotz.survey.model.response.Response;
+import org.cohotz.boot.error.CHException;
+
+public interface QuestionManager {
+    void validate(ResponseDTO response) throws CHException;
+    Response evaluate(ResponseDTO response, StaticSurveyQuestion question);
+    PoolQuestion createPoolQuestion(ApiResponsePoolQuestionResult result);
+    StaticSurveyQuestion createSurveyQuestion(Question blockQuestion, PoolQuestion question);
+    boolean validateResponse(ResponseDTO dto, StaticSurveyQuestion question);
+}

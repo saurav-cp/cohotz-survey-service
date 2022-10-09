@@ -1,0 +1,147 @@
+cohotz:
+  app:
+    name: Survey Service
+    description: Cohotz Survey Microservice
+    version: 1.0
+  clients:
+    cohotz-core-service:
+      url: "http://localhost:18082"
+    cohotz-profile-service:
+      url: "http://localhost:18083"
+
+server:
+  port: 8083
+
+spring:
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+  data:
+    mongodb:
+      uri: mongodb://ch_survey_service:SurveyCH639@localhost:27018/ch_survey_db?retryWrites=true&w=majority&authSource=admin
+      database: ch_survey_db
+      authentication-database: admin
+      auto-index-creation: true
+  thymeleaf:
+    cache: false
+    mode: HTML
+
+kafka:
+  bootstrapAddress: "localhost:9092"
+keycloak:
+  enabled: false
+  auth-server-url: http://localhost:8080
+  realm: cohotz
+  resource: cohotz-service
+  public-client: true
+  bearer-only: true
+  principal-attribute: preferred_username
+  use-resource-role-mappings: true
+  security-constraints:
+    - authRoles:
+        - user
+        - admin
+
+security:
+  oauth2:
+    client:
+      client-id: cohotz-core-service
+      client-secret: bGF8VdAWSkUlHtsIJL4VDcRWEAlJrK8i
+      user-authorization-uri: ${keycloak.auth-server-url}/realms/cohotz/protocol/openid-connect/auth
+      access-token-uri: ${keycloak.auth-server-url}/realms/cohotz/protocol/openid-connect/token
+      scope: openid
+      grant-type: client_credentials
+
+resilience4j:
+  retry:
+    retry-aspect-order: 2
+    instances:
+      cohotz-core-service:
+        max-attempts: 3
+        wait-duration: 5s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.RestClientException
+        ignore-exceptions:
+          - org.cohotz.boot.error.CHException
+      cohotz-profile-service:
+        max-attempts: 3
+        wait-duration: 5s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.RestClientException
+        ignore-exceptions:
+          - org.cohotz.boot.error.CHException
+  circuitbreaker:
+    circuit-breaker-aspect-order: 1
+    instances:
+      cohotz-core-service:
+        wait-duration-in-open-state: 1m
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: count-based
+        sliding-window-size: 5
+        minimum-number-of-calls: 5
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 60
+        failure-rate-threshold: 60
+        record-exceptions:
+          - org.springframework.web.client.RestClientException
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+      cohotz-profile-service:
+        wait-duration-in-open-state: 1m
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: count-based
+        sliding-window-size: 5
+        minimum-number-of-calls: 5
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 60
+        failure-rate-threshold: 60
+        record-exceptions:
+          - org.springframework.web.client.RestClientException
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+
+cohotz-core-service:
+  oauth2:
+    enabled: true
+    client-id: cohotz-core-service
+
+survey:
+  cohorts:
+    department: Department
+    workLocation: Location
+    currentExperience: Tenure
+    totalExperience: Experience
+  update-delay: 300000
+  scheduler:
+    enabled: true
+    frequency: 30000
+    tenants:
+      - COHOTZ
+  smart-threshold: 3
+  survey-link-format: "http://localhost:8083/survey/%s/%s/%s"
+  status-map:
+    DRAFT:
+      - PUBLISHED
+      - STARTED
+      - CANCELLED
+    ERROR:
+      - PUBLISHED
+    PUBLISHED:
+      - STARTED
+      - CANCELLED
+    CANCELLED:
+    IN_PROGRESS:
+      - AUTO_COMPLETE
+      - MARKED_COMPLETE
+    AUTO_COMPLETE:
+    MARKED_COMPLETE:

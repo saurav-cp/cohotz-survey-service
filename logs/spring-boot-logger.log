@@ -1,0 +1,576 @@
+2022-10-09 01:24:41,850 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 01:24:53,930 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 01:24:56,039 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:24:58,181 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:25:00,458 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:25:02,985 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:25:05,818 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:25:15,995 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:16, serverValue:1}] to localhost:27018
+2022-10-09 01:25:15,996 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4435000}
+2022-10-09 01:25:22,419 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:17, serverValue:8}] to localhost:27018
+2022-10-09 01:25:47,543 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 01:25:59,607 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 01:26:02,069 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:04,300 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:06,574 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:08,975 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:11,694 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:14,654 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:17,732 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:20,952 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:24,116 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:27,080 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:29,976 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:32,869 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:36,078 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:39,050 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:42,023 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:45,182 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:48,111 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:51,076 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:54,178 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:26:57,329 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:00,420 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:03,554 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:06,638 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:09,848 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:13,068 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:16,265 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:19,277 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:22,286 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:25,477 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:28,498 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:31,455 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:34,601 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:37,502 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:40,657 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:43,744 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:46,826 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:49,909 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:53,180 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:56,328 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:27:59,536 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:02,560 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:05,774 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:08,712 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:11,930 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:15,200 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:18,224 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:21,434 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:24,578 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:27,474 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:28:34,319 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:44, serverValue:2}] to localhost:27018
+2022-10-09 01:28:34,319 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3573800}
+2022-10-09 01:28:38,702 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:45, serverValue:7}] to localhost:27018
+2022-10-09 01:30:16,954 INFO org.cohotz.boot.service.impl.LoggingService trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] REQUEST method = [GET] path = [/survey/COHOTZ/6340e101b559e53410b1cb19/5294d42c-9fc3-49ec-99f3-40558c707d9e] 
+2022-10-09 01:30:16,956 INFO org.cohotz.boot.auth.AuthenticationInterceptor trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Authenticated User: AuthenticatedUser(userId=ANONYMOUS, email=ANONYMOUS, tenant=ANONYMOUS)
+2022-10-09 01:30:16,973 DEBUG com.cohotz.survey.controller.SurveyUIController trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Generating survey form for tenant COHOTZ, surveyId 6340e101b559e53410b1cb19 and accessCode: 5294d42c-9fc3-49ec-99f3-40558c707d9e
+2022-10-09 01:30:16,975 DEBUG com.cohotz.survey.service.impl.SurveyServiceImpl trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Fetching participant 5294d42c-9fc3-49ec-99f3-40558c707d9e for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:16,976 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Finding Participant 5294d42c-9fc3-49ec-99f3-40558c707d9e for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:17,039 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Opened connection [connectionId{localValue:46, serverValue:18}] to localhost:27018
+2022-10-09 01:30:17,093 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] Finding Participant 5294d42c-9fc3-49ec-99f3-40558c707d9e for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:17,121 INFO org.cohotz.boot.service.impl.LoggingService trace-id=6b0d01ef-cfde-4cc2-98b6-43332606306c [http-nio-8083-exec-8] RESPONSE  method = [GET] responseBody = [ApiResponse(status=400, message=Your response for this survey has already been submitted, result=ErrorDetail(errorCode=CP-ERR-SRVY-107, errorMessage=Your response for this survey has already been submitted))]
+2022-10-09 01:30:20,427 INFO org.cohotz.boot.service.impl.LoggingService trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] REQUEST method = [GET] path = [/survey/COHOTZ/6340e101b559e53410b1cb19/596fdfd1-6d47-484c-9fc9-8cf37115f762] 
+2022-10-09 01:30:20,428 INFO org.cohotz.boot.auth.AuthenticationInterceptor trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] Authenticated User: AuthenticatedUser(userId=ANONYMOUS, email=ANONYMOUS, tenant=ANONYMOUS)
+2022-10-09 01:30:20,429 DEBUG com.cohotz.survey.controller.SurveyUIController trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] Generating survey form for tenant COHOTZ, surveyId 6340e101b559e53410b1cb19 and accessCode: 596fdfd1-6d47-484c-9fc9-8cf37115f762
+2022-10-09 01:30:20,430 DEBUG com.cohotz.survey.service.impl.SurveyServiceImpl trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] Fetching participant 596fdfd1-6d47-484c-9fc9-8cf37115f762 for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:20,430 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] Finding Participant 596fdfd1-6d47-484c-9fc9-8cf37115f762 for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:20,447 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] Finding Participant 596fdfd1-6d47-484c-9fc9-8cf37115f762 for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:20,453 INFO org.cohotz.boot.service.impl.LoggingService trace-id=127a565c-611c-471a-a576-c7f8bc0a176e [http-nio-8083-exec-9] RESPONSE  method = [GET] responseBody = [ApiResponse(status=400, message=Your response for this survey has already been submitted, result=ErrorDetail(errorCode=CP-ERR-SRVY-107, errorMessage=Your response for this survey has already been submitted))]
+2022-10-09 01:30:23,654 INFO org.cohotz.boot.service.impl.LoggingService trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] REQUEST method = [GET] path = [/survey/COHOTZ/6340e101b559e53410b1cb19/e699795a-450a-48cf-bb53-14f2d1f6d86d] 
+2022-10-09 01:30:23,655 INFO org.cohotz.boot.auth.AuthenticationInterceptor trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] Authenticated User: AuthenticatedUser(userId=ANONYMOUS, email=ANONYMOUS, tenant=ANONYMOUS)
+2022-10-09 01:30:23,656 DEBUG com.cohotz.survey.controller.SurveyUIController trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] Generating survey form for tenant COHOTZ, surveyId 6340e101b559e53410b1cb19 and accessCode: e699795a-450a-48cf-bb53-14f2d1f6d86d
+2022-10-09 01:30:23,657 DEBUG com.cohotz.survey.service.impl.SurveyServiceImpl trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] Fetching participant e699795a-450a-48cf-bb53-14f2d1f6d86d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:23,657 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] Finding Participant e699795a-450a-48cf-bb53-14f2d1f6d86d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:23,674 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] Finding Participant e699795a-450a-48cf-bb53-14f2d1f6d86d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:23,681 INFO org.cohotz.boot.service.impl.LoggingService trace-id=07a408e0-9cad-4dc7-8b37-810bd67eed22 [http-nio-8083-exec-1] RESPONSE  method = [GET] responseBody = [ApiResponse(status=400, message=Your response for this survey has already been submitted, result=ErrorDetail(errorCode=CP-ERR-SRVY-107, errorMessage=Your response for this survey has already been submitted))]
+2022-10-09 01:30:26,967 INFO org.cohotz.boot.service.impl.LoggingService trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] REQUEST method = [GET] path = [/survey/COHOTZ/6340e101b559e53410b1cb19/4e340fb4-0f3e-4665-aee2-ce46fabb140d] 
+2022-10-09 01:30:26,967 INFO org.cohotz.boot.auth.AuthenticationInterceptor trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] Authenticated User: AuthenticatedUser(userId=ANONYMOUS, email=ANONYMOUS, tenant=ANONYMOUS)
+2022-10-09 01:30:26,968 DEBUG com.cohotz.survey.controller.SurveyUIController trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] Generating survey form for tenant COHOTZ, surveyId 6340e101b559e53410b1cb19 and accessCode: 4e340fb4-0f3e-4665-aee2-ce46fabb140d
+2022-10-09 01:30:26,969 DEBUG com.cohotz.survey.service.impl.SurveyServiceImpl trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] Fetching participant 4e340fb4-0f3e-4665-aee2-ce46fabb140d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:26,969 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] Finding Participant 4e340fb4-0f3e-4665-aee2-ce46fabb140d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:26,983 DEBUG com.cohotz.survey.service.impl.SurveyParticipantServiceImpl trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] Finding Participant 4e340fb4-0f3e-4665-aee2-ce46fabb140d for survey 6340e101b559e53410b1cb19 and tenant COHOTZ
+2022-10-09 01:30:26,990 INFO org.cohotz.boot.service.impl.LoggingService trace-id=d48189dc-73be-4a51-ae96-1f297de09ac5 [http-nio-8083-exec-2] RESPONSE  method = [GET] responseBody = [ApiResponse(status=400, message=Your response for this survey has already been submitted, result=ErrorDetail(errorCode=CP-ERR-SRVY-107, errorMessage=Your response for this survey has already been submitted))]
+2022-10-09 01:50:31,813 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 01:50:43,879 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 01:50:46,854 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:50:48,995 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:50:51,264 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:50:53,731 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:50:56,603 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:50:59,661 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:51:02,787 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 01:51:05,923 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:51, serverValue:1}] to localhost:27018
+2022-10-09 01:51:05,924 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2500600}
+2022-10-09 01:51:14,238 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:52, serverValue:3}] to localhost:27018
+2022-10-09 02:02:33,291 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:02:45,349 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:02:48,857 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:02:51,054 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:02:53,323 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:02:55,715 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:02:58,544 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:03:01,735 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:03:04,869 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:03:08,975 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:03:18,991 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:59, serverValue:3}] to localhost:27018
+2022-10-09 02:03:18,992 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5539500}
+2022-10-09 02:03:19,213 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:60, serverValue:4}] to localhost:27018
+2022-10-09 02:09:15,454 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:09:27,525 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:09:30,120 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:32,250 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:34,500 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:36,946 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:39,764 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:42,788 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:45,862 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:09:49,571 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:09:53,716 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:66, serverValue:1}] to localhost:27018
+2022-10-09 02:09:59,598 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:67, serverValue:4}] to localhost:27018
+2022-10-09 02:09:59,599 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=10171000}
+2022-10-09 02:12:06,325 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:12:18,393 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:12:21,420 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:23,552 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:25,810 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:28,273 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:30,983 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:34,122 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:37,268 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:12:52,521 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:74, serverValue:1}] to localhost:27018
+2022-10-09 02:12:52,522 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3623800}
+2022-10-09 02:12:57,989 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:75, serverValue:3}] to localhost:27018
+2022-10-09 02:23:28,144 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:23:40,211 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:23:42,549 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:44,773 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:47,032 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:49,480 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:52,249 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:55,398 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:23:58,610 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:24:02,267 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:24:12,275 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:82, serverValue:2}] to localhost:27018
+2022-10-09 02:24:12,276 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5608400}
+2022-10-09 02:24:12,845 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:83, serverValue:3}] to localhost:27018
+2022-10-09 02:29:40,739 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:29:52,811 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:29:56,250 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:29:58,455 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:00,732 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:03,118 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:05,895 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:08,850 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:11,811 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:15,054 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:18,124 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:21,070 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:24,157 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:27,174 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:30,250 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:30:38,955 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:30:48,971 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:94, serverValue:2}] to localhost:27018
+2022-10-09 02:30:48,972 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=9854800}
+2022-10-09 02:30:51,391 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:95, serverValue:4}] to localhost:27018
+2022-10-09 02:35:09,090 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:35:21,131 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:35:23,310 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:25,447 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:27,689 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:30,149 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:33,037 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:36,043 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:39,246 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:42,398 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:45,688 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:48,888 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:51,785 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:55,044 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:35:58,243 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:01,326 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:04,283 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:07,318 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:10,268 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:13,471 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:16,664 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:19,614 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:22,747 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:25,891 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:28,760 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:31,899 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:34,922 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:37,919 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:41,102 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:43,353 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:36:44,288 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:36:45,946 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:111, serverValue:1}] to localhost:27018
+2022-10-09 02:36:53,362 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:112, serverValue:6}] to localhost:27018
+2022-10-09 02:36:53,363 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2932800}
+2022-10-09 02:42:39,554 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoNodeIsRecoveringException: Command failed with error 11600 (InterruptedAtShutdown): 'interrupted at shutdown' on server localhost:27018. The full response is {"ok": 0.0, "errmsg": "interrupted at shutdown", "code": 11600, "codeName": "InterruptedAtShutdown"}
+	at com.mongodb.internal.connection.ProtocolHelper.createSpecialException(ProtocolHelper.java:266)
+	at com.mongodb.internal.connection.ProtocolHelper.getCommandFailureException(ProtocolHelper.java:194)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:413)
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:42:51,609 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65)
+	... 4 common frames omitted
+2022-10-09 02:42:55,200 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:42:57,353 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:42:59,618 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:02,065 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:04,896 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:08,135 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:11,236 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:14,193 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:17,186 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:20,080 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:23,097 WARN org.apache.kafka.clients.NetworkClient trace-id= [kafka-producer-network-thread | producer-1] [Producer clientId=producer-1] Connection to node 1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2022-10-09 02:43:26,723 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Exception in monitor thread while connecting to server localhost:27018
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112)
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571)
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410)
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:337)
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:101)
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:45)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:131)
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.startHandshake(InternalStreamConnectionInitializer.java:73)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:182)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-10-09 02:43:32,525 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-rtt-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:120, serverValue:1}] to localhost:27018
+2022-10-09 02:43:36,752 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Opened connection [connectionId{localValue:121, serverValue:3}] to localhost:27018
+2022-10-09 02:43:36,753 INFO com.mongodb.diagnostics.logging.SLF4JLogger trace-id= [cluster-ClusterId{value='6341c112ea2e375254b34cba', description='null'}-localhost:27018] Monitor thread successfully connected to server with description ServerDescription{address=localhost:27018, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=10499500}

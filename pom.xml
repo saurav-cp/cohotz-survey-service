@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.cohotz.boot</groupId>
+        <artifactId>cohotz-starter-parent</artifactId>
+        <version>1.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.cohotz.survey</groupId>
+    <artifactId>cohotz-survey-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>cohotz-survey-service</name>
+    <description>Cohotz survey microservice</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <openapi.plugin.version>6.0.1</openapi.plugin.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring-kafka.version>2.8.0</spring-kafka.version>
+        <avro.version>1.8.2</avro.version>
+        <confluent.version>3.3.1</confluent.version>
+    </properties>
+
+    <!--necessary to resolve confluent dependencies-->
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.cohotz.boot</groupId>
+            <artifactId>cohotz-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-circuitbreaker-resilience4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${confluent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+        <!--		</dependency>-->
+
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-devtools</artifactId>-->
+        <!--			<scope>runtime</scope>-->
+        <!--			<optional>true</optional>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+    </dependencies>
+
+    <!--Spring cloud dependency-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <mainClass>com.cohotz.event.CohotzSurveyServiceApplication</mainClass>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>1</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+                            <inputSpec>${project.basedir}/src/main/resources/api/cohotz-core-service.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <library>resttemplate</library>
+                            <apiPackage>com.cohotz.survey.client.core</apiPackage>
+                            <modelPackage>com.cohotz.survey.client.core.model</modelPackage>
+                            <generateApis>true</generateApis>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <sourceFolder>src/main/java</sourceFolder>
+                                <java8>true</java8>
+                                <dateLibrary>java8-localdatetime</dateLibrary>
+                                <useTags>true</useTags>
+                                <interfaceOnly>false</interfaceOnly>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>2</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+                            <inputSpec>${project.basedir}/src/main/resources/api/cohotz-profile-service.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <library>resttemplate</library>
+                            <apiPackage>com.cohotz.survey.client.profile</apiPackage>
+                            <modelPackage>com.cohotz.survey.client.profile.model</modelPackage>
+                            <generateApis>true</generateApis>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <sourceFolder>src/main/java</sourceFolder>
+                                <java8>true</java8>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <interfaceOnly>false</interfaceOnly>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- avro-maven-plugin -->
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
+                            <stringType>String</stringType>
+                            <createSetters>false</createSetters>
+                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
+                            <fieldVisibility>private</fieldVisibility>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--force discovery of generated classes-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <!--                <version>3.0.0</version>-->
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/avro</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

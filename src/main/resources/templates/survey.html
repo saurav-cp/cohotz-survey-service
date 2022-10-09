@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cohotz Survey</title>
+    <link rel="stylesheet" href="/css/survey.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--    <script th:inline="javascript" src="/js/survey.js"></script>-->
+</head>
+<body>
+<form action="">
+    <fieldset>
+        <legend id="group_label" th:text="'Survey: ' + ${surveyName}">Survey Name</legend>
+        <legend th:text="'Description: ' + ${surveyDesc}">Survey Description</legend>
+        <legend th:text="'Publisher: ' + ${publisher}">Survey Publisher</legend>
+        <div id="message"></div>
+        <div class="q-legend">
+            <span>
+			<span id="1">1<span class="vh">.</span></span>
+            <span id="2">2<span class="vh">.</span></span>
+            <span id="3">3<span class="vh">.</span></span>
+            <span id="4">4<span class="vh">.</span></span>
+            <span id="5">5<span class="vh">.</span></span>
+			<span id="6">6<span class="vh">.</span></span>
+            <span id="7">7<span class="vh">.</span></span>
+            <span id="8">8<span class="vh">.</span></span>
+            <span id="9">9<span class="vh">.</span></span>
+			<span id="10">10<span class="vh">.</span></span>
+		</span>
+        </div>
+
+        <ol class="q-list" start="" style="counter-reset: question 0">
+            <li th:each="question: ${questions}" class="q-list__item">
+                <div class="q-block">
+                    <p th:id="'question_part' + ${question.position}" class="q-title" th:text="${question.text}"></p>
+                    <div class="wrapper" role="group"
+                         th:aria-labelledby="'group_label question_part' + ${question.position}">
+                        <div class="question-legend">
+                            <div th:each="responseOption: ${question.responseOptionMap}">
+                                <div class="tooltip" th:id="'l_' + ${responseOption.value.text} + '_1'" th:inline="text">
+                                    [[${responseOption.value.text}]]
+                                    <span class="tooltiptext" th:text="${responseOption.value.info}"></span>
+                                </div>
+                            </div>
+
+<!--                            <div th:id="'r' + ${question.position} + '_1'">1</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_2'">2</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_3'">3</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_4'">4</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_5'">5</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_6'">6</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_7'">7</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_8'">8</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_9'">9</div>-->
+<!--                            <div th:id="'r' + ${question.position} + '_10'">10</div>-->
+                        </div>
+<!--                            <div th:if="${question.responseType == 'MULTI_SELECT_INFO'}" class="response-option-wrapper">-->
+
+<!--                                <div th:each="responseOption: ${question.responseOptionMap}">-->
+<!--                                    <input type="checkbox" th:name="${question.poolQuesReferenceCode}"-->
+<!--                                           th:value="${responseOption.key + 1}" class="vh"-->
+<!--                                           th:id="'r' + ${question.position} + ${responseOption.key +1}">-->
+<!--                                    <label th:id="'l_r' + ${question.position} + ${responseOption.key + 1}"-->
+<!--                                           th:for="'r' + ${question.position} + ${responseOption.key + 1}"-->
+<!--                                           th:text="${responseOption.key + 1}">10</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div th:unless="${question.responseType == 'SINGLE_SELECT'}" class="response-option-wrapper">-->
+<!--                                <div th:each="responseOption: ${question.responseOptionMap}">-->
+<!--                                    <input type="radio" th:name="${question.poolQuesReferenceCode}"-->
+<!--                                           th:value="${responseOption.key + 1}" class="vh"-->
+<!--                                           th:id="'r' + ${question.position} + ${responseOption.key +1}">-->
+<!--                                    <label th:id="'l_r' + ${question.position} + ${responseOption.key + 1}"-->
+<!--                                           th:for="'r' + ${question.position} + ${responseOption.key + 1}"-->
+<!--                                           th:text="${responseOption.key + 1}">10</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        <div th:each="responseOption: ${question.responseOptionMap}">
+                            <input type="radio" th:name="${question.poolQuesReferenceCode}"
+                                   th:value="${responseOption.key + 1}" class="vh"
+                                   th:id="'r' + ${question.position} + ${responseOption.key +1}">
+                            <label th:id="'l_r' + ${question.position} + ${responseOption.key + 1}"
+                                   th:for="'r' + ${question.position} + ${responseOption.key + 1}"
+                                   th:text="${responseOption.key + 1}">10</label>
+                        </div>
+
+                    </div>
+                </div>
+                <input class="comment" th:id="'comment' + ${question.position}" type="text" placeholder="comment"/>
+                </div>
+            </li>
+        </ol>
+    </fieldset>
+    <div class="buttons">
+        <input type="reset" value="Clear" class="clear">
+        <input type="submit" value="Submit" class="submit">
+    </div>
+</form>
+</body>
+<script th:inline="javascript">
+    var tenant = [[${tenant}]];
+    var surveyId = [[${surveyId}]];
+    var accessCode = [[${accessCode}]];
+    var questions = [[${questions}]];
+    var selection;
+    var error;
+
+
+
+    $('form').on('submit', function(event) {
+        error = null;
+        $('#message').html('');
+        event.preventDefault();
+        const response = questions.map(q => {
+            selection = $('input[name=' + q.poolQuesReferenceCode+ ']:checked').val();
+            console.log(selection)
+            console.log(q)
+            if(selection == null){
+                error = "Please confirm response on all mandatory questions";
+                return null;
+            }else{
+                return {comment: $('#comment' + q.position).val(), questionCode: q.poolQuesReferenceCode, selections: [parseInt(selection)], skipped: false, type: q.responseType};
+            }
+            console.log("selection for "+q.poolQuesReferenceCode + " - " + $('input[name=' + q.poolQuesReferenceCode+ ']:checked').val());
+        })
+        if(error == null){
+            console.log("No error in form. Submitting");
+            $.ajax({
+                type: 'PUT',
+                url: '/api/surveys/' + tenant + '/' + surveyId + '/responses/' + accessCode,
+                data: JSON.stringify(response),
+                contentType: 'application/json',
+                success: function(res) {
+                    console.log("Survey response captured successfully. Response from server: "+res)
+                    $('#message').html("<strong class='text-success'>Successfully captured response</strong>")
+                },
+                error: function(xhr, status, error) {
+                    $('#message').html("<strong class='text-danger'>Error while submitting survey response</strong>")
+                }
+            })
+        }else{
+            $('#message').html("<strong class='text-danger'>Please provide response for all mandatory questions</strong>");
+        }
+        console.log(response);
+        //this.submit(); //now submit the form
+    });
+
+
+</script>
+</html>
