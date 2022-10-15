@@ -1,7 +1,7 @@
 {
-  "namespace": "com.cohotz.survey.engine.score.record",
+  "namespace": "com.cohotz.survey.exp.score.record",
   "type": "record",
-  "name": "EngineScoreRecord",
+  "name": "ExperienceScoreRecord",
   "fields": [
     {
       "name": "metadata",
@@ -24,7 +24,7 @@
       "name": "data",
       "type": {
         "type": "record",
-        "name": "EngineScore",
+        "name": "ExperienceScore",
         "fields": [
           {
             "name": "email",
@@ -46,32 +46,55 @@
             "type": "string"
           },
           {
-            "name": "score",
+            "name": "averageScore",
             "type": "double"
           },
           {
-            "name": "max",
+            "name": "totalScore",
             "type": "double"
+          },
+          {
+            "name": "responses",
+            "type": "int"
           },
           {
             "name": "source",
             "type": "string"
           },
           {
-            "name": "engine",
+            "name": "engines",
             "type": {
-              "type": "record",
-              "name": "EngineDetails",
-              "fields": [
-                {
-                  "name": "code",
-                  "type": "string"
-                },
-                {
-                  "name": "name",
-                  "type": "string"
-                }
-              ]
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "Engine",
+                "fields": [
+                  {
+                    "name": "name",
+                    "type": "string"
+                  },
+                  {
+                    "name": "code",
+                    "type": "string"
+                  },
+                  {
+                    "name": "averageScore",
+                    "type": "double"
+                  },
+                  {
+                    "name": "totalScore",
+                    "type": "double"
+                  },
+                  {
+                    "name": "responses",
+                    "type": "int"
+                  },
+                  {
+                    "name": "weight",
+                    "type": "int"
+                  }
+                ]
+              }
             }
           },
           {

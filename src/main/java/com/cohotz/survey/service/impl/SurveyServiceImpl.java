@@ -7,21 +7,16 @@ import com.cohotz.survey.client.core.model.*;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.SurveyDao;
-import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.request.SurveyDTO;
 import com.cohotz.survey.dto.response.QuestionMinRes;
 import com.cohotz.survey.dto.response.*;
-import com.cohotz.survey.esr.ESRRecordPublisher;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
-import com.cohotz.survey.esr.avro.BlockDetails;
-import com.cohotz.survey.esr.avro.Cohort;
-import com.cohotz.survey.esr.avro.EngineDetails;
-import com.cohotz.survey.esr.avro.EngineScoreRecord;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
-import com.cohotz.survey.model.response.Response;
+import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
+import com.cohotz.survey.score.record.ExpScoreRecordPublisher;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
@@ -29,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cohotz.boot.error.CHException;
-import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -40,12 +34,9 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import static com.cohotz.survey.SurveyConstants.SURVEY_SERVICE_CLIENT;
 import static com.cohotz.survey.error.ServiceCHError.*;
-import static org.cohotz.boot.CHConstants.LOG_TRACE_ID;
 
 @Service
 @Slf4j
@@ -75,19 +66,14 @@ public class SurveyServiceImpl implements SurveyService {
     @Autowired
     MailService mailService;
 
-//    @Autowired
-//    UserDao userDao;
+    @Autowired
+    ExpScoreRecordPublisher expScoreRecordPublisher;
 
     @Autowired
-    ESRRecordPublisher esrRecordPublisher;
+    EngineScoreRecordPublisher engineScoreRecordPublisher;
 
     @Autowired
     ApplicationContext context;
-
-    @Override
-    public List<String> futureStatuses(String currentState) {
-        return config.getStatusMap().get(currentState);
-    }
 
     @Override
     public List<SurveyMinRes> fetchAll(String tenant, String status, String search) {
@@ -110,8 +96,8 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public List<SurveyMinRes> fetchAllIncomplete(String tenant) {
-        return dao.findByTenantAndStatusIn(tenant, List.of(SurveyStatus.PUBLISHED.name(), SurveyStatus.STARTED.name()));
+    public List<SurveyMinRes> fetchAll(String tenant, List<String> statuses) {
+        return dao.findByTenantAndStatusIn(tenant, statuses);
     }
 
     @Override
@@ -149,7 +135,7 @@ public class SurveyServiceImpl implements SurveyService {
         survey.setLastReminder(LocalDateTime.now());
         survey.setTenant(tenant);
         survey.setBlock(new CultureBlockMin().name(block.getName()).code(block.getCode()));
-        survey.setPartCount(CollectionUtils.emptyIfNull(dto.getSurveyParticipants()).size());
+        survey.setPartCount(CollectionUtils.emptyIfNull(dto.getParticipants()).size());
         survey.setCompletedDate(dto.getEndDate());
         survey.setPublisher(pub);
         survey.setPublisherName(publisher.getFirstName() +" "+ publisher.getLastName());
@@ -158,7 +144,7 @@ public class SurveyServiceImpl implements SurveyService {
         Survey s = dao.save(survey);
 
         log.info("Creating participants for survey {} for pub {}", s.getId(), s.getPublisher());
-        participantService.createParticipantsSync(s.getId(), tenant, dto, block.getQuestions(), survey.getEngines());
+        createParticipants(s, dto.getParticipants(), dto.getParticipantSource());
         return s;
     }
 
@@ -264,11 +250,24 @@ public class SurveyServiceImpl implements SurveyService {
         //Delete previously created participants and recreate
         log.info("Clearing previously created participants and creating all based on edit for survey {} tenant {}", id, tenant);
         participantService.deleteBySurveyId(id);
-        participantService.createParticipants(id, tenant,
-                updatedSurvey,
-                block.getQuestions(),survey.getEngines());
-        survey.setPartCount(CollectionUtils.emptyIfNull(updatedSurvey.getSurveyParticipants()).size());
+        createParticipants(survey, updatedSurvey.getParticipants(), updatedSurvey.getParticipantSource());
+        survey.setPartCount(CollectionUtils.emptyIfNull(updatedSurvey.getParticipants()).size());
         dao.save(survey);
+    }
+
+    private void createParticipants(Survey survey, Set<String> participants, Survey.ParticipantSource source)
+            throws CHException {
+        switch (source){
+            case TEAM:
+            case MANUAL:
+                participantService.createParticipants(survey, participants);
+                break;
+            case DIRECT_REPORTS:
+                participantService.createParticipants(survey);
+                break;
+            default:
+                throw new CHException(CH_SURVEY_PUBLISHER_NOT_FOUND);
+        }
     }
 
 
@@ -276,7 +275,7 @@ public class SurveyServiceImpl implements SurveyService {
      * Status update of survey
      */
     @Override
-    public void updateSurveyStatus(String tenant, String id, String newStatus) throws CHException {
+    public void updateStatus(String tenant, String id, String newStatus) throws CHException {
         Survey survey = fetchSurveyByIdAndTenant(id, tenant);
         log.debug("Updating status of survey {} from {} to {}", id, survey.getStatus(), newStatus);
         if (survey.getStatus().name().equals(newStatus)) {
@@ -285,13 +284,13 @@ public class SurveyServiceImpl implements SurveyService {
         }
         if (config.getStatusMap().get(survey.getStatus().name()).contains(newStatus)) {
             survey.setStatus(SurveyStatus.valueOf(newStatus));
-            log.debug("Successfully updated survey {} to {}", survey.getId(), survey.getStatus());
+            participantService.updateStatus(tenant, survey.getId(), survey.getStatus());
+            log.debug("Successfully updated status of survey {} to {} along with the participants", survey.getId(), survey.getStatus());
             if (survey.getStatus().compareTo(SurveyStatus.PUBLISHED) == 0) {
                 log.debug("Status moved to published. Pushing emails to all participants");
                 if(survey.getStartDate() == null){
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
                     survey.setStatus(SurveyStatus.STARTED);
-                    participantService.updateSurveyStatus(tenant, survey.getId(), SurveyStatus.STARTED);
                     participantService.emailParticipantForSurvey(tenant, survey.getId(), survey);
                 }
 
@@ -301,21 +300,6 @@ public class SurveyServiceImpl implements SurveyService {
             log.error("Status update for survey {} from {} to {} not allowed", id, survey.getStatus(), newStatus);
             throw new CHException(CULTR_SURVEY_STATUS_UPDATE_NOT_ALLOWED);
         }
-    }
-
-    @Override
-    public Map listParticipant(String tenant, String id) throws CHException {
-        SurveyRes survey = details(tenant, id);
-        List<ParticipantMinRes> participants = new ArrayList<>();
-        participantService.findAllParticipantForSurvey(tenant, id).forEach(p -> {
-            participants.add(
-                    new ParticipantMinRes(
-                            p.isSurveyComplete(),
-                            String.format(config.getSurveyLinkFormat(), survey.getTenant(), survey.getId(), p.getAccessCode()),
-                            p.getEmail()));
-        });
-
-        return Map.of("survey_details", survey, "participants", participants);
     }
 
     @Override
@@ -388,80 +372,6 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public void addResponse(List<ResponseDTO> responses, String tenant, String surveyId, String accessCode) throws CHException {
-        Survey survey = fetchSurveyByIdAndTenant(surveyId, tenant);
-        Participant participant = participantService.findParticipantByAccessCodeForSurvey(surveyId, tenant, accessCode);
-
-        //Validate the participant and submitted response
-        surveyResponseValidation(responses, participant, survey);
-
-        Map<String, EngineWeight> participantScore = new HashMap<>();
-        log.info("Capturing response for participant {} for survey {} and tenant {}", participant.getEmail(), surveyId, tenant);
-
-        for(ResponseDTO r : responses) {
-            StaticSurveyQuestion ques = survey.getQuestionMap().get(r.getQuestionCode());
-            QuestionManager rm = (QuestionManager)context.getBean(ques.getResponseType());
-            rm.validate(r);
-            Response response = rm.evaluate(r, ques);
-            participant.getResponseMap().put(r.getQuestionCode(), response);
-
-            //Update score
-            log.debug("Available engines: {} to be matched with {}", survey.getEngines(), ques.getEngine().getCode());
-
-            //Aggregate the engine score
-            EngineWeight partEngineWeight = participantScore.get(ques.getEngine().getCode()) == null ?
-                    new EngineWeight().score(0d).questionCount(0) : participantScore.get(ques.getEngine().getCode());
-            partEngineWeight.setCode(ques.getEngine().getCode());
-            partEngineWeight.setName(ques.getEngine().getName());
-            partEngineWeight.setWeight(survey.getEngines().stream().filter(e -> e.getCode().equals(ques.getEngine().getCode())).findFirst().orElseGet(() -> new EngineWeight()).getWeight());
-            partEngineWeight.setScore(partEngineWeight.getScore() + response.getScore());
-            partEngineWeight.setQuestionCount(partEngineWeight.getQuestionCount() + 1);
-            participantScore.put(ques.getEngine().getCode(), partEngineWeight);
-            participant.getEngineScore().put(ques.getEngine().getCode(), partEngineWeight);
-        }
-
-                //Update the survey level engine score with participant's response evaluation
-                survey.getEngines().forEach(ew -> {
-                    ew.setScore(ew.getScore() + participant.getEngineScore().get(ew.getCode()).getScore());
-                    ew.setQuestionCount(ew.getQuestionCount() + participant.getEngineScore().get(ew.getCode()).getQuestionCount());
-                });
-
-        participant.setSurveyComplete(true);
-        participant.setResponseTS(LocalDateTime.now(ZoneOffset.UTC));
-        participantService.updateParticipant(participant);
-        List<String> reportingHierarchy = userService.fetchReportingHierarchy(tenant, participant.getEmail());
-        participant.getEngineScore().forEach((engineCode, pe) ->
-                esrRecordPublisher.publish(
-                        participant.getId()+"__"+engineCode,
-                        EngineScoreRecord.newBuilder()
-                                .setMetadata(com.cohotz.survey.esr.avro.MetaData.newBuilder()
-                                        .setSource(SURVEY_SERVICE_CLIENT)
-                                        .setTraceId(MDC.get(LOG_TRACE_ID))
-                                .build())
-                                .setData(com.cohotz.survey.esr.avro.EngineScore.newBuilder()
-                                        .setEmail(participant.getEmail())
-                                        .setReportingTo(participant.getReportingTo())
-                                        .setTenant(participant.getTenant())
-                                        .setEngine(new EngineDetails(engineCode, pe.getName()))
-                                        .setBlock(new BlockDetails(survey.getBlock().getCode(), survey.getBlock().getName()))
-                                        .setSource("SURVEY")
-                                        .setTotalScore(pe.getScore())
-                                        .setAverageScore(pe.getScore()/pe.getQuestionCount())
-                                        .setCohorts(participant.getCohorts().stream().map(c -> new Cohort(c.getValue(), c.getName())).collect(Collectors.toList()))
-                                        .setResponses(pe.getQuestionCount())
-                                        .setReportingHierarchy(reportingHierarchy.stream().collect(Collectors.toList()))
-                                        .build()
-                                ).build()));
-
-
-        //Update status to IN_PROGRESS on first response by any participant
-        if (survey.getStatus().equals(SurveyStatus.PUBLISHED)) {
-            survey.setStatus(SurveyStatus.STARTED);
-        }
-        dao.save(survey);
-    }
-
-    @Override
     public void deleteAll() {
         participantService.deleteAll();
         dao.deleteAll();
@@ -497,30 +407,5 @@ public class SurveyServiceImpl implements SurveyService {
             throw new CHException(CULTR_SURVEY_ALREADY_SUBMITTED);
         }
         return currentParticipant;
-    }
-
-    private void surveyResponseValidation(List<ResponseDTO> responses, Participant participant, Survey survey) throws CHException {
-        log.debug("Validating Survey response for participant: {}", participant.getEmail());
-        if (participant == null) throw new CHException(CULTR_SURVEY_PARTICIPANT_NOT_FOUND);
-        if (participant.isSurveyComplete()) throw new CHException(CULTR_SURVEY_ALREADY_SUBMITTED);
-        if (survey.getStatus().surveyClosed()) {
-            throw new CHException(CULTR_SURVEY_CLOSED);
-        }else if(survey.getStatus().surveyNotStarted()){
-            throw new CHException(CULTR_SURVEY_NOT_STARTED);
-        }
-
-        //Validate for duplicate responses
-        if(responses.size() != Set.copyOf(responses).size()) throw new CHException(CULTR_SURVEY_DUPLICATE_ANSWERS);
-
-        //Validate that all mandatory/non-smart skipped questions are answered
-        AtomicBoolean missingResponse = new AtomicBoolean(false);
-        AtomicBoolean invalidSelection = new AtomicBoolean(false);
-        participant.getResponseMap().forEach((q,r) -> {
-            QuestionManager qm = (QuestionManager) context.getBean(survey.getQuestionMap().get(q).getResponseType());
-            ResponseDTO responseDto = responses.stream().filter(res -> res.getQuestionCode().equals(q)).findFirst().orElse(null);
-            invalidSelection.set(qm.validateResponse(responseDto, survey.getQuestionMap().get(q)));
-        });
-        if(missingResponse.get()) throw new CHException(CULTR_SURVEY_MISSING_MANDATORY_RESPONSE);
-        if(invalidSelection.get()) throw new CHException(CULTR_SURVEY_RESPONSE_INVALID_OPTION);
     }
 }

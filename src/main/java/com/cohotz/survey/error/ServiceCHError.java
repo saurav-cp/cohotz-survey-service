@@ -34,6 +34,7 @@ public enum ServiceCHError implements CHError {
     CULTR_SURVEY_DUPLICATE_ANSWERS("CP-ERR-SRVY-111","Responses on one or more questions have been repeated"),
     CULTR_SURVEY_NOT_STARTED("CP-ERR-SRVY-112","Responses cannot be accepted for this survey has not started"),
     CH_SURVEY_PUBLISHER_NOT_FOUND("CP-ERR-SRVY-113","Survey Publisher not found"),
+    CH_SURVEY_INVALID_PARTICIPANTS_SOURCE("CP-ERR-SRVY-114","Invalid Participants Source"),
 
     CH_SUBS_ALREADY_EXISTS("CP-ERR-SUBS-100","Subscription already exists"),
     CH_SUBS_NOT_FOUND("CP-ERR-SUBS-101","Subscription not found"),

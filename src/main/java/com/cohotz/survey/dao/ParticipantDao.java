@@ -17,6 +17,7 @@ public interface ParticipantDao extends MongoRepository<Participant, String> {
     List<Participant> findByTenantAndEmailAndResponseTSGreaterThanEqual(String tenant, String email, LocalDateTime responseTS);
     List<Participant> findByTenantAndSurveyIdAndSurveyCompleteAndScoreAccumulated(String tenant, String surveyId, boolean surveyComplete, boolean scoreAccumulated);
     List<Participant> findByTenantAndSurveyId(String tenant, String surveyId);
+    Optional<Participant> findByTenantAndSurveyIdAndId(String tenant, String surveyId, String id);
     void deleteBySurveyId(String surveyId);
     Long countByTenantAndSurveyId(String tenant, String surveyId);
     Long countByTenantAndSurveyIdAndSurveyComplete(String tenant, String surveyId, boolean surveyComplete);

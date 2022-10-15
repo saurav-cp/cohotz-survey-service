@@ -7,8 +7,10 @@ import com.cohotz.survey.client.core.model.TextResponseBasedQuestion;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.request.TextBasedResponseDTO;
 import com.cohotz.survey.manager.QuestionManager;
+import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
+import com.cohotz.survey.model.question.TextResponseBasedSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
 import com.cohotz.survey.model.response.TextResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,7 @@ public class TextQuestionManager implements QuestionManager {
     }
 
     @Override
-    public Response evaluate(ResponseDTO r, StaticSurveyQuestion question) {
+    public Response evaluate(ResponseDTO r, StaticSurveyQuestion question, Participant participant) {
         TextResponse response = new TextResponse();
         TextBasedResponseDTO responseDTO = (TextBasedResponseDTO)r;
         response.setQuestionCode(r.getQuestionCode());
@@ -56,6 +58,13 @@ public class TextQuestionManager implements QuestionManager {
         sQuestion.setResponseType(poolQuestion.getResponseType());
 
         return sQuestion;
+    }
+
+    @Override
+    public StaticSurveyQuestion copySurveyQuestion(StaticSurveyQuestion source) {
+        StaticSurveyQuestion question = new TextResponseBasedSurveyQuestion();
+        BeanUtils.copyProperties(source, question);
+        return question;
     }
 
     @Override

@@ -30,6 +30,7 @@ spring:
 
 kafka:
   bootstrapAddress: "localhost:9092"
+  schemaRegistry: "http://localhost:8585"
 keycloak:
   enabled: false
   auth-server-url: http://localhost:8080

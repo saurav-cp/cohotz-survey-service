@@ -46,10 +46,10 @@ surveysTable = $("#surveys-table").DataTable({
         {
             "data": "update",
             "render": function(data, type, row) {
-                if (row.status === 'Draft') {
-                    return '<button class="btn btn-outline-dark text-nowrap float-right w-50 survey_status_update" id="survey_status_update_' + row.id + '"type="button">PUBLISH</button>';
+                if (row.status === 'Draft' || row.status === 'Published') {
+                    return '<button class="btn btn-outline-dark text-nowrap float-right w-50 survey_status_update" id="survey_status_update_' + row.id + '_'+row.status+'" type="button">PUBLISH/START</button>';
                 } else {
-                    return '<button disabled class="btn btn-outline-dark text-nowrap float-right w-50 survey_status_update" id="survey_status_update_' + row.id + '"type="button">PUBLISH</button>';
+                    return '<button disabled class="btn btn-outline-dark text-nowrap float-right w-50 survey_status_update" id="survey_status_update_' + row.id + '" type="button">PUBLISH/START</button>';
                 }
             },
         }
@@ -323,7 +323,7 @@ function listItems(event) {
         $('#subs-card-toggle i').removeClass('fa-plus');
         $('#subs-card-toggle i').addClass('fa-minus');
     } else if (event.data.type === 'surveys') {
-        endpoint = "/api/surveys/" + $('#surveyTenant').val();
+        endpoint = "/api/surveys";
         $('.surveys-card-body').show();
         table = surveysTable;
         $('#surveys-card-toggle i').removeClass('fa-plus');
@@ -414,12 +414,14 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '.survey_status_update', function() {
         var surveyId = $(this)[0].id.split("_")[3];
-        console.log(surveyId);
+        var status = $(this)[0].id.split("_")[4];
+        console.log("Current Status: ",status);
+        const newStatus = status === 'Published' ? 'STARTED' : 'PUBLISHED'
         //console.log($(this));
         // AJAX request
         $.ajax({
-            url: '/api/surveys/' + $('#surveyTenant').val() + '/' + surveyId + '/statusUpdate/PUBLISHED',
-            type: 'put',
+            url: '/api/surveys/' + surveyId + '/status-update?status='+newStatus,
+            type: 'patch',
             headers: getAuthHeader(),
             success: function(response) {
                 console.log(response)
@@ -436,7 +438,7 @@ $(document).ready(function() {
         //console.log($(this));
         // AJAX request
         $.ajax({
-            url: '/api/surveys/' + $('#surveyTenant').val() + '/' + surveyId + '/participants',
+            url: '/api/surveys/' + surveyId + '/participants',
             type: 'get',
             headers: getAuthHeader(),
             success: function(response) {
@@ -547,12 +549,14 @@ function updateTenant(id, t) {
 
 function getAuthHeader() {
     var authHeader = {
-        'dummy': 'dummy'
+        'dummy': 'dummy',
+        'tenant': $('#surveyTenant').val()
     };
     console.log($('#authToken').text())
     if ($('#authToken').text() != '') {
         authHeader = {
-            'Authorization': 'Bearer ' + $('#authToken').text()
+            'Authorization': 'Bearer ' + $('#authToken').text(),
+            'tenant': $('#surveyTenant').val()
         }
     }
     return authHeader;
@@ -609,7 +613,7 @@ $('#create-survey-form').on('submit', function(event) {
         comment: 'From Admin Tool',
         reminderFrequencyInDays: 0,
         tags: ['adminTool'],
-        surveyParticipants: $('#new-survey-participants').val().split(','),
+        participants: $('#new-survey-participants').val().split(','),
     }
     console.log($('#new-survey-participants').val())
     console.log($('#new-survey-participants').val().split(','))

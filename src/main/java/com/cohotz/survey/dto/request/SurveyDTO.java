@@ -40,8 +40,10 @@ public class SurveyDTO {
     @NotNull
     private String block;
     //@NotEmpty
-    private Set<String> surveyParticipants;
+    private Set<String> participants;
     private long reminderFrequencyInDays;
+    @Builder.Default
     private boolean smartSkip =true;
-    private Survey.SurveyType type = Survey.SurveyType.CULTR_ENGINE_STATIC;
+    @Builder.Default
+    private Survey.SurveyType type = Survey.SurveyType.CULTURE_ENGINE_STATIC;
 }

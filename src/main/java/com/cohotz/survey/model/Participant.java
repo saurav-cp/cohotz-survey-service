@@ -3,13 +3,13 @@ package com.cohotz.survey.model;
 import com.cohotz.survey.client.core.model.CultureBlockMin;
 import com.cohotz.survey.client.core.model.CultureEngineMin;
 import com.cohotz.survey.client.core.model.EngineWeight;
+import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.cohotz.boot.model.CHBaseModel;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,8 +23,8 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@Document("cp_survey_participant")
-@Sharded(shardKey = "tenant")
+@Document("ch_survey_participant")
+@Sharded(shardKey = { "tenant" })
 public class Participant extends CHBaseModel {
 
     public Participant(String email, String reportingTo, String surveyId, String surveyName, String tenant, LocalDateTime dueDate){
@@ -37,6 +37,8 @@ public class Participant extends CHBaseModel {
         this.emailSent = false;
         this.email = email;
         this.reportingTo = reportingTo;
+        this.reportingHierarchy = new ArrayList<>();
+        this.setQuestionMap(new HashMap<>());
         this.setResponseMap(new HashMap<>());
         this.setEngineScore(new HashMap<>());
         this.engines = new ArrayList<>();
@@ -67,6 +69,9 @@ public class Participant extends CHBaseModel {
     @Field("reporting_to")
     private String reportingTo;
 
+    @Field("reporting_hierarchy")
+    private List<String> reportingHierarchy;
+
     @Field("email_sent")
     private boolean emailSent;
 
@@ -75,6 +80,9 @@ public class Participant extends CHBaseModel {
 
     @Field("score_accumulated")
     private boolean scoreAccumulated;
+
+    @Field("questions")
+    protected Map<String, StaticSurveyQuestion> questionMap;
 
     @Field("responses")
     private Map<String, Response> responseMap;
@@ -89,10 +97,6 @@ public class Participant extends CHBaseModel {
     @Field("due_dt")
     private LocalDateTime dueDate;
 
-//    @Field("created_ts")
-//    @CreatedDate
-//    private LocalDateTime createdTS;
-
     @Field("response_ts")
     private LocalDateTime responseTS;
 
@@ -101,4 +105,7 @@ public class Participant extends CHBaseModel {
 
     @Field("lst_rem_dt")
     protected LocalDateTime lastReminder;
+
+    @Field("smart_skip")
+    protected boolean smartSkip;
 }

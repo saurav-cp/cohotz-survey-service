@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.Sharded;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,16 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Document(collection = "cp_survey")
+@Document(collection = "ch_survey")
+@Sharded(shardKey = { "tenant" })
 @ToString
 @Setter
 @Getter
 public class Survey {
     public Survey(){
         this.questionMap = new HashMap<>();
-        //this.engines = new HashMap<>();
         this.engines = new ArrayList<>();
-        this.type = SurveyType.CULTR_ENGINE_STATIC;
+        this.type = SurveyType.CULTURE_ENGINE_STATIC;
     }
     @Id
     protected String id;
@@ -67,7 +68,7 @@ public class Survey {
     @Field("part_source")
     protected ParticipantSource participantSource;
     public enum SurveyType {
-        CULTR_ENGINE_STATIC, CULTR_ENGINE_RUBICA, ENPS, SPOT, AUTOMATIC
+        CULTURE_ENGINE_STATIC, CULTURE_ENGINE_RUBICA, ENPS, SPOT, AUTOMATIC
     }
 
     public enum ParticipantSource {

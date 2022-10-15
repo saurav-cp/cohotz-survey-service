@@ -54,27 +54,7 @@
 <!--                            <div th:id="'r' + ${question.position} + '_9'">9</div>-->
 <!--                            <div th:id="'r' + ${question.position} + '_10'">10</div>-->
                         </div>
-<!--                            <div th:if="${question.responseType == 'MULTI_SELECT_INFO'}" class="response-option-wrapper">-->
-
-<!--                                <div th:each="responseOption: ${question.responseOptionMap}">-->
-<!--                                    <input type="checkbox" th:name="${question.poolQuesReferenceCode}"-->
-<!--                                           th:value="${responseOption.key + 1}" class="vh"-->
-<!--                                           th:id="'r' + ${question.position} + ${responseOption.key +1}">-->
-<!--                                    <label th:id="'l_r' + ${question.position} + ${responseOption.key + 1}"-->
-<!--                                           th:for="'r' + ${question.position} + ${responseOption.key + 1}"-->
-<!--                                           th:text="${responseOption.key + 1}">10</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div th:unless="${question.responseType == 'SINGLE_SELECT'}" class="response-option-wrapper">-->
-<!--                                <div th:each="responseOption: ${question.responseOptionMap}">-->
-<!--                                    <input type="radio" th:name="${question.poolQuesReferenceCode}"-->
-<!--                                           th:value="${responseOption.key + 1}" class="vh"-->
-<!--                                           th:id="'r' + ${question.position} + ${responseOption.key +1}">-->
-<!--                                    <label th:id="'l_r' + ${question.position} + ${responseOption.key + 1}"-->
-<!--                                           th:for="'r' + ${question.position} + ${responseOption.key + 1}"-->
-<!--                                           th:text="${responseOption.key + 1}">10</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                        <div class="response-input-group">
                         <div th:each="responseOption: ${question.responseOptionMap}">
                             <input type="radio" th:name="${question.poolQuesReferenceCode}"
                                    th:value="${responseOption.key + 1}" class="vh"
@@ -83,7 +63,7 @@
                                    th:for="'r' + ${question.position} + ${responseOption.key + 1}"
                                    th:text="${responseOption.key + 1}">10</label>
                         </div>
-
+                        </div>
                     </div>
                 </div>
                 <input class="comment" th:id="'comment' + ${question.position}" type="text" placeholder="comment"/>
@@ -127,9 +107,10 @@
             console.log("No error in form. Submitting");
             $.ajax({
                 type: 'PUT',
-                url: '/api/surveys/' + tenant + '/' + surveyId + '/responses/' + accessCode,
+                url: '/api/surveys/' + surveyId + '/participants/'+accessCode+'/responses' ,
                 data: JSON.stringify(response),
                 contentType: 'application/json',
+                headers: {'tenant': tenant},
                 success: function(res) {
                     console.log("Survey response captured successfully. Response from server: "+res)
                     $('#message').html("<strong class='text-success'>Successfully captured response</strong>")

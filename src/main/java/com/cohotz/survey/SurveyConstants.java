@@ -11,6 +11,7 @@ public class SurveyConstants {
     public static final String CULTR_BLOCK_ENDPOINT = "/api/culture/blocks";
 
     public static final String COHOTZ_SURVEY_ENDPOINT = "/api/surveys";
+    public static final String COHOTZ_SURVEY_PARTICIPANT_ENDPOINT = "/api/surveys/{surveyId}/participants";
 
     /**
      *
@@ -32,4 +33,13 @@ public class SurveyConstants {
      * Kafka
      */
     public static final String ENGINE_SCORE_RECORD_TOPIC = "cohotz-engine-score-record";
+    public static final String ENGINE_SCORE_RECORD_KAFKA_TEMPLATE = "cohotz-engine-score-record-kafka-template";
+    public static final String ENGINE_SCORE_RECORD_KAFKA_PRODUCER = "cohotz-engine-score-record-kafka-producer";
+
+    public static final String EXP_SCORE_RECORD_TOPIC = "cohotz-exp-score-record";
+    public static final String EXP_SCORE_RECORD_KAFKA_TEMPLATE = "cohotz-exp-score-record-kafka-template";
+    public static final String EXP_SCORE_RECORD_KAFKA_PRODUCER = "cohotz-exp-score-record-kafka-producer";
+
+    public static final String CREATE_SURVEY_LISTENER_GROUP_ID = "cohotz-create-survey-listener";
+    public static final String CREATE_SURVEY_TOPIC = "cohotz-create-survey-topic";
 }

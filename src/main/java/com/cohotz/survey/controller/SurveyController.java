@@ -40,20 +40,22 @@ public class SurveyController {
     @Autowired
     SurveyParticipantService participantService;
 
-//    @Autowired
-//    ScheduledSurveyService scheduledService;
 
-    @Operation(summary = "Get all the surveys for a tenant. Optionally it can also be filtered with status")
-    @GetMapping("/{tenant}")
-    ApiResponse<List<Survey>> fetchAllForTenant(@PathVariable String tenant,
-                                                @RequestParam(value ="status", required = false) String status,
-                                                @RequestParam(value ="search", required = false) String search){
+    @Operation(summary = "Fetch All Surveys. Optionally it can also be filter based on status and search query")
+    @GetMapping
+    ApiResponse<List<Survey>> fetchAll(
+            @RequestHeader String tenant,
+            @RequestParam(value ="status", required = false) String status,
+            @RequestParam(value ="search", required = false) String search){
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.fetchAll(tenant, status, search));
     }
 
     @Operation(summary = "Create a new survey")
-    @PostMapping("/{tenant}")
-    ApiResponse<Void> createSurvey(@Valid @RequestBody SurveyDTO surveyDto,@PathVariable String tenant) throws CHException {
+    @PostMapping
+    ApiResponse<Void> create(
+            @RequestHeader String tenant,
+            @Valid @RequestBody SurveyDTO surveyDto
+            ) throws CHException {
         service.createSurvey(surveyDto, tenant, surveyDto.getPublisher());
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
@@ -69,96 +71,45 @@ public class SurveyController {
 //        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
 //    }
 
-    @Operation(summary = "Get the survey details")
-    @GetMapping("/{tenant}/{id}")
-    ApiResponse<SurveyRes> surveyDetails(@PathVariable String tenant, @PathVariable String id) throws CHException {
+    @Operation(summary = "Fetch survey details")
+    @GetMapping("/{id}")
+    ApiResponse<SurveyRes> details(
+            @RequestHeader String tenant,
+            @PathVariable String id) throws CHException {
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.details(tenant, id));
     }
 
-    @Operation(summary = "Get the survey score")
-    @GetMapping("/{tenant}/{id}/score")
-    ApiResponse<SurveyRes> surveyScore(@PathVariable String tenant, @PathVariable String id) throws CHException {
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.surveyEngineScore(tenant, id));
-    }
-
-//    @Operation(summary = "Get the survey insight")
-//    @GetMapping("/{tenant}/{id}/insight")
-//    ApiResponse<List<SurveyQuestionScore>> surveyInsight(@PathVariable String tenant, @PathVariable String id)
-//            throws CHException {
-//        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.surveyQuestionScore(tenant, id));
-//    }
-
-    @Operation(summary = "Get the survey participants. Accessible on to CULTR PLUS super admin")
-    @GetMapping("/{tenant}/{id}/participants")
-    ApiResponse<Map> participants(@PathVariable String tenant, @PathVariable String id) throws CHException {
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.listParticipant(tenant, id));
-    }
-
-    @Operation(summary = "Get the survey participant details including response")
-    @GetMapping("/{tenant}/{id}/participants/{accessCode}")
-    ApiResponse<Survey> participantDetails(
-            @PathVariable String tenant,
-            @PathVariable String id,
-            @PathVariable String accessCode) throws CHException {
-        return new ApiResponse(
-                HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.participantDetails(tenant, id, accessCode)
-        );
-    }
-
-    @Operation(summary = "Get the survey details")
-    @GetMapping("/{tenant}/{id}/questions/{accessCode}")
-    ApiResponse<List<StaticSurveyQuestion>> fetchSurveyQuestions(
-            @PathVariable String tenant,
-            @PathVariable String id,
-            @PathVariable String accessCode
-    ) throws CHException {
-        List<StaticSurveyQuestion> questions = service.surveyQuestions(tenant, id, accessCode);
-        questions.sort(Comparator.comparing(StaticSurveyQuestion::getPosition));
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,questions);
-    }
-
-
-    @Operation(summary = "Delete a DRAFT survey")
-    @DeleteMapping("/{tenant}/{id}")
-    ApiResponse<Void> deleteSurvey(@PathVariable String tenant, @PathVariable String id) throws CHException {
+    @Operation(summary = "Delete survey")
+    @DeleteMapping("/{id}")
+    ApiResponse<Void> delete(@RequestHeader String tenant, @PathVariable String id) throws CHException {
         service.deleteSurvey(tenant, id);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
-    @ApiOperation(value = "Update a DRAFT survey")
-    @PutMapping("/{tenant}/{id}")
-    ApiResponse<Void> updateSurvey(@Valid @RequestBody SurveyDTO surveyDto,
-                                   @PathVariable String tenant,
-                                   @PathVariable String id) throws CHException {
+    @ApiOperation(value = "Update survey")
+    @PutMapping("/{id}")
+    ApiResponse<Void> update(
+            @RequestHeader String tenant,
+            @Valid @RequestBody SurveyDTO surveyDto,
+            @PathVariable String id) throws CHException {
         service.editSurvey(surveyDto, tenant, id);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
     @Operation(summary = "Update the status of a survey")
-    @PutMapping("/{tenant}/{id}/statusUpdate/{status}")
-    ApiResponse<Void> updateSurveyStatus(@PathVariable String tenant,
-                                         @PathVariable String id, @PathVariable String status) throws CHException {
-        service.updateSurveyStatus(tenant, id, status);
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
-    }
-
-    @Operation(summary = "Add participant response")
-    @PutMapping("/{tenant}/{id}/responses/{accessCode}")
-            ApiResponse<Void> addResponse(@RequestBody List<ResponseDTO> responses,
-                                  @PathVariable String tenant,
-                                  @PathVariable String id,
-                                  @PathVariable String accessCode) throws CHException {
-        service.addResponse(responses, tenant, id, accessCode);
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
-    }
-
-    @Operation(summary = "Update participant reminder")
-    @PutMapping("/{tenant}/{id}/responses/{accessCode}/update-last-reminder")
-    ApiResponse<Void> updateReminderForUser(
-            @PathVariable String tenant,
+    @PatchMapping("/{id}/status-update")
+    ApiResponse<Void> statusUpdate(
+            @RequestHeader String tenant,
             @PathVariable String id,
-            @PathVariable String accessCode) throws CHException {
-        participantService.updateReminder(tenant, id, accessCode);
+            @RequestParam String status) throws CHException {
+        service.updateStatus(tenant, id, status);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
+    }
+
+
+    @Operation(summary = "Get the survey score")
+    @GetMapping("/{tenant}/{id}/score")
+    ApiResponse<SurveyRes> surveyScore(@PathVariable String tenant, @PathVariable String id) throws CHException {
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.surveyEngineScore(tenant, id));
     }
 }
