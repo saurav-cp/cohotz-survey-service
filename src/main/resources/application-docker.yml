@@ -7,11 +7,15 @@ cohotz:
 server:
   port: 8080
 
+kafka:
+  bootstrapAddress: "kafka:29092"
+  schemaRegistry: "http://schema-registry:8585"
+
 spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    host: redis
     port: 6379
   data:
     mongodb:
@@ -22,9 +26,9 @@ spring:
 
 keycloak:
   enabled: true
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://keycloak:8080
   realm: cohotz
-  resource: cohotz-profile-service
+  resource: cohotz-service
   public-client: true
   bearer-only: true
   principal-attribute: preferred_username

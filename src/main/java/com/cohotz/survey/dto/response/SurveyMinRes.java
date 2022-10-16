@@ -12,7 +12,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class SurveyMinRes {
     protected String id;
     protected String name;
@@ -27,4 +26,17 @@ public class SurveyMinRes {
     protected long partCount;
     @Field("res_count")
     protected long responseCount;
+
+    @Override
+    public String toString() {
+        return "SurveyMinRes{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", block='" + block + '\'' +
+                ", endDate=" + endDate +
+                ", partCount=" + partCount +
+                ", responseCount=" + responseCount +
+                '}';
+    }
 }
