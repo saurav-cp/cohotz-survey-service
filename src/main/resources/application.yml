@@ -6,6 +6,12 @@ cohotz:
   clients:
     cohotz-core-service:
       url: "http://localhost:18082"
+      oauth2:
+        enabled: true
+        client-id: cohotz-service
+        client-secret: IytP0wmUozePYx3Vo1XYUEQilEvl9olQ
+        access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
+        provider-id: cohotz-core-service
     cohotz-profile-service:
       url: "http://localhost:18083"
 
@@ -114,7 +120,10 @@ resilience4j:
 cohotz-core-service:
   oauth2:
     enabled: true
-    client-id: cohotz-core-service
+    client-id: cohotz-service
+    client-secret: AnIlQh2ZUEnpXfLoBwXd4z8qvCLUuNBx
+    access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
+    provider-id: cohotz-core-service
 
 survey:
   cohorts:

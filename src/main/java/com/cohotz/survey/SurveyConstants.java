@@ -19,7 +19,7 @@ public class SurveyConstants {
      *
      */
     public static final String SURVEY_SERVICE_CLIENT = "cohotz-survey-service";
-    public static final String CORE_SERVICE_CLIENT = "cohotz-core-service";
+    public static final String CORE_SERVICE_CLIENT = "cohotz.clients.cohotz-core-service";
     public static final String USER_SERVICE_CLIENT = "cohotz-profile-service";
 
     public static final String CORE_SERVICE_API_CLIENT_BEAN = "cohotz-core-service-api-client-bean";
