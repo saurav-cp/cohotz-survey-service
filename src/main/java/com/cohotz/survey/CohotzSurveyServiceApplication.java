@@ -12,7 +12,6 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Cohotz Survey Service", version = "1.0", description = "Cohotz Survey Service"))
-@SecurityScheme(name = "cohotz-survey-service", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class CohotzSurveyServiceApplication {
 
 	public static void main(String[] args) {

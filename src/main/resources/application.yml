@@ -7,13 +7,19 @@ cohotz:
     cohotz-core-service:
       url: "http://localhost:18082"
       oauth2:
-        enabled: true
+        enabled: ${COHOTZ_CORE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
-        client-secret: IytP0wmUozePYx3Vo1XYUEQilEvl9olQ
+        client-secret: ${COHOTZ_CORE_SERVICE_SECRET}
         access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
       url: "http://localhost:18083"
+      oauth2:
+        enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
+        client-id: cohotz-service
+        client-secret: ${COHOTZ_PROFILE_SERVICE_SECRET}
+        access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
+        provider-id: cohotz-profile-service
 
 server:
   port: 8083
@@ -42,10 +48,10 @@ keycloak:
   auth-server-url: http://localhost:8080
   realm: cohotz
   resource: cohotz-service
-  public-client: true
+  public-client: false
   bearer-only: true
   principal-attribute: preferred_username
-  use-resource-role-mappings: true
+  use-resource-role-mappings: false
   security-constraints:
     - authRoles:
         - user

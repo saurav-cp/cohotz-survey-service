@@ -2,8 +2,12 @@ cohotz:
   clients:
     cohotz-core-service:
       url: "http://cohotz-core-service:8080"
+      oauth2:
+        access-token-url: http://keycloak:8080/realms/cohotz/protocol/openid-connect/token
     cohotz-profile-service:
       url: "http://cohotz-profile-service:8080"
+      oauth2:
+        access-token-url: http://keycloak:8080/realms/cohotz/protocol/openid-connect/token
 server:
   port: 8080
 
