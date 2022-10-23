@@ -30,13 +30,3 @@ spring:
 
 keycloak:
   auth-server-url: http://keycloak:8080
-  realm: cohotz
-  resource: cohotz-service
-  public-client: true
-  bearer-only: true
-  principal-attribute: preferred_username
-  use-resource-role-mappings: true
-  security-constraints:
-    - authRoles:
-        - user
-        - admin
