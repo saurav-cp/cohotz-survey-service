@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -115,7 +116,8 @@ public class SurveyServiceImpl implements SurveyService {
     public Survey createSurveySync(final SurveyDTO dto, String tenant, String pub) throws CHException {
         Survey survey = new Survey();
         BeanUtils.copyProperties(dto, survey);
-        UserRes publisher = userService.fetchByTenantAndEmail(tenant, pub);
+        String email = RequestUtils.email(dto.getPublisher());
+        UserRes publisher = userService.fetchByTenantAndEmail(tenant, email);
         CultureBlock block = blockService.fetchByCode(tenant, dto.getBlock());
         for(Question q : block.getQuestions()) {
             PoolQuestion poolQuestion = questionService.fetchByTenantAndCode(tenant, q.getPoolQuesReferenceCode());
@@ -137,13 +139,13 @@ public class SurveyServiceImpl implements SurveyService {
         survey.setBlock(new CultureBlockMin().name(block.getName()).code(block.getCode()));
         survey.setPartCount(CollectionUtils.emptyIfNull(dto.getParticipants()).size());
         survey.setCompletedDate(dto.getEndDate());
-        survey.setPublisher(pub);
+        survey.setPublisher(email);
         survey.setPublisherName(publisher.getFirstName() +" "+ publisher.getLastName());
 
         log.debug("Creating survey: {}", survey);
         Survey s = dao.save(survey);
 
-        log.info("Creating participants for survey {} for pub {}", s.getId(), s.getPublisher());
+        log.info("Creating participants for survey {} for pub {} for type", s.getId(), email, s.getParticipantSource());
         createParticipants(s, dto.getParticipants(), dto.getParticipantSource());
         return s;
     }

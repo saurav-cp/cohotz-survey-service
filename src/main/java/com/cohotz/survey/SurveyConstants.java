@@ -18,9 +18,10 @@ public class SurveyConstants {
      * REST TEMPLATE
      *
      */
+    public static final String CLIENTS_PREFIX = "cohotz.clients.";
     public static final String SURVEY_SERVICE_CLIENT = "cohotz-survey-service";
-    public static final String CORE_SERVICE_CLIENT = "cohotz.clients.cohotz-core-service";
-    public static final String USER_SERVICE_CLIENT = "cohotz.clients.cohotz-profile-service";
+    public static final String CORE_SERVICE_CLIENT = "cohotz-core-service";
+    public static final String USER_SERVICE_CLIENT = "cohotz-profile-service";
 
     public static final String CORE_SERVICE_API_CLIENT_BEAN = "cohotz-core-service-api-client-bean";
     public static final String CULTURE_BLOCK_API_BEAN = "culture-block-api-bean";

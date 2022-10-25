@@ -29,8 +29,8 @@ public class CultureBlockService {
     @Retry(name = CORE_SERVICE_CLIENT)
     public CultureBlock fetchByCode(String tenant, String code) throws CHException {
         try {
-            log.debug("[{}] Fetching Culture Block Details: [{}] : [{}]", CORE_SERVICE_CLIENT, tenant, code);
-            CultureBlock cultureBlock = cultureBlockApi.fetchByCode1(tenant, code).getResult();
+            log.debug("[{}] Fetching Culture Block Details: [{}] : [{}]", tenant, code);
+            CultureBlock cultureBlock = cultureBlockApi.fetchByCode1(code, tenant).getResult();
             return cultureBlock;
         } catch (HttpClientErrorException e) {
             if(e.getStatusCode() == HttpStatus.BAD_REQUEST){

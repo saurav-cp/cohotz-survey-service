@@ -12,6 +12,7 @@ import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cohotz.survey.SurveyConstants.COHOTZ_SURVEY_PARTICIPANT_ENDPOINT;
+import static org.cohotz.boot.CHConstants.ACCESS_ALL_ADMINS;
 import static org.cohotz.boot.CHConstants.RES_GENERIC_SUCCESS_MSG;
 
 @Tag(name = "Participant")
@@ -29,6 +31,7 @@ import static org.cohotz.boot.CHConstants.RES_GENERIC_SUCCESS_MSG;
 @RequestMapping(COHOTZ_SURVEY_PARTICIPANT_ENDPOINT)
 @Validated
 @Slf4j
+@PreAuthorize(ACCESS_ALL_ADMINS)
 public class SurveyParticipantController {
 
     @Autowired
@@ -39,7 +42,9 @@ public class SurveyParticipantController {
 
     @Operation(summary = "Get the survey participants. Accessible on to COHOTZ super admin")
     @GetMapping
-    ApiResponse<Map> participants(@RequestHeader String tenant, @PathVariable String surveyId) throws CHException {
+    ApiResponse<Map> participants(
+            @RequestHeader(name = "tenant", required = false) String tenant,
+            @PathVariable String surveyId) throws CHException {
         Map<String, Object> response = new HashMap<>();
         response.put("participants", service.listParticipant(tenant, surveyId));
         response.put("survey_details", surveyService.details(tenant, surveyId));
@@ -49,7 +54,7 @@ public class SurveyParticipantController {
     @Operation(summary = "Fetch survey participant details")
     @GetMapping("/{accessCode}")
     ApiResponse<ParticipantRes> participantDetails(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
         return new ApiResponse(
@@ -60,7 +65,7 @@ public class SurveyParticipantController {
     @Operation(summary = "Get the survey details")
     @GetMapping("/{accessCode}/questions")
     ApiResponse<List<StaticSurveyQuestion>> fetchSurveyQuestions(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode
     ) throws CHException {
@@ -72,7 +77,7 @@ public class SurveyParticipantController {
     @Operation(summary = "Add participant response")
     @PutMapping("/{accessCode}/responses")
     ApiResponse<Void> addResponse(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @RequestBody List<ResponseDTO> responses,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
@@ -83,7 +88,7 @@ public class SurveyParticipantController {
     @Operation(summary = "Update participant reminder")
     @PatchMapping("/{accessCode}/last-reminder")
     ApiResponse<Void> updateReminder(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
         service.updateReminder(tenant, surveyId, accessCode);

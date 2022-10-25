@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import static org.cohotz.boot.CHConstants.RES_GENERIC_SUCCESS_MSG;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/admin")
+@ConditionalOnProperty(name = "survey.scheduler.enabled", havingValue = "true")
 public class AdminController {
 
     @Autowired

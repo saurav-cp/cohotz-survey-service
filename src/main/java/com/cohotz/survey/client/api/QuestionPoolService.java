@@ -34,7 +34,7 @@ public class QuestionPoolService {
     public PoolQuestion fetchByTenantAndCode(String tenant, String code) throws CHException {
         try {
             log.debug("[{}] Fetching Pool Question Details: [{}] : [{}]", CORE_SERVICE_CLIENT, tenant, code);
-            PoolQuestion result = (PoolQuestion)questionPoolApi.questionDetails(tenant, code).getResult();
+            PoolQuestion result = questionPoolApi.questionDetails(code, tenant).getResult();
             //QuestionManager qm = (QuestionManager) context.getBean(result.getResponseType());
             return result;
         } catch (HttpClientErrorException e) {

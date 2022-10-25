@@ -1,10 +1,8 @@
 package com.cohotz.survey.controller;
 
-import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.request.SurveyDTO;
 import com.cohotz.survey.dto.response.SurveyRes;
 import com.cohotz.survey.model.Survey;
-import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
 import io.swagger.annotations.ApiOperation;
@@ -13,17 +11,18 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.response.ApiResponse;
+import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import static com.cohotz.survey.SurveyConstants.COHOTZ_SURVEY_ENDPOINT;
+import static org.cohotz.boot.CHConstants.ACCESS_ALL_ADMINS;
 import static org.cohotz.boot.CHConstants.RES_GENERIC_SUCCESS_MSG;
 
 @Tag(name = "Survey")
@@ -43,20 +42,24 @@ public class SurveyController {
 
     @Operation(summary = "Fetch All Surveys. Optionally it can also be filter based on status and search query")
     @GetMapping
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     ApiResponse<List<Survey>> fetchAll(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @RequestParam(value ="status", required = false) String status,
-            @RequestParam(value ="search", required = false) String search){
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.fetchAll(tenant, status, search));
+            @RequestParam(value ="search", required = false) String search) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.fetchAll(currentTenant, status, search));
     }
 
     @Operation(summary = "Create a new survey")
     @PostMapping
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     ApiResponse<Void> create(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @Valid @RequestBody SurveyDTO surveyDto
             ) throws CHException {
-        service.createSurvey(surveyDto, tenant, surveyDto.getPublisher());
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.createSurvey(surveyDto, currentTenant, surveyDto.getPublisher());
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
@@ -73,43 +76,57 @@ public class SurveyController {
 
     @Operation(summary = "Fetch survey details")
     @GetMapping("/{id}")
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     ApiResponse<SurveyRes> details(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String id) throws CHException {
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.details(tenant, id));
+        String currentTenant = RequestUtils.tenant(tenant);
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.details(currentTenant, id));
     }
 
     @Operation(summary = "Delete survey")
     @DeleteMapping("/{id}")
-    ApiResponse<Void> delete(@RequestHeader String tenant, @PathVariable String id) throws CHException {
-        service.deleteSurvey(tenant, id);
+    @PreAuthorize(ACCESS_ALL_ADMINS)
+    ApiResponse<Void> delete(
+            @RequestHeader(name = "tenant", required = false) String tenant,
+            @PathVariable String id) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.deleteSurvey(currentTenant, id);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
     @ApiOperation(value = "Update survey")
     @PutMapping("/{id}")
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     ApiResponse<Void> update(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @Valid @RequestBody SurveyDTO surveyDto,
             @PathVariable String id) throws CHException {
-        service.editSurvey(surveyDto, tenant, id);
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.editSurvey(surveyDto, currentTenant, id);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
     @Operation(summary = "Update the status of a survey")
     @PatchMapping("/{id}/status-update")
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     ApiResponse<Void> statusUpdate(
-            @RequestHeader String tenant,
+            @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String id,
             @RequestParam String status) throws CHException {
-        service.updateStatus(tenant, id, status);
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.updateStatus(currentTenant, id, status);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
 
     @Operation(summary = "Get the survey score")
     @GetMapping("/{tenant}/{id}/score")
-    ApiResponse<SurveyRes> surveyScore(@PathVariable String tenant, @PathVariable String id) throws CHException {
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.surveyEngineScore(tenant, id));
+    @PreAuthorize(ACCESS_ALL_ADMINS)
+    ApiResponse<SurveyRes> surveyScore(
+            @RequestHeader(name = "tenant", required = false) String tenant,
+            @PathVariable String id) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,service.surveyEngineScore(currentTenant, id));
     }
 }

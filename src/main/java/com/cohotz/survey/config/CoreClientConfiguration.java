@@ -20,7 +20,7 @@ import static org.cohotz.boot.CHConstants.REQUEST_HEADER_TRACE_ID;
 public class CoreClientConfiguration {
 
     @Autowired
-    @Qualifier(CORE_SERVICE_CLIENT)
+    @Qualifier(CLIENTS_PREFIX + CORE_SERVICE_CLIENT)
     RestTemplate restTemplate;
 
     @Autowired
