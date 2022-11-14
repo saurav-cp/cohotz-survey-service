@@ -1,6 +1,8 @@
 package com.cohotz.survey.controller;
 
 import com.cohotz.survey.dto.request.SurveyDTO;
+import com.cohotz.survey.engine.score.record.EngineScoreRecord;
+import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
 import com.cohotz.survey.service.SurveyService;
 import com.cohotz.survey.service.SurveyUpdateTask;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +33,9 @@ public class AdminController {
     @Autowired
     SurveyUpdateTask surveyUpdateTask;
 
+    @Autowired
+    EngineScoreRecordPublisher publisher;
+
     @Operation(summary = "Create a new survey")
     @PostMapping("/surveys/{tenant}")
     ApiResponse<Void> createSurvey(@Valid @RequestBody SurveyDTO surveyDto, @PathVariable String tenant, @RequestParam String publisher) throws CHException {
@@ -42,6 +47,13 @@ public class AdminController {
     @PostMapping("/surveys/update/{tenant}")
     ApiResponse<Void> updateSurveys(@PathVariable String tenant){
         surveyUpdateTask.update(tenant);
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
+    }
+
+    @Operation(summary = "Engine Record Test")
+    @PostMapping("/engine-record/publish")
+    ApiResponse<Void> publishEngineRecord(@RequestBody EngineScoreRecord record, @RequestParam String key) {
+        publisher.publish(key, record);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 }

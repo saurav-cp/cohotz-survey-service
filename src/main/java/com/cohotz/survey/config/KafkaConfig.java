@@ -30,10 +30,19 @@ public class KafkaConfig {
     @Value(value = "${kafka.schemaRegistry}")
     private String schemaRegistry;
 
+    @Value(value = "${kafka.username}")
+    private String username;
+
+    @Value(value = "${kafka.password}")
+    private String password;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configs.put("sasl.mechanism", "PLAIN");
+        configs.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule   required username='"+username+"'   password='"+password+"';");
+        configs.put("security.protocol", "SASL_PLAINTEXT");
         return new KafkaAdmin(configs);
     }
 
@@ -55,6 +64,9 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
         configProps.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistry);
+        configProps.put("sasl.mechanism", "PLAIN");
+        configProps.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule   required username='"+username+"'   password='"+password+"';");
+        configProps.put("security.protocol", "SASL_PLAINTEXT");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
