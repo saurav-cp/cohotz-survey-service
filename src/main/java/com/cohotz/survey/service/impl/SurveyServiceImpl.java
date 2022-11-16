@@ -292,7 +292,7 @@ public class SurveyServiceImpl implements SurveyService {
             log.debug("Successfully updated status of survey {} to {} along with the participants", survey.getId(), survey.getStatus());
             if (survey.getStatus().compareTo(SurveyStatus.PUBLISHED) == 0) {
                 log.debug("Status moved to published. Pushing emails to all participants");
-                if(survey.getStartDate() == null){
+                if(survey.getStartDate() == null || LocalDateTime.now(ZoneOffset.UTC).isAfter(survey.getStartDate())){
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
                     survey.setStatus(SurveyStatus.STARTED);
                     participantService.emailParticipantForSurvey(tenant, survey.getId(), survey);
