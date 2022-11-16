@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.response.ApiResponse;
+import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cohotz.survey.SurveyConstants.COHOTZ_SURVEY_PARTICIPANT_ENDPOINT;
-import static org.cohotz.boot.CHConstants.ACCESS_ALL_ADMINS;
-import static org.cohotz.boot.CHConstants.RES_GENERIC_SUCCESS_MSG;
+import static org.cohotz.boot.CHConstants.*;
 
 @Tag(name = "Participant")
 @RestController
@@ -40,14 +40,16 @@ public class SurveyParticipantController {
     @Autowired
     SurveyParticipantService service;
 
+    @PreAuthorize(ACCESS_SUPER_ADMIN_ONLY)
     @Operation(summary = "Get the survey participants. Accessible on to COHOTZ super admin")
     @GetMapping
     ApiResponse<Map> participants(
             @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
         Map<String, Object> response = new HashMap<>();
-        response.put("participants", service.listParticipant(tenant, surveyId));
-        response.put("survey_details", surveyService.details(tenant, surveyId));
+        response.put("participants", service.listParticipant(currentTenant, surveyId));
+        response.put("survey_details", surveyService.details(currentTenant, surveyId));
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, response);
     }
 
@@ -57,8 +59,9 @@ public class SurveyParticipantController {
             @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
         return new ApiResponse(
-                HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, surveyService.participantDetails(tenant, surveyId, accessCode)
+                HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, surveyService.participantDetails(currentTenant, surveyId, accessCode)
         );
     }
 
@@ -69,7 +72,8 @@ public class SurveyParticipantController {
             @PathVariable String surveyId,
             @PathVariable String accessCode
     ) throws CHException {
-        List<StaticSurveyQuestion> questions = surveyService.surveyQuestions(tenant, surveyId, accessCode);
+        String currentTenant = RequestUtils.tenant(tenant);
+        List<StaticSurveyQuestion> questions = surveyService.surveyQuestions(currentTenant, surveyId, accessCode);
         questions.sort(Comparator.comparing(StaticSurveyQuestion::getPosition));
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,questions);
     }
@@ -81,7 +85,8 @@ public class SurveyParticipantController {
             @RequestBody List<ResponseDTO> responses,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
-        service.addResponse(tenant, surveyId, accessCode, responses);
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.addResponse(currentTenant, surveyId, accessCode, responses);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
@@ -91,7 +96,8 @@ public class SurveyParticipantController {
             @RequestHeader(name = "tenant", required = false) String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
-        service.updateReminder(tenant, surveyId, accessCode);
+        String currentTenant = RequestUtils.tenant(tenant);
+        service.updateReminder(currentTenant, surveyId, accessCode);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 }

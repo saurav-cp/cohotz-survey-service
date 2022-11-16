@@ -1,6 +1,6 @@
 package com.cohotz.survey.dto.request;
 
-import com.cohotz.survey.client.core.model.PoolQuestion;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
@@ -22,6 +22,7 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = TextBasedResponseDTO.class, name = "TEXT")
 })
 public class ResponseDTO {
+    @JsonProperty("question_code")
     protected String questionCode;
     protected String comment;
     protected boolean skipped;

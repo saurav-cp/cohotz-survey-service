@@ -14,6 +14,7 @@ import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
 import com.cohotz.survey.score.record.ExpScoreRecordPublisher;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,13 +132,13 @@ public class SurveyServiceImpl implements SurveyService {
         block.getEngines().forEach(e -> {
             EngineWeight ew = new EngineWeight();
             BeanUtils.copyProperties(e, ew);
-            survey.getEngines().add(ew);
+            survey.getEngines().add(new WeightedEngineScore(ew.getName(), ew.getCode(), ew.getWeight()));
         });
         survey.setFormula(block.getFormula());
         survey.setStatus(SurveyStatus.DRAFT);
         survey.setLastReminder(LocalDateTime.now());
         survey.setTenant(tenant);
-        survey.setBlock(new CultureBlockMin().name(block.getName()).code(block.getCode()));
+        survey.setBlock(new CohotzEntity(block.getName(), block.getCode()));
         survey.setPartCount(CollectionUtils.emptyIfNull(dto.getParticipants()).size());
         survey.setCompletedDate(dto.getEndDate());
         survey.setPublisher(email);
@@ -162,9 +164,9 @@ public class SurveyServiceImpl implements SurveyService {
 
         res.setBlock(survey.getBlock().getName());
 
-        List<EngineWeight> engineWeights = new ArrayList<>();
+        List<WeightedEngineScore> engineWeights = new ArrayList<>();
         survey.getEngines().forEach(engine -> {
-            EngineWeight engineWeight = new EngineWeight();
+            WeightedEngineScore engineWeight = new WeightedEngineScore();
             BeanUtils.copyProperties(engine, engineWeight);
             if(engineWeight.getQuestionCount() == 0){
                 engineWeight.setScore(0d);
@@ -243,7 +245,7 @@ public class SurveyServiceImpl implements SurveyService {
 
         survey.setEngines(new ArrayList<>());
         block.getEngines().forEach(e -> {
-            EngineWeight ew = new EngineWeight();
+            WeightedEngineScore ew = new WeightedEngineScore();
             BeanUtils.copyProperties(e, ew);
             survey.getEngines().add(ew);
         });

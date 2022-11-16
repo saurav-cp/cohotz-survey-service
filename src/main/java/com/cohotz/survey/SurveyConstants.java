@@ -12,6 +12,7 @@ public class SurveyConstants {
 
     public static final String COHOTZ_SURVEY_ENDPOINT = "/api/surveys";
     public static final String COHOTZ_SURVEY_PARTICIPANT_ENDPOINT = "/api/surveys/{surveyId}/participants";
+    public static final String COHOTZ_PARTICIPATION_ENDPOINT = "/api/participation";
 
     /**
      *

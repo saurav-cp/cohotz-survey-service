@@ -1,11 +1,11 @@
 package com.cohotz.survey.model;
 
-import com.cohotz.survey.client.core.model.CultureBlockMin;
-import com.cohotz.survey.client.core.model.EngineWeight;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -47,7 +47,7 @@ public class Survey {
     @Field("comp_dt")
     protected LocalDateTime completedDate;
     protected SurveyStatus status;
-    protected CultureBlockMin block;
+    protected CohotzEntity block;
     @Field("questions")
     protected Map<String, StaticSurveyQuestion> questionMap;
     protected String formula;
@@ -55,8 +55,7 @@ public class Survey {
     protected long reminderFrequencyInDays;
     @Field("lst_rem_dt")
     protected LocalDateTime lastReminder;
-    //private Map<String, EngineWeight> engines;
-    private List<EngineWeight> engines;
+    private List<WeightedEngineScore> engines;
     private String error;
     @Field("smart_skip")
     protected boolean smartSkip;
@@ -67,6 +66,8 @@ public class Survey {
     protected SurveyType type;
     @Field("part_source")
     protected ParticipantSource participantSource;
+    @Field("created_ts")
+    protected LocalDateTime createdTS = LocalDateTime.now();
     public enum SurveyType {
         CULTURE_ENGINE_STATIC, CULTURE_ENGINE_RUBICA, ENPS, SPOT, AUTOMATIC
     }

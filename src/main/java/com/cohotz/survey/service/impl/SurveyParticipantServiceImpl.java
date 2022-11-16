@@ -16,6 +16,7 @@ import com.cohotz.survey.model.Cohort;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
 import com.cohotz.survey.service.MailService;
@@ -114,13 +115,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         //Create blank engines for participant
         survey.getEngines().forEach(e -> {
             participant.getEngineScore()
-                    .put(e.getCode(), new EngineWeight()
-                            .score(0d)
-                            .code(e.getCode())
-                            .name(e.getName())
-                            .weight(e.getWeight())
-                            .questionCount(e.getQuestionCount())
-                            .total(0d));
+                    .put(e.getCode(), new WeightedEngineScore(e.getName(), e.getCode(), e.getWeight(), 0d, e.getQuestionCount(), 0d));
             participant.getEngines().add(new CultureEngineMin().name(e.getName()).code(e.getCode()));
         });
 
@@ -236,7 +231,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         //Validate the participant and submitted response
         responseValidation(responses, participant);
 
-        Map<String, EngineWeight> participantScore = new HashMap<>();
+        Map<String, WeightedEngineScore> participantScore = new HashMap<>();
         log.info("Capturing response for participant {} for survey {} and tenant {}", participant.getEmail(), surveyId, tenant);
 
         for(ResponseDTO r : responses) {
@@ -250,11 +245,11 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
             log.debug("Available engines: {} to be matched with {}", participant.getEngines(), ques.getEngine().getCode());
 
             //Aggregate the engine score
-            EngineWeight partEngineWeight = participantScore.get(ques.getEngine().getCode()) == null ?
-                    new EngineWeight().score(0d).questionCount(0) : participantScore.get(ques.getEngine().getCode());
+            WeightedEngineScore partEngineWeight = participantScore.get(ques.getEngine().getCode()) == null ?
+                    new WeightedEngineScore() : participantScore.get(ques.getEngine().getCode());
             partEngineWeight.setCode(ques.getEngine().getCode());
             partEngineWeight.setName(ques.getEngine().getName());
-            partEngineWeight.setWeight(participant.getEngineScore().values().stream().filter(e -> e.getCode().equals(ques.getEngine().getCode())).findFirst().orElseGet(() -> new EngineWeight()).getWeight());
+            partEngineWeight.setWeight(participant.getEngineScore().values().stream().filter(e -> e.getCode().equals(ques.getEngine().getCode())).findFirst().orElseGet(() -> new WeightedEngineScore()).getWeight());
             partEngineWeight.setScore(partEngineWeight.getScore() + response.getScore());
             partEngineWeight.setQuestionCount(partEngineWeight.getQuestionCount() + 1);
             participantScore.put(ques.getEngine().getCode(), partEngineWeight);

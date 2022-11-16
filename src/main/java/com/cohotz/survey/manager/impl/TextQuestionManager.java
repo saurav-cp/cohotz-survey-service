@@ -15,6 +15,7 @@ import com.cohotz.survey.model.response.Response;
 import com.cohotz.survey.model.response.TextResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,7 @@ public class TextQuestionManager implements QuestionManager {
         BeanUtils.copyProperties(blockQuestion, sQuestion);
 
         sQuestion.setId(poolQuestion.getId());
-        sQuestion.setEngine(poolQuestion.getEngine());
+        sQuestion.setEngine(new CohotzEntity(poolQuestion.getEngine().getName(), poolQuestion.getEngine().getCode()));
         sQuestion.setText(poolQuestion.getText());
         sQuestion.setResponseType(poolQuestion.getResponseType());
 

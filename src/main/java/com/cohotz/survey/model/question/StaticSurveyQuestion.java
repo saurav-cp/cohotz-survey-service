@@ -1,12 +1,11 @@
 package com.cohotz.survey.model.question;
 
-import com.cohotz.survey.client.core.model.CultureEngineMin;
-import com.cohotz.survey.client.core.model.PoolQuestion;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Objects;
@@ -35,7 +34,7 @@ public class StaticSurveyQuestion {
     protected String text;
     @Field("rsp_type")
     protected String responseType;
-    private CultureEngineMin engine;
+    private CohotzEntity engine;
     @Field("smart_skip")
     private boolean smartSkip = false;
     private double score;

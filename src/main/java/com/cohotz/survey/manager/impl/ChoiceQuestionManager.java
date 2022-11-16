@@ -13,6 +13,7 @@ import com.cohotz.survey.model.response.Response;
 import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class ChoiceQuestionManager implements QuestionManager {
         return response;
     }
 
-    private void createEngineRecord(Participant participant, CultureEngineMin engine, double score, double max) {
+    private void createEngineRecord(Participant participant, CohotzEntity engine, double score, double max) {
         log.debug("Creating Engine Score record for [{}] for engine [{}]", participant.getEmail(), engine.getCode());
         engineScoreRecordPublisher.publish(
                 participant.getId()+"__"+engine.getCode(),
@@ -107,13 +108,12 @@ public class ChoiceQuestionManager implements QuestionManager {
         BeanUtils.copyProperties(blockQuestion, sQuestion);
 
         sQuestion.setId(poolQuestion.getId());
-        sQuestion.setEngine(poolQuestion.getEngine());
+        sQuestion.setEngine(new CohotzEntity(poolQuestion.getEngine().getName(), poolQuestion.getEngine().getCode()));
         sQuestion.setText(poolQuestion.getText());
         sQuestion.setResponseType(poolQuestion.getResponseType());
         poolQuestion.getResponseOptionMap().forEach((k,ro) -> {
             sQuestion.getResponseOptionMap().put(Integer.parseInt(k), ro);
         });
-        //sQuestion.setResponseOptionMap(poolQuestion.getResponseOptionMap());
         sQuestion.setMax(poolQuestion.getMax());
 
         return sQuestion;

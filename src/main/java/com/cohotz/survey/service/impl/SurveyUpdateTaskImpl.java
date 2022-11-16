@@ -9,6 +9,7 @@ import com.cohotz.survey.dto.response.SurveyMinRes;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.service.SurveyParticipantService;
@@ -65,7 +66,7 @@ public class SurveyUpdateTaskImpl implements SurveyUpdateTask {
                     //Check if new responses are available
                     if (participants.size() > 0) {
                         survey.setResponseCount(survey.getResponseCount() + participants.size());
-                        List<EngineWeight> engines = survey.getEngines();
+                        List<WeightedEngineScore> engines = survey.getEngines();
                         participants
                                 .forEach(p -> {
                                     //Map<String, EngineWeight> partEngines = p.getEngineScore();

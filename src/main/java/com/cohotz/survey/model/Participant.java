@@ -3,6 +3,7 @@ package com.cohotz.survey.model;
 import com.cohotz.survey.client.core.model.CultureBlockMin;
 import com.cohotz.survey.client.core.model.CultureEngineMin;
 import com.cohotz.survey.client.core.model.EngineWeight;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
 import lombok.Getter;
@@ -88,7 +89,7 @@ public class Participant extends CHBaseModel {
     private Map<String, Response> responseMap;
 
     @Field("score")
-    private Map<String, EngineWeight> engineScore;
+    private Map<String, WeightedEngineScore> engineScore;
 
     private List<Cohort> cohorts;
 
@@ -108,4 +109,9 @@ public class Participant extends CHBaseModel {
 
     @Field("smart_skip")
     protected boolean smartSkip;
+
+    @Field("created_ts")
+    public LocalDateTime getCreatedTS() {
+        return this.createdTS;
+    }
 }

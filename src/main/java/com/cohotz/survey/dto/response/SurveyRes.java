@@ -1,7 +1,7 @@
 package com.cohotz.survey.dto.response;
 
-import com.cohotz.survey.client.core.model.EngineWeight;
 import com.cohotz.survey.model.SurveyStatus;
+import com.cohotz.survey.model.engine.WeightedEngineScore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +32,7 @@ public class SurveyRes {
     private String formula;
     private long reminderFrequencyInDays;
     private LocalDateTime lastReminder;
-    private List<EngineWeight> engines;
+    private List<WeightedEngineScore> engines;
     private String error;
     protected long partCount;
     protected long responseCount;
