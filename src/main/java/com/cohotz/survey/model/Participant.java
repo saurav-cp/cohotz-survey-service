@@ -1,8 +1,6 @@
 package com.cohotz.survey.model;
 
 import com.cohotz.survey.client.core.model.CultureBlockMin;
-import com.cohotz.survey.client.core.model.CultureEngineMin;
-import com.cohotz.survey.client.core.model.EngineWeight;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
@@ -11,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.cohotz.boot.model.CHBaseModel;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -93,7 +92,7 @@ public class Participant extends CHBaseModel {
 
     private List<Cohort> cohorts;
 
-    private List<CultureEngineMin> engines;
+    private List<CohotzEntity> engines;
 
     @Field("due_dt")
     private LocalDateTime dueDate;

@@ -2,15 +2,12 @@ package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.client.api.UserService;
 import com.cohotz.survey.client.core.model.CultureBlockMin;
-import com.cohotz.survey.client.core.model.CultureEngineMin;
-import com.cohotz.survey.client.core.model.EngineWeight;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.ParticipantDao;
 import com.cohotz.survey.dao.SurveyDao;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantMinRes;
-import com.cohotz.survey.dto.response.SurveyRes;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Cohort;
 import com.cohotz.survey.model.Participant;
@@ -24,6 +21,7 @@ import com.cohotz.survey.service.SurveyParticipantService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -116,7 +114,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         survey.getEngines().forEach(e -> {
             participant.getEngineScore()
                     .put(e.getCode(), new WeightedEngineScore(e.getName(), e.getCode(), e.getWeight(), 0d, e.getQuestionCount(), 0d));
-            participant.getEngines().add(new CultureEngineMin().name(e.getName()).code(e.getCode()));
+            participant.getEngines().add(new CohotzEntity(e.getName(), e.getCode()));
         });
 
         participant.setSurveyStatus(SurveyStatus.DRAFT);

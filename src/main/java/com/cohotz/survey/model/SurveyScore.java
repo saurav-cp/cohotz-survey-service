@@ -1,10 +1,10 @@
 package com.cohotz.survey.model;
 
 import com.cohotz.survey.client.core.model.CultureBlockMin;
-import com.cohotz.survey.client.core.model.CultureEngineMin;
 import com.cohotz.survey.dto.response.SurveyQuestionScore;
 import lombok.Getter;
 import lombok.Setter;
+import org.cohotz.boot.model.common.CohotzEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -31,7 +31,7 @@ public class SurveyScore {
     @Field("creation_dt")
     protected LocalDateTime creationDate;
     protected CultureBlockMin block;
-    protected List<CultureEngineMin> engines;
+    protected List<CohotzEntity> engines;
     @Field("ques_scores")
     protected List<SurveyQuestionScore> questionScores;
 }

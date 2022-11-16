@@ -1,8 +1,6 @@
 package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.client.api.QuestionPoolService;
-import com.cohotz.survey.client.core.model.ChoiceBasedQuestion;
-import com.cohotz.survey.client.core.model.EngineWeight;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.SurveyDao;
 import com.cohotz.survey.dto.response.SurveyMinRes;
@@ -10,7 +8,6 @@ import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
-import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
@@ -18,7 +15,6 @@ import com.cohotz.survey.service.SurveyUpdateTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -54,7 +50,7 @@ public class SurveyUpdateTaskImpl implements SurveyUpdateTask {
     }
 
     public void update(String tenant) {
-        //Fetch All Incomplete(PUBLISHED or STARTED) surveys for update
+        log.info("Running update for tenant : [{}]", tenant);
         List<SurveyMinRes> surveys = surveyService.fetchAll(tenant, List.of(SurveyStatus.PUBLISHED.name(), SurveyStatus.STARTED.name()));
         surveys.forEach(s ->
                 surveyDao.findByTenantAndId(tenant, s.getId()).ifPresent(survey -> {

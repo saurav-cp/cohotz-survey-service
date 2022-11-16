@@ -1,15 +1,11 @@
 package com.cohotz.survey.model.question;
 
-import com.cohotz.survey.client.core.model.CultureEngineMin;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.cohotz.boot.model.common.CohotzEntity;
 
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseInsight {
@@ -17,7 +13,7 @@ public class ResponseInsight {
         this.insight = insight;
     }
     String insight;
-    CultureEngineMin engine;
+    CohotzEntity engine;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

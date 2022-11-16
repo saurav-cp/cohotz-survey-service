@@ -130,7 +130,7 @@ public class SurveyServiceImpl implements SurveyService {
         }
 
         block.getEngines().forEach(e -> {
-            EngineWeight ew = new EngineWeight();
+            WeightedCultureEngine ew = new WeightedCultureEngine();
             BeanUtils.copyProperties(e, ew);
             survey.getEngines().add(new WeightedEngineScore(ew.getName(), ew.getCode(), ew.getWeight()));
         });
