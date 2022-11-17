@@ -19,6 +19,7 @@ import java.util.Objects;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ChoiceBasedResponseDTO.class, name = "SINGLE_SELECT"),
         @JsonSubTypes.Type(value = ChoiceBasedResponseDTO.class, name = "MULTI_SELECT"),
+        @JsonSubTypes.Type(value = ChoiceBasedResponseDTO.class, name = "MULTI_SELECT_INFO"),
         @JsonSubTypes.Type(value = TextBasedResponseDTO.class, name = "TEXT")
 })
 public class ResponseDTO {

@@ -1,6 +1,5 @@
 package com.cohotz.survey.dto.request;
 
-import com.cohotz.survey.client.core.model.PoolQuestion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -39,12 +39,12 @@ public class TextQuestionManager implements QuestionManager {
         return response;
     }
 
-    @Override
-    public PoolQuestion createPoolQuestion(ApiResponsePoolQuestionResult result) {
-        PoolQuestion question = new TextResponseBasedQuestion();
-        BeanUtils.copyProperties(result, question);
-        return question;
-    }
+//    @Override
+//    public PoolQuestion createPoolQuestion(ApiResponsePoolQuestionResult result) {
+//        PoolQuestion question = new TextResponseBasedQuestion();
+//        BeanUtils.copyProperties(result, question);
+//        return question;
+//    }
 
     @Override
     public StaticSurveyQuestion createSurveyQuestion(Question blockQuestion, PoolQuestion question) {

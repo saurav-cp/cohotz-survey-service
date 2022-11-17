@@ -31,7 +31,6 @@ import static org.cohotz.boot.CHConstants.*;
 @RequestMapping(COHOTZ_SURVEY_PARTICIPANT_ENDPOINT)
 @Validated
 @Slf4j
-@PreAuthorize(ACCESS_ALL_ADMINS)
 public class SurveyParticipantController {
 
     @Autowired
@@ -53,6 +52,7 @@ public class SurveyParticipantController {
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, response);
     }
 
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     @Operation(summary = "Fetch survey participant details")
     @GetMapping("/{accessCode}")
     ApiResponse<ParticipantRes> participantDetails(
@@ -68,12 +68,11 @@ public class SurveyParticipantController {
     @Operation(summary = "Get the survey details")
     @GetMapping("/{accessCode}/questions")
     ApiResponse<List<StaticSurveyQuestion>> fetchSurveyQuestions(
-            @RequestHeader(name = "tenant", required = false) String tenant,
+            @RequestHeader String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode
     ) throws CHException {
-        String currentTenant = RequestUtils.tenant(tenant);
-        List<StaticSurveyQuestion> questions = surveyService.surveyQuestions(currentTenant, surveyId, accessCode);
+        List<StaticSurveyQuestion> questions = surveyService.surveyQuestions(tenant, surveyId, accessCode);
         questions.sort(Comparator.comparing(StaticSurveyQuestion::getPosition));
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,questions);
     }
@@ -81,15 +80,15 @@ public class SurveyParticipantController {
     @Operation(summary = "Add participant response")
     @PutMapping("/{accessCode}/responses")
     ApiResponse<Void> addResponse(
-            @RequestHeader(name = "tenant", required = false) String tenant,
+            @RequestHeader String tenant,
             @RequestBody List<ResponseDTO> responses,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {
-        String currentTenant = RequestUtils.tenant(tenant);
-        service.addResponse(currentTenant, surveyId, accessCode, responses);
+        service.addResponse(tenant, surveyId, accessCode, responses);
         return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,null);
     }
 
+    @PreAuthorize(ACCESS_ALL_ADMINS)
     @Operation(summary = "Update participant reminder")
     @PatchMapping("/{accessCode}/last-reminder")
     ApiResponse<Void> updateReminder(

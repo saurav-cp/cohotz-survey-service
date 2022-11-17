@@ -15,7 +15,7 @@ spring:
       auto-index-creation: true
 
 keycloak:
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://localhost:8080/auth
   realm: cohotz
   resource: cohotz-profile-service
   public-client: true

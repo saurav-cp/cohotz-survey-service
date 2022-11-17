@@ -3,11 +3,11 @@ cohotz:
     cohotz-core-service:
       url: "http://cohotz-core-service:8080"
       oauth2:
-        access-token-url: http://keycloak:8080/realms/cohotz/protocol/openid-connect/token
+        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
     cohotz-profile-service:
       url: "http://cohotz-profile-service:8080"
       oauth2:
-        access-token-url: http://keycloak:8080/realms/cohotz/protocol/openid-connect/token
+        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
 server:
   port: 8080
 
@@ -29,4 +29,4 @@ spring:
       auto-index-creation: true
 
 keycloak:
-  auth-server-url: http://keycloak:8080
+  auth-server-url: http://keycloak:8080/auth

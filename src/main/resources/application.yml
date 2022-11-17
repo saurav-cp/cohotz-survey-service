@@ -10,7 +10,7 @@ cohotz:
         enabled: ${COHOTZ_CORE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_CORE_SERVICE_SECRET}
-        access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
+        access-token-url: http://localhost:8080/auth/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
       url: "http://localhost:18083"
@@ -18,7 +18,7 @@ cohotz:
         enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_PROFILE_SERVICE_SECRET}
-        access-token-url: http://localhost:8080/realms/cohotz/protocol/openid-connect/token
+        access-token-url: http://localhost:8080/auth/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-profile-service
 
 server:
@@ -47,7 +47,7 @@ kafka:
   password: Cohotz@486Kafka
 keycloak:
   enabled: ${COHOTZ_AUTH_ENABLED:true}
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://localhost:8080/auth
   realm: cohotz
   resource: cohotz-service
   public-client: false

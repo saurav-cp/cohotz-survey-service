@@ -20,6 +20,7 @@ import java.util.Objects;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ChoiceBasedSurveyQuestion.class, name = "SINGLE_SELECT"),
         @JsonSubTypes.Type(value = ChoiceBasedSurveyQuestion.class, name = "MULTI_SELECT"),
+        @JsonSubTypes.Type(value = ChoiceBasedSurveyQuestion.class, name = "MULTI_SELECT_INFO"),
         @JsonSubTypes.Type(value = TextResponseBasedSurveyQuestion.class, name = "TEXT")
 })
 public class StaticSurveyQuestion {

@@ -1,5 +1,6 @@
 package com.cohotz.survey.config;
 
+import com.cohotz.profile.preference.CultureEnginePreferenceRecord;
 import com.cohotz.survey.engine.score.record.EngineScoreRecord;
 import com.cohotz.survey.exp.score.record.ExperienceScoreRecord;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
@@ -56,6 +57,11 @@ public class KafkaConfig {
         return new NewTopic(EXP_SCORE_RECORD_TOPIC, 1, (short) 1);
     }
 
+    @Bean(PROFILE_ENGINE_PREF_RECORD_TOPIC)
+    public NewTopic profileEnginePrefRecordTopic() {
+        return new NewTopic(PROFILE_ENGINE_PREF_RECORD_TOPIC, 1, (short) 1);
+    }
+
 
     @Bean
     public ProducerFactory<String, ?> producerFactory() {
@@ -88,5 +94,10 @@ public class KafkaConfig {
     @Bean(EXP_SCORE_RECORD_KAFKA_TEMPLATE)
     public KafkaTemplate<String, ExperienceScoreRecord> expKafkaTemplate() {
         return new KafkaTemplate<>((ProducerFactory<String, ExperienceScoreRecord>)producerFactory());
+    }
+
+    @Bean(PROFILE_ENGINE_PREF_RECORD_KAFKA_TEMPLATE)
+    public KafkaTemplate<String, CultureEnginePreferenceRecord> profileEnginePrefKafkaTemplate() {
+        return new KafkaTemplate<>((ProducerFactory<String, CultureEnginePreferenceRecord>)producerFactory());
     }
 }
