@@ -46,8 +46,9 @@ spring:
 kafka:
   bootstrapAddress: "localhost:9092"
   schemaRegistry: "http://localhost:8585"
-  username: cohotz
-  password: Cohotz@486Kafka
+  username: ${COHOTZ_KAFKA_CLUSTER_USERNAME:cohotz}
+  password: ${COHOTZ_KAFKA_CLUSTER_PASSWORD:Cohotz@486Kafka}
+  sasl-enabled: ${COHOTZ_SASL_ENABLED:true}
 keycloak:
   enabled: ${COHOTZ_AUTH_ENABLED:true}
   auth-server-url: http://localhost:8080/auth
