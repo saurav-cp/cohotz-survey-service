@@ -1,15 +1,21 @@
 package com.cohotz.survey.manager.impl;
 
-import com.cohotz.survey.client.core.model.*;
+import com.cohotz.survey.client.core.model.ChoiceBasedQuestion;
+import com.cohotz.survey.client.core.model.PoolQuestion;
+import com.cohotz.survey.client.core.model.Question;
+import com.cohotz.survey.client.core.model.ResponseOption;
 import com.cohotz.survey.dto.request.ChoiceBasedResponseDTO;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.engine.score.record.*;
+import com.cohotz.survey.kafka.ResponseInsightProducer;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.ChoiceResponse;
 import com.cohotz.survey.model.response.Response;
+import com.cohotz.survey.response.insight.record.QuestionDetails;
+import com.cohotz.survey.response.insight.record.ResponseInsightRecord;
 import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
@@ -34,6 +40,8 @@ public class ChoiceQuestionManager implements QuestionManager {
     @Autowired
     EngineScoreRecordPublisher engineScoreRecordPublisher;
 
+    @Autowired
+    ResponseInsightProducer responseInsightProducer;
 
     @Override
     public void validate(ResponseDTO response) throws CHException {
@@ -53,6 +61,7 @@ public class ChoiceQuestionManager implements QuestionManager {
         AtomicReference<Double> score = new AtomicReference<>((double) 0);
         ChoiceBasedSurveyQuestion ques = (ChoiceBasedSurveyQuestion) question;
         response.setSelections(responseDTO.getSelections());
+        response.setChannel(r.getChannel());
         response.setMax(100);
 
         responseDTO.getSelections().forEach(s -> {
@@ -60,12 +69,48 @@ public class ChoiceQuestionManager implements QuestionManager {
             ResponseOption responseOption = ques.getResponseOptionMap().get(s - 1);
             //if (responseOption == null) invalidResponse.set(true);
             score.set(score.get() + responseOption.getScore());
+            publishInsights(participant, question, responseOption);
         });
         response.setScore((score.get()*100)/ques.getMax());
 
         createEngineRecord(participant, question.getEngine(), response.getScore(), response.getMax());
 
         return response;
+    }
+
+    private void publishInsights(Participant participant, StaticSurveyQuestion ques, ResponseOption response) {
+        log.info("Publishing Insight for [{}] from [{}] for question [{}]",
+                participant.getEmail(), participant.getTenant(), ques.getPoolQuesReferenceCode());
+        try {
+            responseInsightProducer.publish(
+                    participant.getId() + "__" + ques.getPoolQuesReferenceCode(),
+                    ResponseInsightRecord.newBuilder()
+                            .setMetadata(com.cohotz.survey.response.insight.record.MetaData.newBuilder()
+                                    .setSource(SURVEY_SERVICE_CLIENT)
+                                    .setTraceId(MDC.get(LOG_TRACE_ID))
+                                    .build())
+                            .setData(com.cohotz.survey.response.insight.record.ResponseInsight.newBuilder()
+                                    .setEmail(participant.getEmail())
+                                    .setTenant(participant.getTenant())
+                                    .setQuestion(new QuestionDetails(ques.getPoolQuesReferenceCode(), ques.getText()))
+                                    .setEngine(com.cohotz.survey.response.insight.record.EngineDetails.newBuilder()
+                                            .setCode(ques.getEngine().getCode())
+                                            .setName(ques.getEngine().getName())
+                                            .build())
+                                    .setBlock(com.cohotz.survey.response.insight.record.BlockDetails.newBuilder()
+                                            .setCode(participant.getBlock().getCode())
+                                            .setName(participant.getBlock().getName())
+                                            .build())
+                                    .setInsight(response.getInsight().getInsight())
+                                    .setSource("STATIC_SURVEY")
+                                    .setChannel("WEB")
+                                    .build())
+                            .build()
+            );
+        } catch (Exception e) {
+            log.error("Error while publishing insight for [{}] from [{}] for question [{}]: [{}]",
+                    participant.getEmail(), participant.getTenant(), ques.getPoolQuesReferenceCode(), e.getMessage());
+        }
     }
 
     private void createEngineRecord(Participant participant, CohotzEntity engine, double score, double max) {

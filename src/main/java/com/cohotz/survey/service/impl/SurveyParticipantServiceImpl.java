@@ -89,7 +89,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         Map<String, Response> smartSkipEligibleQuestions = fetchSmartSkipEligibleQuestions(survey.getTenant(), email);
         UserRes user = userService.fetchByTenantAndEmail(survey.getTenant(), email);
         List<String> reportingHierarchy = userService.fetchReportingHierarchy(survey.getTenant(), email);
-        Participant participant = new Participant(email, user.getReportingToEmail(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
+        Participant participant = new Participant(email, user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
         participant.setReportingHierarchy(reportingHierarchy);
         survey.getQuestionMap().forEach((qCode, question) -> {
             QuestionManager rm = (QuestionManager)context.getBean(question.getResponseType());
@@ -327,7 +327,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
                     cohorts.add(new Cohort(v, (String) field.get(u)));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error while creating cohort: [{}]", e.getMessage());
             }
         });
         return cohorts;

@@ -13,7 +13,7 @@ cohotz:
         access-token-url: http://localhost:8080/auth/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
-      url: "http://localhost:18083"
+      url: "http://localhost:8082"
       oauth2:
         enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service

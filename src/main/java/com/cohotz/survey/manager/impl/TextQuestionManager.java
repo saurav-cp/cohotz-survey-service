@@ -32,6 +32,7 @@ public class TextQuestionManager implements QuestionManager {
         TextResponse response = new TextResponse();
         TextBasedResponseDTO responseDTO = (TextBasedResponseDTO)r;
         response.setQuestionCode(r.getQuestionCode());
+        response.setChannel(r.getChannel());
         response.setSkipped(r.isSkipped());
         response.setComment(r.getComment());
         response.setScore(100);

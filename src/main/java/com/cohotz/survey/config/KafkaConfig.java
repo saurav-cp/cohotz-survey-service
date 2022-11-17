@@ -3,6 +3,7 @@ package com.cohotz.survey.config;
 import com.cohotz.profile.preference.CultureEnginePreferenceRecord;
 import com.cohotz.survey.engine.score.record.EngineScoreRecord;
 import com.cohotz.survey.exp.score.record.ExperienceScoreRecord;
+import com.cohotz.survey.response.insight.record.ResponseInsightRecord;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
@@ -62,6 +63,11 @@ public class KafkaConfig {
         return new NewTopic(PROFILE_ENGINE_PREF_RECORD_TOPIC, 1, (short) 1);
     }
 
+    @Bean(RESPONSE_INSIGHT_RECORD_TOPIC)
+    public NewTopic responseInsightRecordTopic() {
+        return new NewTopic(RESPONSE_INSIGHT_RECORD_TOPIC, 1, (short) 1);
+    }
+
 
     @Bean
     public ProducerFactory<String, ?> producerFactory() {
@@ -99,5 +105,10 @@ public class KafkaConfig {
     @Bean(PROFILE_ENGINE_PREF_RECORD_KAFKA_TEMPLATE)
     public KafkaTemplate<String, CultureEnginePreferenceRecord> profileEnginePrefKafkaTemplate() {
         return new KafkaTemplate<>((ProducerFactory<String, CultureEnginePreferenceRecord>)producerFactory());
+    }
+
+    @Bean(RESPONSE_INSIGHT_RECORD_KAFKA_TEMPLATE)
+    public KafkaTemplate<String, ResponseInsightRecord> responseInsightKafkaTemplate() {
+        return new KafkaTemplate<>((ProducerFactory<String, ResponseInsightRecord>)producerFactory());
     }
 }

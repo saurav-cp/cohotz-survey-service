@@ -45,6 +45,9 @@ public class SurveyConstants {
     public static final String PROFILE_ENGINE_PREF_RECORD_TOPIC = "cohotz-profile-engine-pref-record";
     public static final String PROFILE_ENGINE_PREF_RECORD_KAFKA_TEMPLATE = "cohotz-profile-engine-pref-record-kafka-template";
 
+    public static final String RESPONSE_INSIGHT_RECORD_TOPIC = "cohotz-response-insight-record";
+    public static final String RESPONSE_INSIGHT_RECORD_KAFKA_TEMPLATE = "cohotz-response-insight-record-kafka-template";
+
     public static final String CREATE_SURVEY_LISTENER_GROUP_ID = "cohotz-create-survey-listener";
     public static final String CREATE_SURVEY_TOPIC = "cohotz-create-survey-topic";
 }

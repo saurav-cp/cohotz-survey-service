@@ -81,6 +81,7 @@ public class SurveyParticipantController {
     @PutMapping("/{accessCode}/responses")
     ApiResponse<Void> addResponse(
             @RequestHeader String tenant,
+            @RequestHeader(name = "channel", required = false, defaultValue = "WEB") String channel,
             @RequestBody List<ResponseDTO> responses,
             @PathVariable String surveyId,
             @PathVariable String accessCode) throws CHException {

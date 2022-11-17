@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.cohotz.boot.dto.CohotzChannel;
 
 import java.util.Objects;
 
@@ -28,6 +29,7 @@ public class ResponseDTO {
     protected String comment;
     protected boolean skipped;
     protected String type;
+    protected CohotzChannel channel = CohotzChannel.WEB;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

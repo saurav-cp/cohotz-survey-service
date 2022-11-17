@@ -6,6 +6,7 @@ import com.nimbusds.oauth2.sdk.ResponseType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.cohotz.boot.dto.CohotzChannel;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
@@ -33,4 +34,5 @@ public class Response {
     @Field("smart_skip")
     private boolean smartSkip = false;
     protected ResponseType type;
+    protected CohotzChannel channel;
 }

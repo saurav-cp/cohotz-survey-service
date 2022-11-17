@@ -11,6 +11,7 @@ import com.cohotz.survey.client.core.model.ResponseOption;
 import com.cohotz.survey.dto.request.ChoiceBasedResponseDTO;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.kafka.EnginePreferenceProducer;
+import com.cohotz.survey.kafka.ResponseInsightProducer;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
@@ -37,6 +38,8 @@ import static org.cohotz.boot.CHConstants.LOG_TRACE_ID;
 public class ChoiceInfoQuestionManager implements QuestionManager {
 
     private EnginePreferenceProducer producer;
+
+    private ResponseInsightProducer responseInsightProducer;
 
     public ChoiceInfoQuestionManager(EnginePreferenceProducer producer) {
         this.producer = producer;
@@ -78,6 +81,7 @@ public class ChoiceInfoQuestionManager implements QuestionManager {
         response.setQuestionCode(r.getQuestionCode());
         response.setSkipped(r.isSkipped());
         response.setComment(r.getComment());
+        response.setChannel(r.getChannel());
         response.setScore(0);
 
         return response;

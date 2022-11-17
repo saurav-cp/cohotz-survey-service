@@ -32,7 +32,9 @@ public class UserService {
     public UserRes fetchByTenantAndEmail(String tenant, String email) throws CHException {
         try {
             log.debug("[{}] Fetching User Details: [{}] [{}]", USER_SERVICE_CLIENT, tenant, email);
-            return userApi.findByEmailAndTenant(email, tenant).getResult();
+            UserRes res =  userApi.findByEmailAndTenant(email, tenant).getResult();
+            log.debug("[{}] User Details Response:  {}", USER_SERVICE_CLIENT, res);
+            return res;
         } catch (HttpClientErrorException e) {
             if(e.getStatusCode() == HttpStatus.BAD_REQUEST){
                 log.error("Error while fetching User Details:  {}", e.getMessage());
