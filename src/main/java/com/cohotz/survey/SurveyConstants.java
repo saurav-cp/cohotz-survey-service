@@ -30,6 +30,7 @@ public class SurveyConstants {
 
     public static final String USER_SERVICE_API_CLIENT_BEAN = "cohotz-profile-service-api-client-bean";
     public static final String USER_API_BEAN = "user-api-bean";
+    public static final String USER_HIERARCHY_API_BEAN = "user-hierarchy-api-bean";
 
     /**
      * Kafka

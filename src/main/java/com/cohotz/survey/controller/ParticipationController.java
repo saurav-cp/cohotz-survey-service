@@ -3,9 +3,12 @@ package com.cohotz.survey.controller;
 import com.cohotz.survey.dto.request.FilterBy;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantRes;
+import com.cohotz.survey.model.microculture.UserReporteeParticipation;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.score.CHEntityScore;
 import com.cohotz.survey.service.ParticipationService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +85,7 @@ public class ParticipationController {
         return new ApiResponse<>(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, response);
     }
 
-
+    @Operation(summary = "Participation Cohort Status")
     @GetMapping("/status/cohorts")
     public ApiResponse<List<CHEntityScore>> participationByCohorts(
             @RequestHeader(name = "tenant", required = false) String tenant,
@@ -100,6 +103,19 @@ public class ParticipationController {
             response = service.experienceParticipationCohortStatus(currentTenant, filters, from, to);
         }
         return new ApiResponse<>(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, response);
+    }
+
+    @Operation(summary = "Participation Micro Culture")
+    @GetMapping("/micro-culture/{block}")
+    public ApiResponse<List<UserReporteeParticipation>> surveyAnalysis(
+            @RequestHeader(name = "tenant", required = false) String tenant,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false, defaultValue = "#{T(java.time.LocalDate).now().minusYears(1)}") LocalDate from,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false, defaultValue = "#{T(java.time.LocalDate).now().plusMonths(1)}") LocalDate to,
+            @PathVariable String block) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
+        return new ApiResponse<>(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, service.microCulture(currentTenant, block, from, to));
     }
 
 }

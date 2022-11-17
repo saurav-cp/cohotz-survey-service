@@ -3,6 +3,7 @@ package com.cohotz.survey.config;
 import com.cohotz.survey.client.ApiClient;
 import com.cohotz.survey.client.core.CultureBlockApi;
 import com.cohotz.survey.client.profile.UserApi;
+import com.cohotz.survey.client.profile.UserHierarchyApi;
 import org.cohotz.boot.config.CHConfig;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UserClientConfiguration {
     @Bean(USER_API_BEAN)
     public UserApi userApi() {
         return new UserApi(apiClient());
+    }
+
+    @Bean(USER_HIERARCHY_API_BEAN)
+    public UserHierarchyApi userHierarchyApi() {
+        return new UserHierarchyApi(apiClient());
     }
 
     @Bean(USER_SERVICE_API_CLIENT_BEAN)

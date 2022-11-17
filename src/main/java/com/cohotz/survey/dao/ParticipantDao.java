@@ -1,6 +1,7 @@
 package com.cohotz.survey.dao;
 
 import com.cohotz.survey.model.Participant;
+import com.cohotz.survey.model.microculture.UserReporteeParticipation;
 import com.cohotz.survey.model.score.CHEntityScore;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -175,4 +176,16 @@ public interface ParticipantDao extends MongoRepository<Participant, String> {
             "{'$sort': { 'name': 1 }}",
     })
     List<CHEntityScore> experienceParticipationCohortTrends(String tenant, List<String> blocks, String cohort, String cohortOption, LocalDate from, LocalDate to);
+
+
+    @Aggregation(pipeline = {
+            "{'$match': {'tenant': ?0, 'block.code': ?1, 'due_dt': {'$gte': ?2, '$lte': ?3 }, 'reporting_hierarchy': ?4}}",
+            "{'$group': {" +
+                    "'_id': { 'code': '$block.code', 'name': '$block.name'}," +
+                    "'score': { '$avg': {'$toInt' :  {'$multiply' : [{'$divide': [{ '$sum': {'$cond' : ['$survey_complete', 1, 0]}}, { $sum: 1 }]}, 100]}}}, " +
+                    "}" +
+                    "}",
+            "{'$project' : { '_id': 0, 'item' : {'code':'$_id.code', 'name' : '$_id.name'}, 'score': 1 }}"
+    })
+    Optional<UserReporteeParticipation> reporteeParticipation(String tenant, String block, LocalDate from, LocalDate to, String email);
 }

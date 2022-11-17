@@ -13,13 +13,16 @@ cohotz:
         access-token-url: http://localhost:8080/auth/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
-      url: "http://localhost:8082"
+      url: "http://localhost:18083"
       oauth2:
         enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_PROFILE_SERVICE_SECRET}
         access-token-url: http://localhost:8080/auth/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-profile-service
+  micro-culture:
+    reportee-threshold: 2
+    caching: ${COHOTZ_MICRO_CULTURE_CACHING:false}
 
 server:
   port: 8083
