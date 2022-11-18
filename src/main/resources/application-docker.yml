@@ -13,7 +13,7 @@ server:
 
 kafka:
   bootstrapAddress: "kafka:29092"
-  schemaRegistry: "http://schema-registry:8585"
+  schemaRegistry: "http://schema-registry:8081"
 
 spring:
   cache:
