@@ -8,6 +8,10 @@ cohotz:
       url: "http://cohotz-profile-service:8080"
       oauth2:
         access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
+    cohotz-record-service:
+      url: "http://cohotz-record-service:8080"
+      oauth2:
+        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
 server:
   port: 8080
 
