@@ -1,49 +1,50 @@
 package com.cohotz.survey.manager.impl;
 
-import com.cohotz.profile.preference.CultureEnginePreference;
-import com.cohotz.profile.preference.CultureEnginePreferenceRecord;
-import com.cohotz.profile.preference.MetaData;
 import com.cohotz.profile.preference.PreferredEngine;
 import com.cohotz.survey.client.core.model.ChoiceBasedQuestion;
 import com.cohotz.survey.client.core.model.PoolQuestion;
 import com.cohotz.survey.client.core.model.Question;
 import com.cohotz.survey.client.core.model.ResponseOption;
+import com.cohotz.survey.dto.producer.MetadataDTO;
+import com.cohotz.survey.dto.producer.preferredEngine.CultureEnginePreferenceDTO;
+import com.cohotz.survey.dto.producer.preferredEngine.CultureEnginePreferenceRecordDTO;
 import com.cohotz.survey.dto.request.ChoiceBasedResponseDTO;
 import com.cohotz.survey.dto.request.ResponseDTO;
-import com.cohotz.survey.kafka.EnginePreferenceProducer;
-import com.cohotz.survey.kafka.ResponseInsightProducer;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.ChoiceResponse;
 import com.cohotz.survey.model.response.Response;
-import lombok.NoArgsConstructor;
+import com.cohotz.survey.producer.EnginePreferenceProducer;
+import com.cohotz.survey.producer.ResponseInsightProducer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.common.CohotzEntity;
 import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static com.cohotz.survey.SurveyConstants.SURVEY_SERVICE_CLIENT;
 import static com.cohotz.survey.error.ServiceCHError.CULTR_SURVEY_MISSING_MANDATORY_RESPONSE;
 import static org.cohotz.boot.CHConstants.LOG_TRACE_ID;
 
 @Slf4j
-@NoArgsConstructor
+@Component
 public class ChoiceInfoQuestionManager implements QuestionManager {
 
+    @Autowired
     private EnginePreferenceProducer producer;
 
+    @Autowired
     private ResponseInsightProducer responseInsightProducer;
-
-    public ChoiceInfoQuestionManager(EnginePreferenceProducer producer) {
-        this.producer = producer;
-    }
 
     @Override
     public void validate(ResponseDTO response) throws CHException {
@@ -65,16 +66,19 @@ public class ChoiceInfoQuestionManager implements QuestionManager {
             engines.add(new PreferredEngine(engine, engine));
         });
 
-        CultureEnginePreferenceRecord record = CultureEnginePreferenceRecord.newBuilder()
-                .setData(CultureEnginePreference.newBuilder()
-                        .setEmail(participant.getEmail())
-                        .setTenant(participant.getTenant())
-                        .setEngines(engines).build())
-                .setMetadata(MetaData.newBuilder()
-                        .setSource(SURVEY_SERVICE_CLIENT)
-                        .setTraceId(MDC.get(LOG_TRACE_ID))
+        CultureEnginePreferenceRecordDTO record = CultureEnginePreferenceRecordDTO.builder()
+                .data(CultureEnginePreferenceDTO.builder()
+                        .email(participant.getEmail())
+                        .tenant(participant.getTenant())
+                        .engines(engines
+                                .stream()
+                                .map(e -> new CohotzEntity(e.getName(), e.getCode()))
+                                .collect(Collectors.toList())).build())
+                .metadata(MetadataDTO.builder()
+                        .source(SURVEY_SERVICE_CLIENT)
+                        .traceId(MDC.get(LOG_TRACE_ID))
                         .build()).build();
-        producer.publish(participant.getId(), record);
+        producer.send(participant.getId(), record);
 
         //Just to capture the response.
         ChoiceResponse response = new ChoiceResponse();

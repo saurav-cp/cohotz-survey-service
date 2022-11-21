@@ -202,6 +202,35 @@
                             </configOptions>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>3</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+                            <inputSpec>${project.basedir}/src/main/resources/api/cohotz-record-service.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <library>resttemplate</library>
+                            <apiPackage>com.cohotz.survey.client.record</apiPackage>
+                            <modelPackage>com.cohotz.survey.client.record.model</modelPackage>
+                            <generateApis>true</generateApis>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <sourceFolder>src/main/java</sourceFolder>
+                                <java8>true</java8>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <interfaceOnly>false</interfaceOnly>
+                            </configOptions>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 

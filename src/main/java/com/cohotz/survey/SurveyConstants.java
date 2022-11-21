@@ -23,6 +23,7 @@ public class SurveyConstants {
     public static final String SURVEY_SERVICE_CLIENT = "cohotz-survey-service";
     public static final String CORE_SERVICE_CLIENT = "cohotz-core-service";
     public static final String USER_SERVICE_CLIENT = "cohotz-profile-service";
+    public static final String RECORD_SERVICE_CLIENT = "cohotz-record-service";
 
     public static final String CORE_SERVICE_API_CLIENT_BEAN = "cohotz-core-service-api-client-bean";
     public static final String CULTURE_BLOCK_API_BEAN = "culture-block-api-bean";
@@ -31,6 +32,9 @@ public class SurveyConstants {
     public static final String USER_SERVICE_API_CLIENT_BEAN = "cohotz-profile-service-api-client-bean";
     public static final String USER_API_BEAN = "user-api-bean";
     public static final String USER_HIERARCHY_API_BEAN = "user-hierarchy-api-bean";
+
+    public static final String RECORD_SERVICE_API_CLIENT_BEAN = "cohotz-record-service-api-client-bean";
+    public static final String RECORD_CONSUMER_API_BEAN = "record-consumer-api-bean";
 
     /**
      * Kafka

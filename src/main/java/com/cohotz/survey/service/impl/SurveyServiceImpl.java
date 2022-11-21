@@ -3,12 +3,14 @@ package com.cohotz.survey.service.impl;
 import com.cohotz.survey.client.api.CultureBlockService;
 import com.cohotz.survey.client.api.QuestionPoolService;
 import com.cohotz.survey.client.api.UserService;
-import com.cohotz.survey.client.core.model.*;
+import com.cohotz.survey.client.core.model.CultureBlock;
+import com.cohotz.survey.client.core.model.PoolQuestion;
+import com.cohotz.survey.client.core.model.Question;
+import com.cohotz.survey.client.core.model.WeightedCultureEngine;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.SurveyDao;
 import com.cohotz.survey.dto.request.SurveyDTO;
-import com.cohotz.survey.dto.response.QuestionMinRes;
 import com.cohotz.survey.dto.response.*;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
@@ -16,8 +18,6 @@ import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
-import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
-import com.cohotz.survey.score.record.ExpScoreRecordPublisher;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
@@ -36,7 +36,9 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.cohotz.survey.error.ServiceCHError.*;
@@ -47,9 +49,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Autowired
     SurveyDao dao;
-
-//    @Autowired
-//    QuestionDao questionDao;
 
     @Autowired
     SurveyParticipantService participantService;
@@ -68,12 +67,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Autowired
     MailService mailService;
-
-    @Autowired
-    ExpScoreRecordPublisher expScoreRecordPublisher;
-
-    @Autowired
-    EngineScoreRecordPublisher engineScoreRecordPublisher;
 
     @Autowired
     ApplicationContext context;
@@ -109,7 +102,6 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    @Async
     public void createSurvey(final SurveyDTO dto, String tenant, String publisher) throws CHException {
         createSurveySync(dto, tenant, publisher);
     }
@@ -295,6 +287,7 @@ public class SurveyServiceImpl implements SurveyService {
                 if(survey.getStartDate() == null || LocalDateTime.now(ZoneOffset.UTC).isAfter(survey.getStartDate())){
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
                     survey.setStatus(SurveyStatus.STARTED);
+                    participantService.updateStatus(tenant, survey.getId(), SurveyStatus.STARTED);
                     participantService.emailParticipantForSurvey(tenant, survey.getId(), survey);
                 }
 

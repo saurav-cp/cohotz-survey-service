@@ -20,4 +20,9 @@ public class RestTemplateConfiguration {
     RestTemplate cohotzCoreRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean(CLIENTS_PREFIX + RECORD_SERVICE_CLIENT)
+    RestTemplate cohotzRecordRestTemplate() {
+        return new RestTemplate();
+    }
 }

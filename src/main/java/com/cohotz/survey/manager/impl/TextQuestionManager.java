@@ -1,6 +1,5 @@
 package com.cohotz.survey.manager.impl;
 
-import com.cohotz.survey.client.core.model.ApiResponsePoolQuestionResult;
 import com.cohotz.survey.client.core.model.PoolQuestion;
 import com.cohotz.survey.client.core.model.Question;
 import com.cohotz.survey.client.core.model.TextResponseBasedQuestion;

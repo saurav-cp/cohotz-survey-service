@@ -6,6 +6,7 @@ public enum ServiceCHError implements CHError {
 
     CORE_SERVICE_DOWN("CP-ERR-SRV-100","Cohotz Core Service Down"),
     PROFILE_SERVICE_DOWN("CP-ERR-SRV-101","Cohotz Profile Service Down"),
+    RECORD_SERVICE_DOWN("CP-ERR-SRV-102","Cohotz Record Service Down"),
 
     ENGINE_NOT_FOUND("CP-ERR-ENG-101","Engine Not Found"),
 

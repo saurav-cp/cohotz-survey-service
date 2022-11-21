@@ -4,20 +4,26 @@ import com.cohotz.survey.client.core.model.ChoiceBasedQuestion;
 import com.cohotz.survey.client.core.model.PoolQuestion;
 import com.cohotz.survey.client.core.model.Question;
 import com.cohotz.survey.client.core.model.ResponseOption;
+import com.cohotz.survey.dto.producer.MetadataDTO;
+import com.cohotz.survey.dto.producer.enginescore.EngineScoreDTO;
+import com.cohotz.survey.dto.producer.enginescore.EngineScoreRecordDTO;
+import com.cohotz.survey.dto.producer.responseInsight.ResponseInsightDTO;
+import com.cohotz.survey.dto.producer.responseInsight.ResponseInsightRecordDTO;
 import com.cohotz.survey.dto.request.ChoiceBasedResponseDTO;
 import com.cohotz.survey.dto.request.ResponseDTO;
-import com.cohotz.survey.engine.score.record.*;
-import com.cohotz.survey.kafka.ResponseInsightProducer;
 import com.cohotz.survey.manager.QuestionManager;
+import com.cohotz.survey.model.Cohort;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.question.ChoiceBasedSurveyQuestion;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.ChoiceResponse;
 import com.cohotz.survey.model.response.Response;
+import com.cohotz.survey.producer.EngineScoreRecordProducer;
+import com.cohotz.survey.producer.ResponseInsightProducer;
 import com.cohotz.survey.response.insight.record.QuestionDetails;
 import com.cohotz.survey.response.insight.record.ResponseInsightRecord;
-import com.cohotz.survey.score.record.EngineScoreRecordPublisher;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.cohotz.boot.error.CHException;
 import org.cohotz.boot.model.common.CohotzEntity;
 import org.slf4j.MDC;
@@ -38,7 +44,7 @@ import static org.cohotz.boot.CHConstants.LOG_TRACE_ID;
 public class ChoiceQuestionManager implements QuestionManager {
 
     @Autowired
-    EngineScoreRecordPublisher engineScoreRecordPublisher;
+    EngineScoreRecordProducer engineScoreRecordProducer;
 
     @Autowired
     ResponseInsightProducer responseInsightProducer;
@@ -69,7 +75,9 @@ public class ChoiceQuestionManager implements QuestionManager {
             ResponseOption responseOption = ques.getResponseOptionMap().get(s - 1);
             //if (responseOption == null) invalidResponse.set(true);
             score.set(score.get() + responseOption.getScore());
-            publishInsights(participant, question, responseOption);
+            if(StringUtils.isNotBlank(responseOption.getInsight().getInsight())) {
+                publishInsights(participant, question, responseOption);
+            }
         });
         response.setScore((score.get()*100)/ques.getMax());
 
@@ -81,61 +89,54 @@ public class ChoiceQuestionManager implements QuestionManager {
     private void publishInsights(Participant participant, StaticSurveyQuestion ques, ResponseOption response) {
         log.info("Publishing Insight for [{}] from [{}] for question [{}]",
                 participant.getEmail(), participant.getTenant(), ques.getPoolQuesReferenceCode());
-        try {
-            responseInsightProducer.publish(
+            responseInsightProducer.send(
                     participant.getId() + "__" + ques.getPoolQuesReferenceCode(),
-                    ResponseInsightRecord.newBuilder()
-                            .setMetadata(com.cohotz.survey.response.insight.record.MetaData.newBuilder()
-                                    .setSource(SURVEY_SERVICE_CLIENT)
-                                    .setTraceId(MDC.get(LOG_TRACE_ID))
+                    ResponseInsightRecordDTO.builder()
+                            .metadata(MetadataDTO.builder()
+                                    .source(SURVEY_SERVICE_CLIENT)
+                                    .traceId(MDC.get(LOG_TRACE_ID))
                                     .build())
-                            .setData(com.cohotz.survey.response.insight.record.ResponseInsight.newBuilder()
-                                    .setEmail(participant.getEmail())
-                                    .setTenant(participant.getTenant())
-                                    .setQuestion(new QuestionDetails(ques.getPoolQuesReferenceCode(), ques.getText()))
-                                    .setEngine(com.cohotz.survey.response.insight.record.EngineDetails.newBuilder()
-                                            .setCode(ques.getEngine().getCode())
-                                            .setName(ques.getEngine().getName())
-                                            .build())
-                                    .setBlock(com.cohotz.survey.response.insight.record.BlockDetails.newBuilder()
-                                            .setCode(participant.getBlock().getCode())
-                                            .setName(participant.getBlock().getName())
-                                            .build())
-                                    .setInsight(response.getInsight().getInsight())
-                                    .setSource("STATIC_SURVEY")
-                                    .setChannel("WEB")
+                            .data(ResponseInsightDTO.builder()
+                                    .email(participant.getEmail())
+                                    .tenant(participant.getTenant())
+                                    .question(new CohotzEntity(ques.getText(), ques.getPoolQuesReferenceCode()))
+                                    .engine(new CohotzEntity(ques.getEngine().getName(), ques.getEngine().getCode()))
+                                    .block(new CohotzEntity(participant.getBlock().getName(), participant.getBlock().getCode()))
+                                    .insight(response.getInsight().getInsight())
+                                    .source("STATIC_SURVEY")
+                                    .channel("WEB")
                                     .build())
                             .build()
             );
-        } catch (Exception e) {
-            log.error("Error while publishing insight for [{}] from [{}] for question [{}]: [{}]",
-                    participant.getEmail(), participant.getTenant(), ques.getPoolQuesReferenceCode(), e.getMessage());
-        }
     }
 
     private void createEngineRecord(Participant participant, CohotzEntity engine, double score, double max) {
         log.debug("Creating Engine Score record for [{}] for engine [{}]", participant.getEmail(), engine.getCode());
-        engineScoreRecordPublisher.publish(
-                participant.getId()+"__"+engine.getCode(),
-                EngineScoreRecord.newBuilder()
-                        .setMetadata(MetaData.newBuilder()
-                                .setSource(SURVEY_SERVICE_CLIENT)
-                                .setTraceId(MDC.get(LOG_TRACE_ID))
-                                .build())
-                        .setData(EngineScore.newBuilder()
-                                .setEmail(participant.getEmail())
-                                .setReportingTo(participant.getReportingTo())
-                                .setTenant(participant.getTenant())
-                                .setEngine(new EngineDetails(engine.getCode(), engine.getName()))
-                                .setBlock(new BlockDetails(participant.getBlock().getCode(), participant.getBlock().getName()))
-                                .setSource("SURVEY")
-                                .setScore(score)
-                                .setMax(max)
-                                .setCohorts(participant.getCohorts().stream().map(c -> new Cohort(c.getValue(), c.getName())).collect(Collectors.toList()))
-                                .setReportingHierarchy(
-                                        participant.getReportingHierarchy().stream().collect(Collectors.toList()))
-                                .build()
-                        ).build());
+        try {
+            engineScoreRecordProducer.send(
+                    participant.getId() + "__" + engine.getCode(),
+                    EngineScoreRecordDTO.builder()
+                            .metadata(MetadataDTO.builder()
+                                    .source(SURVEY_SERVICE_CLIENT)
+                                    .traceId(MDC.get(LOG_TRACE_ID))
+                                    .build())
+                            .data(EngineScoreDTO.builder()
+                                    .email(participant.getEmail())
+                                    .reportingTo(participant.getReportingTo())
+                                    .tenant(participant.getTenant())
+                                    .engine(new CohotzEntity(engine.getName(), engine.getCode()))
+                                    .block(new CohotzEntity(participant.getBlock().getName(), participant.getBlock().getCode()))
+                                    .source("SURVEY")
+                                    .score(score)
+                                    .max(max)
+                                    .cohorts(participant.getCohorts().stream().map(c -> new Cohort(c.getValue(), c.getName())).collect(Collectors.toList()))
+                                    .reportingHierarchy(
+                                            participant.getReportingHierarchy().stream().collect(Collectors.toList()))
+                                    .build()
+                            ).build());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    @Override

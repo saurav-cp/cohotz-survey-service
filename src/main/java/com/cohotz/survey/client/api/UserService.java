@@ -2,8 +2,10 @@ package com.cohotz.survey.client.api;
 
 import com.cohotz.survey.client.profile.UserApi;
 import com.cohotz.survey.client.profile.UserHierarchyApi;
+import com.cohotz.survey.client.profile.model.PreferredEngineRecordDTO;
 import com.cohotz.survey.client.profile.model.UserMinRes;
 import com.cohotz.survey.client.profile.model.UserRes;
+import com.cohotz.survey.dto.producer.preferredEngine.CultureEnginePreferenceRecordDTO;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
@@ -130,6 +132,29 @@ public class UserService {
         }
     }
 
+    @CircuitBreaker(name = USER_SERVICE_CLIENT, fallbackMethod = "updatePreferenceFallback")
+    @Retry(name = USER_SERVICE_CLIENT)
+    public void updatePreference(PreferredEngineRecordDTO request) throws CHException {
+        try {
+            log.debug("[{}] Updating preference engine [{}] and user [{}]",
+                    USER_SERVICE_CLIENT,
+                    request.getData().getTenant(), request.getData().getEmail());
+            log.info("engine pref request payload: {}", request);
+            userApi.updateEnginePreference(request, request.getData().getTenant());
+        } catch (HttpClientErrorException e) {
+            if(e.getStatusCode() == HttpStatus.BAD_REQUEST){
+                log.error("Error while Updating preference engine:  {}", e.getMessage());
+                throw new CHException(PROFILE_SERVICE_DOWN);
+            }else {
+                log.error("Exception: {}", e);
+                throw e;
+            }
+        } catch (Exception e) {
+            log.error("Exception: {}", e);
+            throw e;
+        }
+    }
+
     public List<UserMinRes> usersFallback(String tenant, Exception e) throws CHException {
         throw new CHException(PROFILE_SERVICE_DOWN);
     }
@@ -143,6 +168,10 @@ public class UserService {
     }
 
     public List<String> reportingHierarchyFallback(String tenant, String email, Exception e) throws CHException {
+        throw new CHException(PROFILE_SERVICE_DOWN);
+    }
+
+    public void updatePreferenceFallback(PreferredEngineRecordDTO request, Exception e) throws CHException {
         throw new CHException(PROFILE_SERVICE_DOWN);
     }
 
