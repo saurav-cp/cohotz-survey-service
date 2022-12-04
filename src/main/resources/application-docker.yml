@@ -2,36 +2,10 @@ cohotz:
   clients:
     cohotz-core-service:
       url: "http://cohotz-core-service:8080"
-      oauth2:
-        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
     cohotz-profile-service:
       url: "http://cohotz-profile-service:8080"
-      oauth2:
-        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
     cohotz-record-service:
       url: "http://cohotz-record-service:8080"
-      oauth2:
-        access-token-url: http://keycloak:8080/auth/realms/cohotz/protocol/openid-connect/token
-server:
-  port: 8080
-
-kafka:
-  bootstrapAddress: "kafka:29092"
-  schemaRegistry: "http://schema-registry:8081"
-
-spring:
-  cache:
-    type: redis
-  redis:
-    host: redis
-    port: 6379
-  data:
-    mongodb:
-      uri: mongodb://ch_survey_service:SurveyCH639@mongodb:27017/ch_survey_db?retryWrites=true&w=majority&authSource=admin
-      database: ch_survey_db
-      authentication-database: admin
-      auto-index-creation: true
 
 keycloak:
-  auth-server-url: http://keycloak:8080/auth
   ssl-required: none
