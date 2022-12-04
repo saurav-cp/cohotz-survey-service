@@ -129,7 +129,7 @@ public class ChoiceQuestionManager implements QuestionManager {
                                     .source("SURVEY")
                                     .score(score)
                                     .max(max)
-                                    .cohorts(participant.getCohorts().stream().map(c -> new Cohort(c.getValue(), c.getName())).collect(Collectors.toList()))
+                                    .cohorts(participant.getCohorts().stream().map(c -> new Cohort(c.getName(), c.getValue())).collect(Collectors.toList()))
                                     .reportingHierarchy(
                                             participant.getReportingHierarchy().stream().collect(Collectors.toList()))
                                     .build()
