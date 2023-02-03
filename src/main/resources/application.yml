@@ -64,6 +64,7 @@ kafka:
   sasl-enabled: ${COHOTZ_SASL_ENABLED:true}
 keycloak:
   enabled: ${COHOTZ_AUTH_ENABLED:true}
+  ssl-required: none
   auth-server-url: http://${COHOTZ_KEYCLOAK_HOST:localhost}:8080/auth
   realm: cohotz
   resource: cohotz-service
