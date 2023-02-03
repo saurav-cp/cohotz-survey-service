@@ -36,6 +36,8 @@ public enum ServiceCHError implements CHError {
     CULTR_SURVEY_NOT_STARTED("CP-ERR-SRVY-112","Responses cannot be accepted for this survey has not started"),
     CH_SURVEY_PUBLISHER_NOT_FOUND("CP-ERR-SRVY-113","Survey Publisher not found"),
     CH_SURVEY_INVALID_PARTICIPANTS_SOURCE("CP-ERR-SRVY-114","Invalid Participants Source"),
+    CH_SURVEY_ALREADY_EXISTS("CP-ERR-SRVY-115","azAI Tree Survey with requested engine and category already exists"),
+    CH_SURVEY_NOT_FOUND("CP-ERR-SRVY-116","azAI Tree Survey not found"),
 
     CH_SUBS_ALREADY_EXISTS("CP-ERR-SUBS-100","Subscription already exists"),
     CH_SUBS_NOT_FOUND("CP-ERR-SUBS-101","Subscription not found"),
@@ -43,6 +45,7 @@ public enum ServiceCHError implements CHError {
     TENANT_NOT_FOUND("CP-ERR-TNT-100","Tenant not found"),
     TENANT_MISMATCH("CP-ERR-TNT-101","Tenant Mismatch"),
     TENANT_ALREADY_EXISTS("CP-ERR-TNT-102","Tenant Already Exisits"),
+
     ;
 
     private final String code;
