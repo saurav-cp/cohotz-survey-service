@@ -1,5 +1,6 @@
 package com.cohotz.survey.service.impl;
 
+import com.cohotz.survey.dto.email.ParticipantEmail;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.mail.sib.SIBSendEmailReq;
 import com.cohotz.survey.model.mail.sib.SIBSendEmailRes;
@@ -24,6 +25,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -39,6 +41,10 @@ public class MailServiceImpl implements MailService {
     @Value("classpath:email/engagement-survey.html")
     private Resource engagementSurveyHtml;
 
+    @Value("classpath:email/engagement-participants.html")
+    private Resource engagementParticipants;
+
+
     @Value("${cp.email.enabled:false}")
     private boolean enabled;
 
@@ -52,25 +58,41 @@ public class MailServiceImpl implements MailService {
     RestTemplate restTemplate;
 
     @Override
-    public void sendSurvey(Survey survey, String email, String link) {
-        //log.warn("TO BE IMPLEMENTED: sending email for survey  {} for participant {}", survey.getId(), email);
+    public void sendSurvey(Survey survey, String email, String name, String link) {
         log.debug("Initiating email survey {} email for {}", survey.getName(), email);
-//        String content = SURVEY_EMAIL_TEMPLATE.replace("SURVEY_LINK", link);
-//        content = content.replace("SURVEY_DETAILS_PLACEHOLDER", survey.getName() + " by "+survey.getPublisher());
-//        SIBSendEmailReq req = SIBSendEmailReq.builder()
-//                .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
-//                .to(List.of(new SIBTo(email, email)))
-//                .subject("New Cohotz Survey - "+survey.getName())
-//                .htmlContent(content)
-//                .build();
-//        send(req);
-        log.debug("Survey Email Template: [{}]", CHStringUtils.asString(surveyHtml));
-        log.info("Successfully send survey {} email to {}", survey.getName(), email);
+        String emailTemplate = CHStringUtils.asString(engagementSurveyHtml);
+        String content = emailTemplate.replace("SURVEY_LINK", link)
+                .replace("SURVEY_DETAILS_PLACEHOLDER", survey.getDescription())
+                .replace("SURVEY_PARTICIPANT_NAME", name);
+        SIBSendEmailReq req = SIBSendEmailReq.builder()
+                .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
+                .to(List.of(new SIBTo(email, email)))
+                .subject("New Cohotz Survey - "+survey.getName())
+                .htmlContent(content)
+                .build();
+        send(req);
+        log.info("Successfully sent survey [{}] email to [{}]", survey.getName(), email);
     }
 
     @Override
-    public void sendEngagementSurvey(Survey survey, String email, String link) {
-        log.debug("Engagement Survey Email Template: [{}]", CHStringUtils.asString(engagementSurveyHtml));
+    public void sendEngagementSurvey(Survey survey, List<ParticipantEmail> participants) {
+        String emailTemplate = CHStringUtils.asString(engagementSurveyHtml);
+        String participantTemplate = CHStringUtils.asString(engagementParticipants);
+        StringBuilder participantDetails = new StringBuilder();
+        participants.forEach(p -> participantDetails.append(participantTemplate
+                .replace("PARTICIPANT_NAME", p.getName()).replace("SURVEY_LINK", p.getLink())));
+        String content = emailTemplate.replace("SURVEY_NAME_PLACEHOLDER", survey.getName()
+                .replace("SURVEY_MANAGER_NAME", survey.getPublisherName())
+                .replace("SURVEY_PARTICIPANTS", participantDetails));
+        log.debug("Engagement Survey Email Template: [{}]", content);
+        SIBSendEmailReq req = SIBSendEmailReq.builder()
+                .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
+                .to(List.of(new SIBTo(survey.getPublisher(), survey.getPublisher())))
+                .subject("Employee Engagement Feedback - "+survey.getName())
+                .htmlContent(content)
+                .build();
+        send(req);
+        log.info("Successfully sent engagement survey [{}] email to [{}]", survey.getName(), survey.getPublisher());
     }
 
     private SIBSendEmailRes send(SIBSendEmailReq request) {

@@ -1,5 +1,6 @@
 package com.cohotz.survey.model;
 
+import com.cohotz.survey.client.core.model.CultureBlock;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class Survey {
     public Survey(){
         this.questionMap = new HashMap<>();
         this.engines = new ArrayList<>();
-        this.type = SurveyType.CULTURE_ENGINE_STATIC;
+        this.type = CultureBlock.TypeEnum.DEFAULT;
     }
     @Id
     protected String id;
@@ -63,7 +64,7 @@ public class Survey {
     protected long partCount;
     @Field("res_count")
     protected long responseCount;
-    protected SurveyType type;
+    protected CultureBlock.TypeEnum type;
     @Field("part_source")
     protected ParticipantSource participantSource;
     @Field("created_ts")

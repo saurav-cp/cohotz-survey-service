@@ -30,7 +30,6 @@ import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -126,6 +125,7 @@ public class SurveyServiceImpl implements SurveyService {
             BeanUtils.copyProperties(e, ew);
             survey.getEngines().add(new WeightedEngineScore(ew.getName(), ew.getCode(), ew.getWeight()));
         });
+        survey.setType(block.getType());
         survey.setFormula(block.getFormula());
         survey.setStatus(SurveyStatus.DRAFT);
         survey.setLastReminder(LocalDateTime.now());
@@ -288,7 +288,7 @@ public class SurveyServiceImpl implements SurveyService {
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
                     survey.setStatus(SurveyStatus.STARTED);
                     participantService.updateStatus(tenant, survey.getId(), SurveyStatus.STARTED);
-                    participantService.emailParticipantForSurvey(tenant, survey.getId(), survey);
+                    participantService.emailParticipantForSurvey(survey);
                 }
 
             }

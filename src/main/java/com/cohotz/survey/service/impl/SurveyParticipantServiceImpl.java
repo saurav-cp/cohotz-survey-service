@@ -6,6 +6,7 @@ import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.ParticipantDao;
 import com.cohotz.survey.dao.SurveyDao;
+import com.cohotz.survey.dto.email.ParticipantEmail;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantMinRes;
 import com.cohotz.survey.manager.QuestionManager;
@@ -172,33 +173,27 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
 
     @Override
     @Async
-    public void emailParticipantForSurvey(String tenant, String surveyId, Survey survey) {
-        dao.findByTenantAndSurveyId(tenant, surveyId)
+    public void emailParticipantForSurvey(Survey survey) {
+        List<ParticipantEmail> participants = new ArrayList<>();
+        dao.findByTenantAndSurveyId(survey.getTenant(), survey.getId())
                 .forEach(p -> {
-                    String email = survey.getType().equals(Survey.SurveyType.ENGAGEMENT) ? survey.getPublisher() : p.getEmail();
-                    mailService.sendSurvey(survey, email, String.format(
+                    participants.add(new ParticipantEmail(p.getName(), p.getEmail(), String.format(
                             config.getSurveyLinkFormat(),
-                            tenant,
-                            surveyId,
-                            p.getAccessCode()));
+                            survey.getTenant(),
+                            survey.getId(),
+                            p.getAccessCode())));
                     p.setSurveyStatus(SurveyStatus.STARTED);
                     dao.save(p);
                 });
-    }
+        switch (survey.getType()) {
+            case EMPLOYEE_ENGAGEMENT:
+                mailService.sendEngagementSurvey(survey, participants);
+                break;
+            default:
+                participants.forEach(p -> mailService.sendSurvey(survey, p.getEmail(), p.getName(), p.getLink()));
+                break;
+        }
 
-    @Override
-    public void emailManagerForSurvey(String tenant, String surveyId, Survey survey) {
-        dao.findByTenantAndSurveyId(tenant, surveyId)
-                .forEach(p -> {
-                    String email = survey.getType().equals(Survey.SurveyType.ENGAGEMENT) ? survey.getPublisher() : p.getEmail();
-                    mailService.sendEngagementSurvey(survey, email, String.format(
-                            config.getSurveyLinkFormat(),
-                            tenant,
-                            surveyId,
-                            p.getAccessCode()));
-                    p.setSurveyStatus(SurveyStatus.STARTED);
-                    dao.save(p);
-                });
     }
 
     @Override

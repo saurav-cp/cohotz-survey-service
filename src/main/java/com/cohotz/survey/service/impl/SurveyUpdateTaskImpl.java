@@ -95,7 +95,7 @@ public class SurveyUpdateTaskImpl implements SurveyUpdateTask {
         if (survey.getStatus().equals(SurveyStatus.PUBLISHED)
                 && survey.getStartDate().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
             survey.setStatus(SurveyStatus.STARTED);
-            participantService.emailParticipantForSurvey(survey.getTenant(), survey.getId(), survey);
+            participantService.emailParticipantForSurvey(survey);
         }
 
         //If Survey has been published with no valid participants, move the status to error
