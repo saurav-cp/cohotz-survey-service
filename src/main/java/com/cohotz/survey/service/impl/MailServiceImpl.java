@@ -81,9 +81,10 @@ public class MailServiceImpl implements MailService {
         StringBuilder participantDetails = new StringBuilder();
         participants.forEach(p -> participantDetails.append(participantTemplate
                 .replace("PARTICIPANT_NAME", p.getName()).replace("SURVEY_LINK", p.getLink())));
-        String content = emailTemplate.replace("SURVEY_NAME_PLACEHOLDER", survey.getName()
+        String content = emailTemplate.replace("SURVEY_NAME_PLACEHOLDER", survey.getName())
                 .replace("SURVEY_MANAGER_NAME", survey.getPublisherName())
-                .replace("SURVEY_PARTICIPANTS", participantDetails));
+                .replace("SURVEY_DETAILS_PLACEHOLDER", survey.getDescription())
+                .replace("SURVEY_PARTICIPANTS", participantDetails);
         log.debug("Engagement Survey Email Template: [{}]", content);
         SIBSendEmailReq req = SIBSendEmailReq.builder()
                 .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
