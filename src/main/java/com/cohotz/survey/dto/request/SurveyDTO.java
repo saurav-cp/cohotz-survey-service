@@ -43,6 +43,4 @@ public class SurveyDTO {
     private long reminderFrequencyInDays;
     @Builder.Default
     private boolean smartSkip =true;
-    @Builder.Default
-    private Survey.SurveyType type = Survey.SurveyType.CULTURE_ENGINE_STATIC;
 }
