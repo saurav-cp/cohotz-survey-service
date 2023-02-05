@@ -279,22 +279,22 @@ public class SurveyServiceImpl implements SurveyService {
             return;
         }
         if (config.getStatusMap().get(survey.getStatus().name()).contains(newStatus)) {
-            survey.setStatus(SurveyStatus.valueOf(newStatus));
-            participantService.updateStatus(tenant, survey.getId(), survey.getStatus());
-            log.debug("Successfully updated status of survey {} to {} along with the participants", survey.getId(), survey.getStatus());
-            if (survey.getStatus().compareTo(SurveyStatus.PUBLISHED) == 0) {
-                log.debug("Status moved to published. Pushing emails to all participants");
+            //Directly move to STARTED instead of PUBLISHED if start date not defined or is in the past
+            if (SurveyStatus.PUBLISHED.equals(newStatus) || SurveyStatus.STARTED.equals(newStatus)) {
                 if(survey.getStartDate() == null || LocalDateTime.now(ZoneOffset.UTC).isAfter(survey.getStartDate())){
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
                     survey.setStatus(SurveyStatus.STARTED);
                     participantService.updateStatus(tenant, survey.getId(), SurveyStatus.STARTED);
                     participantService.emailParticipantForSurvey(survey);
                 }
-
+            }else {
+                survey.setStatus(SurveyStatus.valueOf(newStatus));
+                participantService.updateStatus(tenant, survey.getId(), survey.getStatus());
             }
+            log.debug("Survey [{}] status updated to [{}], pushing emails to participants", survey.getId(), survey.getStatus());
             dao.save(survey);
         } else {
-            log.error("Status update for survey {} from {} to {} not allowed", id, survey.getStatus(), newStatus);
+            log.error("Survey [{}] status update from [{}] to [{}] not allowed", id, survey.getStatus(), newStatus);
             throw new CHException(CULTR_SURVEY_STATUS_UPDATE_NOT_ALLOWED);
         }
     }
