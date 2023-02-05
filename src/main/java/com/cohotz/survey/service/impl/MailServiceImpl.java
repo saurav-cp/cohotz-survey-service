@@ -45,7 +45,7 @@ public class MailServiceImpl implements MailService {
     private Resource engagementParticipants;
 
 
-    @Value("${cp.email.enabled:false}")
+    @Value("${cohotz.email.enabled:false}")
     private boolean enabled;
 
     @Value("${sib.api-key}")
