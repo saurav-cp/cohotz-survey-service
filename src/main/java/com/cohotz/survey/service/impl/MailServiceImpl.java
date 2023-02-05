@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService {
     @Value("classpath:email/engagement-survey.html")
     private Resource engagementSurveyHtml;
 
-    @Value("classpath:email/engagement-participants.html")
+    @Value("classpath:email/engagement-participant.html")
     private Resource engagementParticipants;
 
 
