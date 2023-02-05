@@ -171,7 +171,7 @@ survey:
     tenants:
       - COHOTZ
   smart-threshold: 3
-  survey-link-format: "http://localhost:8083/survey/%s/%s/%s"
+  survey-link-format: "https://app.cohotz.com/survey/%s/%s/%s"
   status-map:
     DRAFT:
       - PUBLISHED
