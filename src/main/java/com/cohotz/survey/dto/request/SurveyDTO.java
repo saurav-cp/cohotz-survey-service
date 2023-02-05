@@ -39,7 +39,6 @@ public class SurveyDTO {
     protected Survey.ParticipantSource participantSource;
     @NotNull
     private String block;
-    //@NotEmpty
     private Set<String> participants;
     private long reminderFrequencyInDays;
     @Builder.Default

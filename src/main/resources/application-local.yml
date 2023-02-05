@@ -9,19 +9,19 @@ spring:
     port: 6379
   data:
     mongodb:
-      uri: mongodb://ch_survey_service:SurveyCH639@localhost:27017/ch_survey_db?retryWrites=true&w=majority&authSource=admin
+      uri: mongodb://ch_survey_service:SurveyCH639@43.204.97.157:27017/ch_survey_db?retryWrites=true&w=majority&authSource=admin
       database: ch_survey_db
       authentication-database: admin
       auto-index-creation: true
 
 keycloak:
-  auth-server-url: http://localhost:8080/auth
+  auth-server-url: http://43.204.97.157:8080/auth
   realm: cohotz
-  resource: cohotz-profile-service
+  resource: cohotz-service
   public-client: true
   bearer-only: true
   principal-attribute: preferred_username
-  use-resource-role-mappings: true
+  use-resource-role-mappings: false
   security-constraints:
     - authRoles:
         - user

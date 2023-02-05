@@ -10,5 +10,6 @@ public interface MailService {
 
     //void profileUpdateConfirmation(String email, String tenant);
     void sendSurvey(Survey survey, String email, String link);
+    void sendEngagementSurvey(Survey survey, String email, String link);
     //SIBSendEmailRes send(SIBSendEmailReq req);
 }

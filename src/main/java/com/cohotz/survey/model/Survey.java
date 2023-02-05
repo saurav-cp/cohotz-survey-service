@@ -69,7 +69,7 @@ public class Survey {
     @Field("created_ts")
     protected LocalDateTime createdTS = LocalDateTime.now();
     public enum SurveyType {
-        CULTURE_ENGINE_STATIC, CULTURE_ENGINE_RUBICA, ENPS, SPOT, AUTOMATIC
+        CULTURE_ENGINE_STATIC, CULTURE_ENGINE_RUBICA, ENPS, SPOT, AUTOMATIC, ENGAGEMENT
     }
 
     public enum ParticipantSource {

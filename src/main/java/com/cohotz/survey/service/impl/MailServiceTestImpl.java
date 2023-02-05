@@ -3,13 +3,14 @@ package com.cohotz.survey.service.impl;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-//@Profile({"it", "test", "perf", "docker"})
+@ConditionalOnProperty(name = "cohotz.email.enabled", havingValue = "false")
 public class MailServiceTestImpl implements MailService {
 
 //    @Async
@@ -45,6 +46,11 @@ public class MailServiceTestImpl implements MailService {
     @Override
     public void sendSurvey(Survey survey, String email, String link) {
         log.warn("Sending email for survey  {} for participant {}", survey.getId(), email);
+    }
+
+    @Override
+    public void sendEngagementSurvey(Survey survey, String email, String link) {
+        log.warn("Sending email for engagement survey  {} for manager {}", survey.getId(), email);
     }
 
 //    @Override

@@ -27,7 +27,7 @@ import java.util.*;
 @Sharded(shardKey = { "tenant" })
 public class Participant extends CHBaseModel {
 
-    public Participant(String email, String reportingTo, String surveyId, String surveyName, String tenant, LocalDateTime dueDate){
+    public Participant(String email, String name, String reportingTo, String surveyId, String surveyName, String tenant, LocalDateTime dueDate){
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.dueDate = dueDate;
@@ -36,6 +36,7 @@ public class Participant extends CHBaseModel {
         this.scoreAccumulated = false;
         this.emailSent = false;
         this.email = email;
+        this.name = name;
         this.reportingTo = reportingTo;
         this.reportingHierarchy = new ArrayList<>();
         this.setQuestionMap(new HashMap<>());
@@ -65,6 +66,8 @@ public class Participant extends CHBaseModel {
     private String accessCode;
 
     private String email;
+
+    private String name;
 
     @Field("reporting_to")
     private String reportingTo;

@@ -89,7 +89,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         Map<String, Response> smartSkipEligibleQuestions = fetchSmartSkipEligibleQuestions(survey.getTenant(), email);
         UserRes user = userService.fetchByTenantAndEmail(survey.getTenant(), email);
         List<String> reportingHierarchy = userService.fetchReportingHierarchy(survey.getTenant(), email);
-        Participant participant = new Participant(email, user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
+        Participant participant = new Participant(email, user.getName(), user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
         participant.setReportingHierarchy(reportingHierarchy);
         survey.getQuestionMap().forEach((qCode, question) -> {
             QuestionManager rm = (QuestionManager)context.getBean(question.getResponseType());
@@ -175,7 +175,23 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     public void emailParticipantForSurvey(String tenant, String surveyId, Survey survey) {
         dao.findByTenantAndSurveyId(tenant, surveyId)
                 .forEach(p -> {
-                    mailService.sendSurvey(survey, p.getEmail(), String.format(
+                    String email = survey.getType().equals(Survey.SurveyType.ENGAGEMENT) ? survey.getPublisher() : p.getEmail();
+                    mailService.sendSurvey(survey, email, String.format(
+                            config.getSurveyLinkFormat(),
+                            tenant,
+                            surveyId,
+                            p.getAccessCode()));
+                    p.setSurveyStatus(SurveyStatus.STARTED);
+                    dao.save(p);
+                });
+    }
+
+    @Override
+    public void emailManagerForSurvey(String tenant, String surveyId, Survey survey) {
+        dao.findByTenantAndSurveyId(tenant, surveyId)
+                .forEach(p -> {
+                    String email = survey.getType().equals(Survey.SurveyType.ENGAGEMENT) ? survey.getPublisher() : p.getEmail();
+                    mailService.sendEngagementSurvey(survey, email, String.format(
                             config.getSurveyLinkFormat(),
                             tenant,
                             surveyId,

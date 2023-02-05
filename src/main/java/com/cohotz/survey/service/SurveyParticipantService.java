@@ -25,6 +25,7 @@ public interface SurveyParticipantService {
     long surveyParticipantCount(String tenant, String surveyId);
     long surveyResponseCount(String tenant, String surveyId);
     void emailParticipantForSurvey(String tenant, String surveyId, Survey survey);
+    void emailManagerForSurvey(String tenant, String surveyId, Survey survey);
     void updateStatus(String tenant, String surveyId, SurveyStatus status);
     List<Participant> findAllForEmployee(String tenant, String email, LocalDateTime responseTS);
     //List<AssignedSurvey> findAssignedSurveys(boolean pending);
