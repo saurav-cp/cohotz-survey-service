@@ -66,7 +66,7 @@ kafka:
 keycloak:
   enabled: ${COHOTZ_AUTH_ENABLED:true}
   ssl-required: none
-  auth-server-url: http://${COHOTZ_KEYCLOAK_HOST:localhost}:8080/auth
+  auth-server-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}
   realm: cohotz
   resource: cohotz-service
   public-client: false
