@@ -14,7 +14,7 @@ cohotz:
         enabled: ${COHOTZ_CORE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_CORE_SERVICE_SECRET}
-        access-token-url: http://${COHOTZ_KEYCLOAK_HOST:localhost}:8080/auth/realms/cohotz/protocol/openid-connect/token
+        access-token-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
       url: ${COHOTZ_PROFILE_SERVICE_HOST:http://localhost:8083}
@@ -22,7 +22,7 @@ cohotz:
         enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_PROFILE_SERVICE_SECRET}
-        access-token-url: http://${COHOTZ_KEYCLOAK_HOST:localhost}:8080/auth/realms/cohotz/protocol/openid-connect/token
+        access-token-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-profile-service
     cohotz-record-service:
       url: ${COHOTZ_RECORD_SERVICE_HOST:http://localhost:8085}
@@ -30,7 +30,7 @@ cohotz:
         enabled: ${COHOTZ_RECORD_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
         client-secret: ${COHOTZ_PROFILE_SERVICE_SECRET}
-        access-token-url: http://${COHOTZ_KEYCLOAK_HOST:localhost}:8080/auth/realms/cohotz/protocol/openid-connect/token
+        access-token-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-record-service
   micro-culture:
     reportee-threshold: 2
