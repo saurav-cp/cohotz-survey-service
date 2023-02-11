@@ -5,6 +5,7 @@ import com.cohotz.survey.client.api.QuestionPoolService;
 import com.cohotz.survey.client.api.TenantService;
 import com.cohotz.survey.client.api.UserService;
 import com.cohotz.survey.client.core.model.*;
+import com.cohotz.survey.client.profile.model.UserCohort;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.SurveyDao;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.model.common.CohortProcessor;
 import org.cohotz.boot.model.common.CohotzEntity;
 import org.cohotz.boot.utils.RequestUtils;
 import org.springframework.beans.BeanUtils;
@@ -141,7 +143,13 @@ public class SurveyServiceImpl implements SurveyService {
 
         CollectionUtils.emptyIfNull(tenantService.fetchByCode(survey.getTenant()).getCohorts())
                 .stream()
-                .map(c -> survey.getCohorts().add(new CohortItem(c.getPosition(), c.getField(), c.getDisplayName())))
+                .filter(com.cohotz.survey.client.core.model.CohortItem::getActive)
+                .map(c -> survey.getCohorts().add(
+                        new CohortItem(
+                                c.getPosition(),
+                                c.getField(),
+                                c.getDisplayName(),
+                                CohortProcessor.valueOf(c.getProcessor().name()))))
                         .collect(Collectors.toList());
 
         log.debug("Creating survey: {}", survey);

@@ -35,6 +35,7 @@ public class TenantService {
         try {
             log.debug("[{}] Fetching tenant Details: [{}]", code);
             TenantRes tenant = tenantApi.fetchByCode(code).getResult();
+            log.info("Tenant Detail: [{}]", tenant);
             return tenant;
         } catch (HttpClientErrorException e) {
             if(e.getStatusCode() == HttpStatus.BAD_REQUEST){
@@ -51,7 +52,7 @@ public class TenantService {
     }
 
 
-    public CultureBlock tenantDetailsFallback(String code, Exception e) throws CHException {
+    public TenantRes tenantDetailsFallback(String code, Exception e) throws CHException {
         throw new CHException(CORE_SERVICE_DOWN);
     }
 }

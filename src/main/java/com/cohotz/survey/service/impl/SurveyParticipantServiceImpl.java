@@ -2,6 +2,7 @@ package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.client.api.UserService;
 import com.cohotz.survey.client.core.model.CultureBlockMin;
+import com.cohotz.survey.client.profile.model.UserCohort;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.ParticipantDao;
@@ -23,14 +24,17 @@ import com.cohotz.survey.service.SurveyParticipantService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cohotz.boot.error.CHException;
+import org.cohotz.boot.model.common.CohortProcessor;
 import org.cohotz.boot.model.common.CohotzEntity;
+import org.cohotz.boot.utils.FieldUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -38,7 +42,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static com.cohotz.survey.error.ServiceCHError.*;
-import static com.cohotz.survey.utils.ProfileUtils.getYearRange;
 
 @Service
 @Slf4j
@@ -328,20 +331,53 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     }
 
     private List<Cohort> fetchCohorts(UserRes u, List<CohortItem> cohortItems) {
+        log.info("Fetching Cohorts for [{}] : [{}]", u.getEmail(), u.getCohorts());
+        log.info("Survey level Cohort Mapper: [{}]", cohortItems);
         List<Cohort> cohorts = new ArrayList<>();
-        cohortItems.forEach(ci -> {
-            try {
-                Field field = UserRes.class.getDeclaredField(ci.getField());
-                field.setAccessible(true);
-                if (List.of("currentExperience", "totalExperience").contains(ci.getField())) {
-                    cohorts.add(new Cohort(ci.getDisplayName(), getYearRange((Double) field.get(u))));
-                } else {
-                    cohorts.add(new Cohort(ci.getDisplayName(), (String) field.get(u)));
+        for(CohortItem ci : cohortItems) {
+            log.info("Processing Cohort Item: [{}]", ci);
+            for(UserCohort uci : u.getCohorts()) {
+                log.info("Processing User Cohort Item: [{}]", uci);
+                if(uci.getKey().equals(ci.getField())) {
+                    log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
+                    if(ci.getProcessor().equals(CohortProcessor.NONE)){
+                        cohorts.add(new Cohort(ci.getDisplayName(), (String) uci.getValue()));
+                    } else {
+                        cohorts.add(new Cohort(ci.getDisplayName(), cohortProcessor(ci, uci)));
+                    }
                 }
-            } catch (Exception e) {
-                log.error("Error while creating cohort: [{}]", e.getMessage());
             }
-        });
+        }
+//        cohortItems.forEach(ci ->
+//                u.getCohorts()
+//                        .stream()
+//                        .filter(uci -> uci.getKey().equals(ci.getField()))
+//                        .map(uci -> {
+//                            log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
+//                            if(ci.getProcessor().equals(CohortProcessor.NONE)){
+//                                cohorts.add(new Cohort(ci.getDisplayName(), (String) uci.getValue()));
+//                            } else {
+//                                cohorts.add(new Cohort(ci.getDisplayName(), cohortProcessor(ci, uci)));
+//                            }
+//                            return null;
+//                }));
         return cohorts;
+    }
+
+    private String cohortProcessor(CohortItem ci, UserCohort uci) {
+        Class<FieldUtils> clazz = FieldUtils.class;
+        Method method = null;
+        try {
+            method = clazz.getMethod(ci.getProcessor().getMethod(), Object.class);
+            Object result = method.invoke(null, uci.getValue());
+            return (String) result;
+        } catch (NoSuchMethodException e) {
+            log.error("Cohort Processor Method NoSuchMethodException [{}] not found. Skipping Cohort [{}] : [{}]", ci.getProcessor().getMethod(), uci.getKey(), uci.getValue());
+        } catch (InvocationTargetException e) {
+            log.error("Cohort Processor Method InvocationTargetException [{}] . Skipping Cohort [{}] : [{}] : [{}]", ci.getProcessor().getMethod(), uci.getKey(), uci.getValue(), e.getMessage());
+        } catch (IllegalAccessException e) {
+            log.error("Cohort Processor Method IllegalAccessException [{}] . Skipping Cohort [{}] : [{}]: [{}]" , ci.getProcessor().getMethod(), uci.getKey(), uci.getValue(), e.getMessage());
+        }
+        return null;
     }
 }
