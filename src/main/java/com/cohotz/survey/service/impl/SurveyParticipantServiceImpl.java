@@ -331,15 +331,15 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     }
 
     private List<Cohort> fetchCohorts(UserRes u, List<CohortItem> cohortItems) {
-        log.info("Fetching Cohorts for [{}] : [{}]", u.getEmail(), u.getCohorts());
-        log.info("Survey level Cohort Mapper: [{}]", cohortItems);
+        //log.info("Fetching Cohorts for [{}] : [{}]", u.getEmail(), u.getCohorts());
+        //log.info("Survey level Cohort Mapper: [{}]", cohortItems);
         List<Cohort> cohorts = new ArrayList<>();
         for(CohortItem ci : cohortItems) {
-            log.info("Processing Cohort Item: [{}]", ci);
+            //log.info("Processing Cohort Item: [{}]", ci);
             for(UserCohort uci : u.getCohorts()) {
-                log.info("Processing User Cohort Item: [{}]", uci);
+                //log.info("Processing User Cohort Item: [{}]", uci);
                 if(uci.getKey().equals(ci.getField())) {
-                    log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
+                    //log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
                     if(ci.getProcessor().equals(CohortProcessor.NONE)){
                         cohorts.add(new Cohort(ci.getDisplayName(), (String) uci.getValue()));
                     } else {
@@ -348,19 +348,6 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
                 }
             }
         }
-//        cohortItems.forEach(ci ->
-//                u.getCohorts()
-//                        .stream()
-//                        .filter(uci -> uci.getKey().equals(ci.getField()))
-//                        .map(uci -> {
-//                            log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
-//                            if(ci.getProcessor().equals(CohortProcessor.NONE)){
-//                                cohorts.add(new Cohort(ci.getDisplayName(), (String) uci.getValue()));
-//                            } else {
-//                                cohorts.add(new Cohort(ci.getDisplayName(), cohortProcessor(ci, uci)));
-//                            }
-//                            return null;
-//                }));
         return cohorts;
     }
 
