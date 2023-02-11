@@ -3,6 +3,7 @@ package com.cohotz.survey.model;
 import com.cohotz.survey.client.core.model.CultureBlock;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
+import com.cohotz.survey.model.survey.CohortItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +28,7 @@ public class Survey {
     public Survey(){
         this.questionMap = new HashMap<>();
         this.engines = new ArrayList<>();
+        this.cohorts = new ArrayList<>();
         this.type = CultureBlock.TypeEnum.DEFAULT;
     }
     @Id
@@ -67,6 +69,7 @@ public class Survey {
     protected CultureBlock.TypeEnum type;
     @Field("part_source")
     protected ParticipantSource participantSource;
+    protected List<CohortItem> cohorts;
     @Field("created_ts")
     protected LocalDateTime createdTS = LocalDateTime.now();
 

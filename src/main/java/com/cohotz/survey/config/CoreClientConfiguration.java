@@ -3,6 +3,7 @@ package com.cohotz.survey.config;
 import com.cohotz.survey.client.ApiClient;
 import com.cohotz.survey.client.core.CultureBlockApi;
 import com.cohotz.survey.client.core.QuestionPoolApi;
+import com.cohotz.survey.client.core.TenantApi;
 import org.cohotz.boot.config.CHConfig;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class CoreClientConfiguration {
     @Bean(CULTURE_BLOCK_API_BEAN)
     public CultureBlockApi cultureBlockApi() {
         return new CultureBlockApi(apiClient());
+    }
+
+    @Bean(TENANT_API_BEAN)
+    public TenantApi tenantApi() {
+        return new TenantApi(apiClient());
     }
 
     @Bean(QUESTION_POOL_API_BEAN)

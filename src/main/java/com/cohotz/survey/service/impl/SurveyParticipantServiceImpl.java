@@ -17,6 +17,7 @@ import com.cohotz.survey.model.SurveyStatus;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
+import com.cohotz.survey.model.survey.CohortItem;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.service.SurveyParticipantService;
 import lombok.extern.slf4j.Slf4j;
@@ -119,7 +120,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         });
 
         participant.setSurveyStatus(SurveyStatus.DRAFT);
-        participant.setCohorts(fetchCohorts(user));
+        participant.setCohorts(fetchCohorts(user, survey.getCohorts()));
 
         participant.setBlock(new CultureBlockMin().code(survey.getBlock().getCode()).name(survey.getBlock().getName()));
         return dao.save(participant);
@@ -326,16 +327,16 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         dao.deleteAll();
     }
 
-    private List<Cohort> fetchCohorts(UserRes u) {
+    private List<Cohort> fetchCohorts(UserRes u, List<CohortItem> cohortItems) {
         List<Cohort> cohorts = new ArrayList<>();
-        config.getCohorts().forEach((k, v) -> {
+        cohortItems.forEach(ci -> {
             try {
-                Field field = UserRes.class.getDeclaredField(k);
+                Field field = UserRes.class.getDeclaredField(ci.getField());
                 field.setAccessible(true);
-                if (List.of("currentExperience", "totalExperience").contains(k)) {
-                    cohorts.add(new Cohort(v, getYearRange((Double) field.get(u))));
+                if (List.of("currentExperience", "totalExperience").contains(ci.getField())) {
+                    cohorts.add(new Cohort(ci.getDisplayName(), getYearRange((Double) field.get(u))));
                 } else {
-                    cohorts.add(new Cohort(v, (String) field.get(u)));
+                    cohorts.add(new Cohort(ci.getDisplayName(), (String) field.get(u)));
                 }
             } catch (Exception e) {
                 log.error("Error while creating cohort: [{}]", e.getMessage());

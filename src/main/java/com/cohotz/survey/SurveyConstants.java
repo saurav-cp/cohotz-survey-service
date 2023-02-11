@@ -28,6 +28,7 @@ public class SurveyConstants {
     public static final String CORE_SERVICE_API_CLIENT_BEAN = "cohotz-core-service-api-client-bean";
     public static final String CULTURE_BLOCK_API_BEAN = "culture-block-api-bean";
     public static final String QUESTION_POOL_API_BEAN = "question-pool-api-bean";
+    public static final String TENANT_API_BEAN = "tenant-api-bean";
 
     public static final String USER_SERVICE_API_CLIENT_BEAN = "cohotz-profile-service-api-client-bean";
     public static final String USER_API_BEAN = "user-api-bean";

@@ -2,22 +2,22 @@ package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.client.api.CultureBlockService;
 import com.cohotz.survey.client.api.QuestionPoolService;
+import com.cohotz.survey.client.api.TenantService;
 import com.cohotz.survey.client.api.UserService;
-import com.cohotz.survey.client.core.model.CultureBlock;
-import com.cohotz.survey.client.core.model.PoolQuestion;
-import com.cohotz.survey.client.core.model.Question;
-import com.cohotz.survey.client.core.model.WeightedCultureEngine;
+import com.cohotz.survey.client.core.model.*;
 import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.SurveyDao;
 import com.cohotz.survey.dto.request.SurveyDTO;
 import com.cohotz.survey.dto.response.*;
+import com.cohotz.survey.dto.response.QuestionMinRes;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
+import com.cohotz.survey.model.survey.CohortItem;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
@@ -66,6 +66,9 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Autowired
     MailService mailService;
+
+    @Autowired
+    TenantService tenantService;
 
     @Autowired
     ApplicationContext context;
@@ -135,6 +138,11 @@ public class SurveyServiceImpl implements SurveyService {
         survey.setCompletedDate(dto.getEndDate());
         survey.setPublisher(email);
         survey.setPublisherName(publisher.getFirstName() +" "+ publisher.getLastName());
+
+        CollectionUtils.emptyIfNull(tenantService.fetchByCode(survey.getTenant()).getCohorts())
+                .stream()
+                .map(c -> survey.getCohorts().add(new CohortItem(c.getPosition(), c.getField(), c.getDisplayName())))
+                        .collect(Collectors.toList());
 
         log.debug("Creating survey: {}", survey);
         Survey s = dao.save(survey);
