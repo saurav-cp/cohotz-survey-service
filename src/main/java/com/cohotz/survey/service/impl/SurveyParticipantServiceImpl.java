@@ -338,7 +338,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
             //log.info("Processing Cohort Item: [{}]", ci);
             for(UserCohort uci : u.getCohorts()) {
                 //log.info("Processing User Cohort Item: [{}]", uci);
-                if(uci.getKey().equals(ci.getField())) {
+                if(uci.getName().equals(ci.getField())) {
                     //log.info("Processing Cohort [{}] : [{}]", uci.getKey(), uci.getValue());
                     if(ci.getProcessor().equals(CohortProcessor.NONE)){
                         cohorts.add(new Cohort(ci.getDisplayName(), (String) uci.getValue()));
@@ -359,11 +359,11 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
             Object result = method.invoke(null, uci.getValue());
             return (String) result;
         } catch (NoSuchMethodException e) {
-            log.error("Cohort Processor Method NoSuchMethodException [{}] not found. Skipping Cohort [{}] : [{}]", ci.getProcessor().getMethod(), uci.getKey(), uci.getValue());
+            log.error("Cohort Processor Method NoSuchMethodException [{}] not found. Skipping Cohort [{}] : [{}]", ci.getProcessor().getMethod(), uci.getName(), uci.getValue());
         } catch (InvocationTargetException e) {
-            log.error("Cohort Processor Method InvocationTargetException [{}] . Skipping Cohort [{}] : [{}] : [{}]", ci.getProcessor().getMethod(), uci.getKey(), uci.getValue(), e.getMessage());
+            log.error("Cohort Processor Method InvocationTargetException [{}] . Skipping Cohort [{}] : [{}] : [{}]", ci.getProcessor().getMethod(), uci.getName(), uci.getValue(), e.getMessage());
         } catch (IllegalAccessException e) {
-            log.error("Cohort Processor Method IllegalAccessException [{}] . Skipping Cohort [{}] : [{}]: [{}]" , ci.getProcessor().getMethod(), uci.getKey(), uci.getValue(), e.getMessage());
+            log.error("Cohort Processor Method IllegalAccessException [{}] . Skipping Cohort [{}] : [{}]: [{}]" , ci.getProcessor().getMethod(), uci.getName(), uci.getValue(), e.getMessage());
         }
         return null;
     }
