@@ -7,5 +7,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface UserReporteeParticipationCacheDao extends MongoRepository<UserReporteeParticipationCache, String> {
+    void deleteByTenant(String tenant);
     Optional<UserReporteeParticipationCache> findByTenantAndCodeAndStartAndEnd(String tenant, String engine, LocalDate start, LocalDate end);
 }

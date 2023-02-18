@@ -15,6 +15,8 @@ import java.util.Optional;
 @Repository
 public interface SurveyDao extends MongoRepository<Survey, String> {
 
+    void deleteByTenant(String tenant);
+
     Optional<Survey> findByTenantAndId(String tenant, String id);
 
     Optional<Survey> findByTenantAndName(String tenant, String name);

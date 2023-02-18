@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface ParticipantDao extends MongoRepository<Participant, String> {
-
+    void deleteByTenant(String tenant);
     Optional<Participant> findBySurveyIdAndTenantAndEmail(String survey, String tenant, String email);
     Optional<Participant> findBySurveyIdAndTenantAndAccessCode(String survey, String tenant, String accessCode);
     List<Participant> findByTenantAndEmail(String tenant, String email);

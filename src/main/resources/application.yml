@@ -3,6 +3,8 @@ cohotz:
     name: Survey Service
     description: Cohotz Survey Microservice
     version: 1.0
+  data:
+    purge: true
   crypto:
     enabled: ${COHOTZ_ENCRYPTION_ENABLED:true}
     secret: ORyEeljxwxwkJeE1i9UShars8fgfKZ1c
