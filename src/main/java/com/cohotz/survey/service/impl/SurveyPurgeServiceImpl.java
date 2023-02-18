@@ -30,7 +30,7 @@ public class SurveyPurgeServiceImpl implements PurgeService {
 
     public void execute(String tenant) throws CHException {
         log.info("-------------------------------------------------------------");
-        log.info("Purge environment flag is true. Purging Record data for [{}]. Point of no return!", tenant);
+        log.info("Purge environment flag is true. Purging Survey data for [{}]. Point of no return!", tenant);
         log.info("-------------Reportee Cache Data Purge-----------------------");
         cacheDao.deleteByTenant(tenant);
         log.info("--------------------Participant Purge------------------------");
