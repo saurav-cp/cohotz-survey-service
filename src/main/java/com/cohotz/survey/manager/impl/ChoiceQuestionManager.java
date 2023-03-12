@@ -75,7 +75,7 @@ public class ChoiceQuestionManager implements QuestionManager {
             ResponseOption responseOption = ques.getResponseOptionMap().get(s - 1);
             //if (responseOption == null) invalidResponse.set(true);
             score.set(score.get() + responseOption.getScore());
-            if(StringUtils.isNotBlank(responseOption.getInsight().getInsight())) {
+            if(responseOption.getInsight() != null && StringUtils.isNotBlank(responseOption.getInsight().getInsight())) {
                 publishInsights(participant, question, responseOption);
             }
         });

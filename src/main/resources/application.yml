@@ -11,7 +11,7 @@ cohotz:
     salt: NMzMpHb8mv
   clients:
     cohotz-core-service:
-      url: ${COHOTZ_CORE_SERVICE_HOST:http://localhost:8081}
+      url: ${COHOTZ_CORE_SERVICE_HOST:http://localhost:3001}
       oauth2:
         enabled: ${COHOTZ_CORE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
@@ -19,7 +19,7 @@ cohotz:
         access-token-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-core-service
     cohotz-profile-service:
-      url: ${COHOTZ_PROFILE_SERVICE_HOST:http://localhost:8083}
+      url: ${COHOTZ_PROFILE_SERVICE_HOST:http://ec2-13-235-89-147.ap-south-1.compute.amazonaws.com/profile-service}
       oauth2:
         enabled: ${COHOTZ_PROFILE_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
@@ -27,7 +27,7 @@ cohotz:
         access-token-url: ${COHOTZ_KEYCLOAK_PROTOCOL:http}://${COHOTZ_KEYCLOAK_HOST:localhost}:${COHOTZ_KEYCLOAK_PORT:8443}/realms/cohotz/protocol/openid-connect/token
         provider-id: cohotz-profile-service
     cohotz-record-service:
-      url: ${COHOTZ_RECORD_SERVICE_HOST:http://localhost:8085}
+      url: ${COHOTZ_RECORD_SERVICE_HOST:http://ec2-13-235-89-147.ap-south-1.compute.amazonaws.com/record-service}
       oauth2:
         enabled: ${COHOTZ_RECORD_SERVICE_OAUTH_ENABLED:true}
         client-id: cohotz-service
