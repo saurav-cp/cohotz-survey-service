@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,6 +42,7 @@ public class RestEngineScoreRecordProducer implements EngineScoreRecordProducer 
                         .name(recordDTO.getData().getBlock().getName()))
                 .score(recordDTO.getData().getScore())
                 .max(recordDTO.getData().getMax())
+                .createdTs(OffsetDateTime.now(ZoneOffset.UTC))
                 .cohorts(recordDTO.getData().getCohorts()
                         .stream()
                         .map(c -> new Cohort().name(c.getName()).value(c.getValue()))
