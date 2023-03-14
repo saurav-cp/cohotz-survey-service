@@ -91,23 +91,6 @@ public class ChoiceInfoQuestionManager implements QuestionManager {
         return response;
     }
 
-//    @Override
-//    @Async
-//    public void profileUpdate(User user, ResponseDTO response, StaticSurveyQuestion question) {
-//        ChoiceBasedResponseDTO responseDTO = (ChoiceBasedResponseDTO)response;
-//        ChoiceBasedSurveyQuestion ques = (ChoiceBasedSurveyQuestion) question;
-//        responseDTO.getSelections().forEach(s -> {
-//            String name = ques.getResponseOptionMap().get(s - 1).getText();
-//            user.getEngines().forEach(e -> {
-//                if(e.getName().equalsIgnoreCase(name)){
-//                    log.info("Setting engine [{}] as preferred for {}", name, user.getEmail());
-//                    e.setPreferred(true);
-//                }
-//            });
-//        });
-//        userDao.save(user);
-//    }
-
 
     @Override
     public StaticSurveyQuestion createSurveyQuestion(Question blockQuestion, PoolQuestion question) {
