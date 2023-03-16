@@ -2,6 +2,7 @@ package com.cohotz.survey.service;
 
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantMinRes;
+import com.cohotz.survey.dto.response.participant.AssignedSurvey;
 import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.SurveyStatus;
@@ -32,7 +33,8 @@ public interface SurveyParticipantService {
     void updateReminder(String tenant, String surveyId, String accessCode) throws CHException;
     List<ParticipantMinRes> listParticipant(String tenant, String id) throws CHException;
     void addResponse(String tenant, String surveyId, String accessCode, List<ResponseDTO> responses) throws CHException;
-
+    List<Participant> findAllByEmail(String tenant, String email);
+    List<AssignedSurvey> findAssignedSurveys(String tenant, String email, boolean pending);
     void deleteBySurveyId(String surveyId);
     void deleteAll();
 }

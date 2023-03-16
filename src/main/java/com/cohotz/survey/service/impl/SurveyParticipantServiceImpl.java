@@ -10,6 +10,7 @@ import com.cohotz.survey.dao.SurveyDao;
 import com.cohotz.survey.dto.email.ParticipantEmail;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantMinRes;
+import com.cohotz.survey.dto.response.participant.AssignedSurvey;
 import com.cohotz.survey.manager.QuestionManager;
 import com.cohotz.survey.model.Cohort;
 import com.cohotz.survey.model.Participant;
@@ -323,6 +324,26 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     public void deleteBySurveyId(String surveyId) {
         log.debug("Deleting all participants of survey {}", surveyId);
         dao.deleteBySurveyId(surveyId);
+    }
+
+    @Override
+    public List<Participant> findAllByEmail(String tenant, String email) {
+        return dao.findByTenantAndEmail(tenant, email);
+    }
+
+    @Override
+    public List<AssignedSurvey> findAssignedSurveys(String tenant, String email, boolean pending) {
+        return findAllByEmail(tenant, email)
+                .stream()
+                .filter(p -> pending ? (!p.isSurveyComplete() && p.getDueDate().isAfter(LocalDateTime.now(ZoneOffset.UTC))) : true)
+                .filter(p -> p.getSurveyStatus().inProgress())
+                .map(p -> AssignedSurvey.builder().surveyId(p.getSurveyId()).surveyName(p.getSurveyName())
+                        .accessCode(p.getAccessCode())
+                        .lastReminder(p.getLastReminder())
+                        .reminderFrequencyInDays(p.getReminderFrequencyInDays())
+                        .cohortParticipation(dao.cohortCompletion(tenant, p.getSurveyId()))
+                        .link(String.format(String.format(config.getSurveyLinkFormat(), tenant, p.getSurveyId(), p.getAccessCode())))
+                        .dueDate(p.getDueDate()).complete(false).build()).collect(Collectors.toList());
     }
 
     @Override

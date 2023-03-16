@@ -40,6 +40,19 @@ public class SurveyParticipantController {
     SurveyParticipantService service;
 
     @PreAuthorize(ACCESS_SUPER_ADMIN_ONLY)
+    @Operation(summary = "Get all open surveys for email. Accessible on to COHOTZ super admin")
+    @GetMapping("/pending-surveys")
+    ApiResponse<Map> assignedSurveys(
+            @RequestHeader(name = "tenant", required = false) String tenant,
+            @PathVariable String surveyId,
+            @RequestParam String email
+    ) throws CHException {
+        String currentTenant = RequestUtils.tenant(tenant);
+        Map<String, Object> response = new HashMap<>();
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG, service.findAssignedSurveys(currentTenant, email, true));
+    }
+
+    @PreAuthorize(ACCESS_SUPER_ADMIN_ONLY)
     @Operation(summary = "Get the survey participants. Accessible on to COHOTZ super admin")
     @GetMapping
     ApiResponse<Map> participants(

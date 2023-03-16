@@ -1,6 +1,7 @@
 package com.cohotz.survey.dao;
 
 import com.cohotz.survey.model.Participant;
+import com.cohotz.survey.model.microculture.CohortParticipation;
 import com.cohotz.survey.model.microculture.UserReporteeParticipation;
 import com.cohotz.survey.model.score.CHEntityScore;
 import org.springframework.data.mongodb.repository.Aggregation;
@@ -188,4 +189,24 @@ public interface ParticipantDao extends MongoRepository<Participant, String> {
             "{'$project' : { '_id': 0, 'item' : {'code':'$_id.code', 'name' : '$_id.name'}, 'score': 1 }}"
     })
     Optional<UserReporteeParticipation> reporteeParticipation(String tenant, String block, LocalDate from, LocalDate to, String email);
+
+    @Aggregation(pipeline = {
+            "{'$match': {'tenant': ?0, 'survey_id': ?1}}",
+            "{'$unwind': {'path': '$cohorts'}}",
+            "{'$group': {" +
+                    "'_id': { 'name': '$cohorts.name', 'value': '$cohorts.value'}," +
+                    "'complete': { '$sum': {'$cond' : ['$survey_complete', 1, 0]}}, " +
+                    "'pending': { '$sum': {'$cond' : ['$survey_complete', 0, 1]}}, " +
+                    "}" +
+                    "}",
+            "{'$project': {" +
+                    "'_id': 0," +
+                    "'name': '$_id.name' ," +
+                    "'value': '$_id.value' ," +
+                    "'complete': 1 ," +
+                    "'pending': 1 " +
+                    "}" +
+                    "}"
+    })
+    List<CohortParticipation> cohortCompletion(String tenant, String surveyId);
 }

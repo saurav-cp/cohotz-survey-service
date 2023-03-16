@@ -2,8 +2,11 @@ package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.client.api.UserService;
 import com.cohotz.survey.client.profile.model.UserMinRes;
+import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.ParticipantDao;
 import com.cohotz.survey.dao.UserReporteeParticipationCacheDao;
+import com.cohotz.survey.dto.response.participant.AssignedSurvey;
+import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.microculture.UserReporteeParticipation;
 import com.cohotz.survey.model.microculture.UserReporteeParticipationCache;
 import com.cohotz.survey.model.score.CHEntityScore;
@@ -12,14 +15,18 @@ import com.cohotz.survey.utils.GraphUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cohotz.boot.error.CHException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -37,6 +44,9 @@ public class ParticipationServiceImpl implements ParticipationService {
 
     @Value("${cohotz.micro-culture.caching:false}")
     Boolean caching;
+
+    @Autowired
+    SurveyConfiguration config;
 
     @Override
     public List<CHEntityScore> engineParticipationTrends(String tenant, List<String> engines, LocalDate from, LocalDate to) {

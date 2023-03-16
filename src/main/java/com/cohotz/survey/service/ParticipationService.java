@@ -1,5 +1,7 @@
 package com.cohotz.survey.service;
 
+import com.cohotz.survey.dto.response.participant.AssignedSurvey;
+import com.cohotz.survey.model.Participant;
 import com.cohotz.survey.model.microculture.UserReporteeParticipation;
 import com.cohotz.survey.model.score.CHEntityScore;
 
@@ -14,6 +16,5 @@ public interface ParticipationService {
     List<CHEntityScore> experienceParticipationTrends(String tenant, List<String> blocks, LocalDate from, LocalDate to);
     List<CHEntityScore> experienceParticipationCohortStatus(String tenant, List<String> blocks, LocalDate from, LocalDate to);
     List<CHEntityScore> experienceParticipationCohortTrends(String tenant, List<String> blocks, String cohort, String cohortOption, LocalDate from, LocalDate to);
-
     List<UserReporteeParticipation> microCulture(String tenant, String block, LocalDate from, LocalDate to);
 }
