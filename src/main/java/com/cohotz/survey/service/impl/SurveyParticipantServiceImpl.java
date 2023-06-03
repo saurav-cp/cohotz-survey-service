@@ -191,7 +191,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
                     dao.save(p);
                 });
         switch (survey.getType()) {
-            case EMPLOYEE_ENGAGEMENT:
+            case ENGAGEMENT:
                 mailService.sendEngagementSurvey(survey, participants);
                 break;
             default:

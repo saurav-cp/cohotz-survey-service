@@ -55,7 +55,7 @@ public class CultureBlockService {
         try {
             log.debug("[{}] Fetching Culture Blocks Details: [{}] ", tenant);
             List<CultureBlockMin> cultureBlocks = cultureBlockApi
-                    .fetchAll4(tenant, null, CultureBlock.TypeEnum.EMPLOYEE_EXPERIENCE.name(),false)
+                    .fetchAll4(tenant, null, CultureBlock.TypeEnum.EXPERIENCE.name(),false)
                     .getResult();
             return cultureBlocks;
         } catch (HttpClientErrorException e) {

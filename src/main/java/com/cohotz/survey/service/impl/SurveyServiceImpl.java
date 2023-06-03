@@ -297,12 +297,14 @@ public class SurveyServiceImpl implements SurveyService {
         if (config.getStatusMap().get(survey.getStatus().name()).contains(newStatus)) {
             //Directly move to STARTED instead of PUBLISHED if start date not defined or is in the past
             if (SurveyStatus.PUBLISHED.name().equals(newStatus) || SurveyStatus.STARTED.name().equals(newStatus)) {
+                SurveyStatus newStatusEnum = SurveyStatus.PUBLISHED;
                 if(survey.getStartDate() == null || LocalDateTime.now(ZoneOffset.UTC).isAfter(survey.getStartDate())){
+                    newStatusEnum = SurveyStatus.STARTED;
                     survey.setStartDate(LocalDateTime.now(ZoneOffset.UTC));
-                    survey.setStatus(SurveyStatus.STARTED);
-                    participantService.updateStatus(tenant, survey.getId(), SurveyStatus.STARTED);
-                    participantService.emailParticipantForSurvey(survey);
                 }
+                survey.setStatus(newStatusEnum);
+                participantService.updateStatus(tenant, survey.getId(), newStatusEnum);
+                participantService.emailParticipantForSurvey(survey);
             }else {
                 survey.setStatus(SurveyStatus.valueOf(newStatus));
                 participantService.updateStatus(tenant, survey.getId(), survey.getStatus());
