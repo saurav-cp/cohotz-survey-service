@@ -94,8 +94,9 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         log.debug("Creating participant {} for survey {}", email, survey.getId());
         Map<String, Response> smartSkipEligibleQuestions = fetchSmartSkipEligibleQuestions(survey.getTenant(), email);
         UserRes user = userService.fetchByTenantAndEmail(survey.getTenant(), email);
+        String userName = user.getFirstName() != null ? user.getFirstName() : "John" + " " +user.getLastName() != null ? user.getLastName() : "Doe";
         List<String> reportingHierarchy = userService.fetchReportingHierarchy(survey.getTenant(), email);
-        Participant participant = new Participant(email, user.getName(), user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
+        Participant participant = new Participant(email, userName, user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
         participant.setReportingHierarchy(reportingHierarchy);
         survey.getQuestionMap().forEach((qCode, question) -> {
             QuestionManager rm = (QuestionManager)context.getBean(question.getResponseType());

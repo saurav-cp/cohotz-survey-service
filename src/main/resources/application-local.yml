@@ -9,7 +9,7 @@ spring:
     port: 6379
   data:
     mongodb:
-      uri: mongodb://ch_survey_service:SurveyCH639@ec2-43-204-97-157.ap-south-1.compute.amazonaws.com:27017/ch_survey_db?retryWrites=true&w=majority&authSource=admin
+      uri: mongodb://ch_survey_service:SurveyCH639@43.204.130.84:27017/ch_survey_db?retryWrites=true&w=majority&authSource=admin
       database: ch_survey_db
       authentication-database: admin
       auto-index-creation: true

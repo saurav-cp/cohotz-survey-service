@@ -192,5 +192,5 @@ survey:
     MARKED_COMPLETE:
 
 sib:
-  api-key: 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
-  url: https://api.sendinblue.com/v3/smtp/email
+  api-key: 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
+  url: https://api.brevo.com/v3/emailCampaigns

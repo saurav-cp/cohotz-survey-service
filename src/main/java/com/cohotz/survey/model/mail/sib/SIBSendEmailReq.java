@@ -11,5 +11,7 @@ public class SIBSendEmailReq {
     private SIBSender sender;
     private List<SIBTo> to;
     private String subject;
+    private String type;
+    private String name;
     private String htmlContent;
 }

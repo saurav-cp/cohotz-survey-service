@@ -59,13 +59,16 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendSurvey(Survey survey, String email, String name, String link) {
-        log.debug("Initiating email survey {} email for {}", survey.getName(), email);
-        String emailTemplate = CHStringUtils.asString(engagementSurveyHtml);
+        log.info("Initiating email at {} for survey {} for {} :: {}", email, survey.getName(), name, link);
+        String emailTemplate = CHStringUtils.asString(surveyHtml);
+        log.debug("emailTemplate {}", emailTemplate);
         String content = emailTemplate.replace("SURVEY_LINK", link)
                 .replace("SURVEY_DETAILS_PLACEHOLDER", survey.getDescription())
-                .replace("SURVEY_PARTICIPANT_NAME", name);
+                .replace("SURVEY_PARTICIPANT_NAME", name != null ? name : "");
         SIBSendEmailReq req = SIBSendEmailReq.builder()
                 .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
+                .name("New Cohotz Survey - "+survey.getName())
+                .type("classic")
                 .to(List.of(new SIBTo(email, email)))
                 .subject("New Cohotz Survey - "+survey.getName())
                 .htmlContent(content)
