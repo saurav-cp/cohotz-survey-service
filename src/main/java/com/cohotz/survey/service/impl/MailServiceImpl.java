@@ -2,13 +2,17 @@ package com.cohotz.survey.service.impl;
 
 import com.cohotz.survey.dto.email.ParticipantEmail;
 import com.cohotz.survey.model.Survey;
-import com.cohotz.survey.model.mail.sib.SIBSendEmailReq;
-import com.cohotz.survey.model.mail.sib.SIBSendEmailRes;
-import com.cohotz.survey.model.mail.sib.SIBSender;
-import com.cohotz.survey.model.mail.sib.SIBTo;
+import com.cohotz.survey.model.mail.sib.*;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.utils.CHStringUtils;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Emailv31;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -51,6 +55,9 @@ public class MailServiceImpl implements MailService {
     @Value("${sib.api-key}")
     String apiKey;
 
+    //    @Value("${sib.api-secret}")
+    //    String apiSecret;
+
     @Value("${sib.url}")
     String sibUrl;
 
@@ -61,10 +68,43 @@ public class MailServiceImpl implements MailService {
     public void sendSurvey(Survey survey, String email, String name, String link) {
         log.info("Initiating email at {} for survey {} for {} :: {}", email, survey.getName(), name, link);
         String emailTemplate = CHStringUtils.asString(surveyHtml);
-        log.debug("emailTemplate {}", emailTemplate);
-        String content = emailTemplate.replace("SURVEY_LINK", link)
+        //log.debug("emailTemplate {}", emailTemplate);
+        String content = emailTemplate.replace("SURVEY_NAME_PLACEHOLDER", survey.getName()).replace("SURVEY_LINK", link)
                 .replace("SURVEY_DETAILS_PLACEHOLDER", survey.getDescription())
                 .replace("SURVEY_PARTICIPANT_NAME", name != null ? name : "");
+//        SMTPPeterRequest request = SMTPPeterRequest.builder()
+//                .from("saurav@cultrplus.com")
+//                .to(List.of(email))
+//                .subject("New Cohotz Survey - "+survey.getName())
+//                .html(content)
+//                .build();
+//        send(request);
+//        MailjetClient client;
+//        MailjetRequest request;
+//        MailjetResponse response;
+//        client = new MailjetClient(ClientOptions.builder()
+//                .apiKey(apiKey)
+//                .apiSecretKey(apiSecret).build());
+//        try {
+//            request = new MailjetRequest(Emailv31.resource)
+//                    .property(Emailv31.MESSAGES, new JSONArray()
+//                            .put(new JSONObject()
+//                                    .put(Emailv31.Message.FROM, new JSONObject()
+//                                            .put("Email", "saurav@cohotz.com")
+//                                            .put("Name", "Cohotz Survey"))
+//                                    .put(Emailv31.Message.TO, new JSONArray()
+//                                            .put(new JSONObject()
+//                                                    .put("Email", email)
+//                                                    .put("Name", email)))
+//                                    .put(Emailv31.Message.SUBJECT, "New Cohotz Survey - "+survey.getName())
+//                                    .put(Emailv31.Message.TEXTPART, "Greetings from Cohotz!")
+//                                    .put(Emailv31.Message.HTMLPART, content)));
+//            response = client.post(request);
+//            System.out.println(response.getStatus());
+//            System.out.println(response.getData());
+//        } catch (Exception e) {
+//            log.error("Error while sending email: {}", e);
+//        }
         SIBSendEmailReq req = SIBSendEmailReq.builder()
                 .sender(new SIBSender("Cohotz", "spike.samantray@gmail.com"))
                 .name("New Cohotz Survey - "+survey.getName())
@@ -116,6 +156,24 @@ public class MailServiceImpl implements MailService {
         }else{
             log.warn("Email service is disabled!");
             return null;
+        }
+    }
+
+    private void send(SMTPPeterRequest request) {
+        if(enabled) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("accept", "application/json");
+            headers.add("api-key", apiKey);
+            headers.add("content-type", "application/json");
+
+            HttpEntity<SMTPPeterRequest> requestEntity = new HttpEntity<>(request, headers);
+            log.debug("Endpoint: {} and apiKey: {}", sibUrl+"?access_token="+apiKey);
+            ResponseEntity response = restTemplate.exchange(
+                    sibUrl+"?access_token="+apiKey, HttpMethod.POST, requestEntity,
+                    SIBSendEmailRes.class);
+            log.debug("SMTPPeter Response: {}", response.getBody());
+        }else{
+            log.warn("Email service is disabled!");
         }
     }
 }
