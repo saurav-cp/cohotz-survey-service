@@ -43,7 +43,7 @@ public class SurveyUpdateTaskImpl implements SurveyUpdateTask {
     QuestionPoolService questionService;
 
     //@Scheduled(cron = "0 3 * * * ?") //Should run every day at 2AM UTC
-    @Scheduled(initialDelay = 300000, fixedDelay = 300000)
+    @Scheduled(initialDelay = 300000000, fixedDelay = 300000000)
     @Override
     public void update() {
         configuration.getScheduler().getTenants().forEach(this::update);
