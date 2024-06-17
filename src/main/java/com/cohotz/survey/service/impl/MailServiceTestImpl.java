@@ -1,11 +1,10 @@
 package com.cohotz.survey.service.impl;
 
-import com.cohotz.survey.dto.email.ParticipantEmail;
+import com.cohotz.survey.dto.email.ParticipantNotificationDetails;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +51,7 @@ public class MailServiceTestImpl implements MailService {
     }
 
     @Override
-    public void sendEngagementSurvey(Survey survey, List<ParticipantEmail> participants) {
+    public void sendEngagementSurvey(Survey survey, List<ParticipantNotificationDetails> participants) {
         log.warn("Sending email for engagement survey  {} for manager {}", survey.getId(), participants);
     }
 

@@ -1,23 +1,14 @@
 package com.cohotz.survey.service.impl;
 
-import com.cohotz.survey.dto.email.ParticipantEmail;
+import com.cohotz.survey.dto.email.ParticipantNotificationDetails;
 import com.cohotz.survey.model.Survey;
 import com.cohotz.survey.model.mail.sib.*;
 import com.cohotz.survey.service.MailService;
 import com.cohotz.survey.utils.CHStringUtils;
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.resource.Emailv31;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,11 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
-import java.io.Reader;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -118,7 +106,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendEngagementSurvey(Survey survey, List<ParticipantEmail> participants) {
+    public void sendEngagementSurvey(Survey survey, List<ParticipantNotificationDetails> participants) {
         String emailTemplate = CHStringUtils.asString(engagementSurveyHtml);
         String participantTemplate = CHStringUtils.asString(engagementParticipants);
         StringBuilder participantDetails = new StringBuilder();

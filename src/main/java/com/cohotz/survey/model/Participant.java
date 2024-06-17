@@ -1,6 +1,7 @@
 package com.cohotz.survey.model;
 
 import com.cohotz.survey.client.core.model.CultureBlockMin;
+import com.cohotz.survey.client.profile.model.CommunicationSettings;
 import com.cohotz.survey.model.engine.WeightedEngineScore;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
@@ -27,7 +28,7 @@ import java.util.*;
 @Sharded(shardKey = { "tenant" })
 public class Participant extends CHBaseModel {
 
-    public Participant(String email, String name, String reportingTo, String surveyId, String surveyName, String tenant, LocalDateTime dueDate){
+    public Participant(String email, String name, String reportingTo, String surveyId, String surveyName, String tenant, LocalDateTime dueDate, List<CommunicationSettings> communicationSettings){
         this.surveyId = surveyId;
         this.surveyName = surveyName;
         this.dueDate = dueDate;
@@ -36,6 +37,7 @@ public class Participant extends CHBaseModel {
         this.scoreAccumulated = false;
         this.emailSent = false;
         this.email = email;
+        this.communicationSettings = new ArrayList<>(communicationSettings);
         this.name = name;
         this.reportingTo = reportingTo;
         this.reportingHierarchy = new ArrayList<>();
@@ -66,6 +68,10 @@ public class Participant extends CHBaseModel {
     private String accessCode;
 
     private String email;
+
+    //private String uniqueIdentifier;
+
+    private List<CommunicationSettings> communicationSettings;
 
     private String name;
 

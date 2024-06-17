@@ -1,10 +1,9 @@
 package com.cohotz.survey.service;
 
-import com.cohotz.survey.dto.email.ParticipantEmail;
+import com.cohotz.survey.dto.email.ParticipantNotificationDetails;
 import com.cohotz.survey.model.Survey;
 
 import java.util.List;
-import java.util.Map;
 
 public interface MailService {
     //void registrationConfirmation(String email, String tenant);
@@ -14,6 +13,6 @@ public interface MailService {
 
     //void profileUpdateConfirmation(String email, String tenant);
     void sendSurvey(Survey survey, String email, String name, String link);
-    void sendEngagementSurvey(Survey survey, List<ParticipantEmail> participants);
+    void sendEngagementSurvey(Survey survey, List<ParticipantNotificationDetails> participants);
     //SIBSendEmailRes send(SIBSendEmailReq req);
 }

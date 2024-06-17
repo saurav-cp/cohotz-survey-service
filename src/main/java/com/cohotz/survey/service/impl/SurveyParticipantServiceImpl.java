@@ -7,7 +7,7 @@ import com.cohotz.survey.client.profile.model.UserRes;
 import com.cohotz.survey.config.SurveyConfiguration;
 import com.cohotz.survey.dao.ParticipantDao;
 import com.cohotz.survey.dao.SurveyDao;
-import com.cohotz.survey.dto.email.ParticipantEmail;
+import com.cohotz.survey.dto.email.ParticipantNotificationDetails;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantMinRes;
 import com.cohotz.survey.dto.response.participant.AssignedSurvey;
@@ -21,6 +21,7 @@ import com.cohotz.survey.model.question.StaticSurveyQuestion;
 import com.cohotz.survey.model.response.Response;
 import com.cohotz.survey.model.survey.CohortItem;
 import com.cohotz.survey.service.MailService;
+import com.cohotz.survey.service.NotificationService;
 import com.cohotz.survey.service.SurveyParticipantService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -61,6 +62,9 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     MailService mailService;
 
     @Autowired
+    NotificationService notificationService;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -96,7 +100,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
         UserRes user = userService.fetchByTenantAndEmail(survey.getTenant(), email);
         String userName = user.getFirstName() != null ? user.getFirstName() : "John" + " " +user.getLastName() != null ? user.getLastName() : "Doe";
         List<String> reportingHierarchy = userService.fetchReportingHierarchy(survey.getTenant(), email);
-        Participant participant = new Participant(email, userName, user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate());
+        Participant participant = new Participant(email, userName, user.getReportingTo(), survey.getId(), survey.getName(), user.getTenant(), survey.getEndDate(), user.getCommunicationSettings());
         participant.setReportingHierarchy(reportingHierarchy);
         survey.getQuestionMap().forEach((qCode, question) -> {
             QuestionManager rm = (QuestionManager)context.getBean(question.getResponseType());
@@ -180,10 +184,10 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
     @Override
     @Async
     public void emailParticipantForSurvey(Survey survey) {
-        List<ParticipantEmail> participants = new ArrayList<>();
+        List<ParticipantNotificationDetails> participants = new ArrayList<>();
         dao.findByTenantAndSurveyId(survey.getTenant(), survey.getId())
                 .forEach(p -> {
-                    participants.add(new ParticipantEmail(p.getName(), p.getEmail(), String.format(
+                    participants.add(new ParticipantNotificationDetails(p.getName(), p.getEmail(), p.getCommunicationSettings(), String.format(
                             config.getSurveyLinkFormat(),
                             survey.getTenant(),
                             survey.getId(),
@@ -196,7 +200,7 @@ public class SurveyParticipantServiceImpl implements SurveyParticipantService {
                 mailService.sendEngagementSurvey(survey, participants);
                 break;
             default:
-                participants.forEach(p -> mailService.sendSurvey(survey, p.getEmail(), p.getName(), p.getLink()));
+                participants.forEach(p -> notificationService.sendSurvey(survey, p));
                 break;
         }
 

@@ -38,6 +38,9 @@ cohotz:
     reportee-threshold: 2
     caching: ${COHOTZ_MICRO_CULTURE_CACHING:false}
   email.enabled: ${COHOTZ_ENABLED_EMAIL:false}
+  notification:
+    enabled: ${COHOTZ_NOTIFICATION_ENABLED:false}
+    url: ${COHOTZ_NOTIFICATION_URL:https://fly91-survey-link-6ff36ffdd37a.herokuapp.com/send_messages}
 
 server:
   port: ${COHOTZ_SERVICE_PORT:8083}
