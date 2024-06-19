@@ -258,6 +258,83 @@
         }
       }
     },
+    "/api/tenants/{code}/details-for-survey": {
+      "get": {
+        "tags": [
+          "Tenant"
+        ],
+        "operationId": "fetchSurveyConfig",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseTenantSurveyConfigRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponseMapStringString"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApiResponseErrorDetail"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseErrorDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseErrorDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseErrorDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/subscriptions/{id}": {
       "get": {
         "tags": [
@@ -3967,6 +4044,22 @@
           }
         }
       },
+      "TenantSurveyConfig": {
+        "type": "object",
+        "properties": {
+          "info_message": {
+            "type": "string"
+          }
+        }
+      },
+      "TenantThemeConfig" :{
+        "type": "object",
+        "properties": {
+          "primaryColor": {
+            "type": "string"
+          }
+        }
+      },
       "MicroCulture": {
         "type": "object",
         "properties": {
@@ -4052,6 +4145,35 @@
           }
         }
       },
+      "ApiResponseTenantSurveyConfigRes": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/TenantSurveyConfigRes"
+          }
+        }
+      },
+      "TenantSurveyConfigRes" : {
+        "type": "object",
+        "properties": {
+          "logoUrl": {
+            "type": "string"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/TenantSurveyConfig"
+          },
+          "theme": {
+            "$ref": "#/components/schemas/TenantThemeConfig"
+          }
+        }
+      },
       "TenantRes": {
         "type": "object",
         "properties": {
@@ -4096,6 +4218,12 @@
           },
           "encryption_config": {
             "$ref": "#/components/schemas/Encryption"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/TenantSurveyConfig"
+          },
+          "theme": {
+            "$ref": "#/components/schemas/TenantThemeConfig"
           }
         }
       },
@@ -4772,6 +4900,9 @@
           },
           "encryption": {
             "$ref": "#/components/schemas/Encryption"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/TenantSurveyConfig"
           },
           "created_ts": {
             "type": "string",

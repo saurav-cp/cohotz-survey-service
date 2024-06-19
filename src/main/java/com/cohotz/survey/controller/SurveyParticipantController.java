@@ -1,8 +1,11 @@
 package com.cohotz.survey.controller;
 
+import com.cohotz.survey.client.api.TenantService;
+import com.cohotz.survey.client.core.model.TenantSurveyConfigRes;
 import com.cohotz.survey.dto.request.ResponseDTO;
 import com.cohotz.survey.dto.response.ParticipantRes;
 import com.cohotz.survey.model.question.StaticSurveyQuestion;
+import com.cohotz.survey.model.question.StaticSurveyQuestionRes;
 import com.cohotz.survey.service.SurveyParticipantService;
 import com.cohotz.survey.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,10 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.cohotz.survey.SurveyConstants.COHOTZ_SURVEY_PARTICIPANT_ENDPOINT;
 import static org.cohotz.boot.CHConstants.*;
@@ -38,6 +38,9 @@ public class SurveyParticipantController {
 
     @Autowired
     SurveyParticipantService service;
+
+    @Autowired
+    TenantService tenantService;
 
     @PreAuthorize(ACCESS_SUPER_ADMIN_ONLY)
     @Operation(summary = "Get all open surveys for email. Accessible on to COHOTZ super admin")
@@ -80,14 +83,17 @@ public class SurveyParticipantController {
 
     @Operation(summary = "Get the survey details")
     @GetMapping("/{accessCode}/questions")
-    ApiResponse<List<StaticSurveyQuestion>> fetchSurveyQuestions(
+    ApiResponse<StaticSurveyQuestionRes> fetchSurveyQuestions(
             @RequestHeader String tenant,
             @PathVariable String surveyId,
             @PathVariable String accessCode
     ) throws CHException {
+        TenantSurveyConfigRes tenantSurveyConfig = tenantService.fetchSurveyConfigByCode(tenant);
         List<StaticSurveyQuestion> questions = surveyService.surveyQuestions(tenant, surveyId, accessCode);
         questions.sort(Comparator.comparing(StaticSurveyQuestion::getPosition));
-        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,questions);
+        StaticSurveyQuestionRes res = StaticSurveyQuestionRes.builder()
+                        .questions(questions).tenant(tenantSurveyConfig).build();
+        return new ApiResponse(HttpStatus.OK.value(), RES_GENERIC_SUCCESS_MSG,res);
     }
 
     @Operation(summary = "Add participant response")
