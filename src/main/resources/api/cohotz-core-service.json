@@ -4047,6 +4047,9 @@
       "TenantSurveyConfig": {
         "type": "object",
         "properties": {
+          "info_display": {
+            "type": "boolean"
+          },
           "info_message": {
             "type": "string"
           }
