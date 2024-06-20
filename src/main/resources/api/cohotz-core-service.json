@@ -4057,6 +4057,12 @@
         "properties": {
           "primaryColor": {
             "type": "string"
+          },
+          "survey_background_url": {
+            "type": "string"
+          },
+          "logo_image_url": {
+            "type": "string"
           }
         }
       },
